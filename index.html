@@ -2,423 +2,85 @@
 <html lang="sw">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jawiza Smart Wallet V2.6 - AI Audio & POS</title>
+    <title>Jawiza Pro V3.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @keyframes pulse-red { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.02); opacity: 0.9; box-shadow: 0 0 15px rgba(239, 68, 68, 0.8); } }
-        .fade-in { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
-        .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); }
-        .modal-content { background-color: #1f2937; margin: 3% auto; padding: 20px; border: 1px solid #374151; width: 90%; max-width: 1000px; border-radius: 12px; color: white; }
+        .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); }
+        .modal-content { background: #1f2937; margin: 5% auto; padding: 20px; width: 90%; max-width: 800px; border-radius: 15px; color: white; }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 font-sans">
+<body class="bg-gray-900 text-gray-100 font-sans p-4">
 
-    <!-- TOP AUDIT BAR -->
-    <div id="topAuditBar" class="bg-blue-800 text-white p-2 text-center text-sm font-bold shadow-md transition-colors duration-500">
-        <i class="fas fa-robot"></i> UKAGUZI WA AI: <span id="auditMessage">Mfumo unajiandaa...</span>
-    </div>
-
-    <!-- MAIN CONTAINER -->
-    <div class="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- CHATBOT SIDE -->
-        <div class="bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700 flex flex-col h-[750px]">
-            <div class="flex items-center justify-between border-b border-gray-700 pb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-xl">J</div>
-                    <div>
-                        <h2 class="font-bold text-lg text-indigo-400">Jawiza AI Voice</h2>
-                        <span class="text-xs text-green-400" id="aiStatus"><i class="fas fa-circle text-[8px] mr-1"></i> Iko Tayari</span>
-                    </div>
-                </div>
-                <div>
-                    <select id="langSelect" class="bg-gray-700 text-xs text-white p-1 rounded border border-gray-600 outline-none">
-                        <option value="sw">🇹🇿 Swahili</option>
-                        <option value="en">🇬🇧 English</option>
-                    </select>
-                </div>
-            </div>
-
-            <div id="chatBox" class="flex-1 overflow-y-auto my-4 space-y-3 p-2 text-sm">
-                <div class="bg-gray-700 p-3 rounded-lg max-w-[85%] fade-in">
-                    Mfumo V2.6 Umewashwa. Ninatumia sauti sasa! Ukisema <b>"ongeza stoki"</b> nitakuletea fomu. Usiposajili akiba, nitakukumbusha kila baada ya dakika 2.
-                </div>
-            </div>
-
-            <div class="flex gap-2 items-center">
-                <input id="userInput" type="text" placeholder="Andika na bonyeza Enter..." class="flex-1 bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500">
-                <button onclick="processTextInput()" class="bg-indigo-600 hover:bg-indigo-700 p-3 rounded-xl"><i class="fas fa-paper-plane"></i></button>
-                <button onclick="startVoiceRecognition()" class="bg-green-600 hover:bg-green-700 p-3 rounded-xl text-lg"><i class="fas fa-microphone"></i></button>
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 cursor-pointer" onclick="openModal('mauzoModal')">
+            <h2 class="text-gray-400">Mauzo</h2>
+            <p id="lblMauzo" class="text-3xl font-bold text-green-400">Tsh 0</p>
         </div>
-
-        <!-- DASHBOARD SIDE -->
-        <div class="lg:col-span-2 space-y-6">
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700 cursor-pointer hover:bg-gray-700 transition-all" onclick="openMauzoLedger()">
-                    <p class="text-gray-400 text-sm"><i class="fas fa-file-invoice-dollar text-green-400"></i> Reja ya Mauzo (Bofya)</p>
-                    <h3 id="lblMauzo" class="text-2xl font-bold text-green-400 mt-1">Tsh 0</h3>
-                </div>
-                <div id="cardMatumizi" class="bg-gray-800 p-5 rounded-2xl border border-gray-700 cursor-pointer hover:bg-gray-700 transition-all" onclick="openLedger('Matumizi')">
-                    <p class="text-gray-400 text-sm"><i class="fas fa-wallet text-yellow-400"></i> Matumizi</p>
-                    <h3 id="lblMatumizi" class="text-2xl font-bold text-yellow-400 mt-1">Tsh 0</h3>
-                </div>
-                <div id="cardAkiba" class="bg-gray-800 p-5 rounded-2xl border border-red-600 cursor-pointer hover:bg-gray-700 transition-all" onclick="openLedger('Akiba')">
-                    <p class="text-gray-400 text-sm"><i class="fas fa-piggy-bank text-red-400"></i> Akiba (Lengo: 2,000)</p>
-                    <h3 id="lblAkiba" class="text-2xl font-bold text-red-400 mt-1">Tsh 0</h3>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700 flex flex-col justify-center items-center h-48">
-                    <canvas id="financeChart"></canvas>
-                </div>
-                <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700 h-48 overflow-y-auto">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="font-bold text-gray-200"><i class="fas fa-boxes"></i> Stoki Iliyopo</h3>
-                    </div>
-                    <table class="w-full text-left text-sm">
-                        <tbody id="stockTableLite"></tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 text-xs h-32 overflow-y-auto">
-                <h4 class="font-bold text-yellow-500 mb-2"><i class="fas fa-history"></i> Logi ya Mfumo</h4>
-                <ul id="logList" class="pl-2 space-y-1 text-gray-400 border-l-2 border-gray-600 ml-2"></ul>
-            </div>
+        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 cursor-pointer" onclick="openModal('matumiziModal')">
+            <h2 class="text-gray-400">Matumizi</h2>
+            <p id="lblMatumizi" class="text-3xl font-bold text-yellow-400">Tsh 0</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 cursor-pointer" onclick="openModal('stockModal')">
+            <h2 class="text-gray-400">Stoki (Bonyeza kuhariri)</h2>
+            <div id="stockListDisplay" class="text-sm"></div>
         </div>
     </div>
 
-    <!-- MAUZO ADVANCED MODAL -->
-    <div id="mauzoModal" class="modal">
+    <div id="stockModal" class="modal">
         <div class="modal-content">
-            <div class="flex justify-between items-center border-b border-gray-700 pb-3 mb-3">
-                <h2 class="text-xl font-bold text-green-400">Reja Kamili ya Mauzo</h2>
-                <button onclick="closeModal('mauzoModal')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"><i class="fas fa-times"></i> Funga</button>
-            </div>
-            
-            <!-- Fomu ya Kuongeza Mauzo -->
-            <div class="bg-gray-700 p-3 rounded mb-4 grid grid-cols-2 md:grid-cols-6 gap-2 text-sm">
-                <input id="smNamba" type="text" placeholder="Namba ya Mteja" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 text-white">
-                <input id="smJina" type="text" placeholder="Jina la Mteja" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 text-white">
-                <select id="smBidhaa" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 text-white"></select>
-                <input id="smIdadi" type="number" placeholder="Idadi" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 text-white">
-                <select id="smHali" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 text-white">
-                    <option value="Imelipiwa">Imelipiwa</option>
-                    <option value="Haijalipiwa">Haijalipiwa (Deni)</option>
-                </select>
-                <button onclick="sajiliMauzoManual()" class="bg-green-600 text-white rounded px-2 py-1 font-bold">Uza Sasa</button>
-            </div>
-
-            <div class="overflow-y-auto max-h-80">
-                <table class="w-full text-left border-collapse text-sm">
-                    <thead>
-                        <tr class="border-b border-gray-700 text-gray-400">
-                            <th class="p-2">Tarehe & Muda</th>
-                            <th class="p-2">Namba</th>
-                            <th class="p-2">Jina</th>
-                            <th class="p-2">Bidhaa</th>
-                            <th class="p-2">Idadi</th>
-                            <th class="p-2">Kiasi (Tsh)</th>
-                            <th class="p-2">Hali</th>
-                            <th class="p-2">Vitendo</th>
-                        </tr>
-                    </thead>
-                    <tbody id="mauzoTableBody"></tbody>
-                </table>
-            </div>
+            <h2 class="text-xl mb-4 font-bold">Hariri Stoki</h2>
+            <div id="stockEditor" class="space-y-2"></div>
+            <button onclick="closeModal('stockModal')" class="mt-4 bg-red-600 px-4 py-2 rounded">Funga</button>
         </div>
     </div>
 
-    <!-- STANDARD LEDGER MODAL (Matumizi/Akiba) -->
-    <div id="ledgerModal" class="modal">
+    <div id="matumiziModal" class="modal">
         <div class="modal-content">
-            <div class="flex justify-between items-center border-b border-gray-700 pb-3 mb-3">
-                <h2 id="ledgerTitle" class="text-xl font-bold text-indigo-400">Reja</h2>
-                <button onclick="closeModal('ledgerModal')" class="bg-red-600 text-white px-3 py-1 rounded"><i class="fas fa-times"></i> Funga</button>
-            </div>
-            <div class="overflow-y-auto max-h-80">
-                <table class="w-full text-left text-sm border-collapse">
-                    <tbody id="ledgerTableBody"></tbody>
-                </table>
-            </div>
+            <h2 class="text-xl mb-4">Ongeza Matumizi</h2>
+            <input id="descMatumizi" type="text" placeholder="Maelezo" class="w-full bg-gray-700 p-2 mb-2 rounded">
+            <input id="kisiMatumizi" type="number" placeholder="Kiasi" class="w-full bg-gray-700 p-2 mb-2 rounded">
+            <button onclick="sajiliMatumizi()" class="bg-yellow-600 px-4 py-2 rounded">Sajili</button>
+            <button onclick="closeModal('matumiziModal')" class="ml-2 bg-gray-600 px-4 py-2 rounded">Funga</button>
         </div>
     </div>
 
     <script>
-        // --- DATA STATE ---
-        let totals = { Mauzo: 0, Matumizi: 0, Akiba: 0 };
-        let ledgers = { Mauzo: [], Matumizi: [], Akiba: [] };
-        let stocks = { chupa: { idadi: 20, bei: 3000 }, sementi: { idadi: 50, bei: 15000 } };
-        let currentActiveLedger = '';
-        let myChart;
-        let serialCounter = 1000;
-
-        // Listeners
-        document.getElementById('userInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') processTextInput();
-        });
-
-        // --- TTS SYSTEM ---
-        function speakAlert(swahiliText, englishText) {
-            if (!('speechSynthesis' in window)) return;
-            let lang = document.getElementById('langSelect').value;
-            let msg = new SpeechSynthesisUtterance();
-            msg.lang = lang === 'en' ? 'en-US' : 'sw-TZ';
-            msg.text = lang === 'en' ? englishText : swahiliText;
-            window.speechSynthesis.speak(msg);
-        }
-
-        // --- FINANCIAL AUDIT ---
-        function runAudit() {
-            let bar = document.getElementById('topAuditBar');
-            let msg = document.getElementById('auditMessage');
-            if (totals.Matumizi > totals.Mauzo && totals.Matumizi > 0) {
-                bar.className = "text-white p-2 text-center text-sm font-bold shadow-md transition-colors duration-500 bg-red-700";
-                msg.innerText = "ONYO: Matumizi yanazidi mauzo! Hali ya mzunguko sio nzuri.";
-            } else if (totals.Mauzo === 0 && totals.Matumizi === 0) {
-                bar.className = "text-white p-2 text-center text-sm font-bold shadow-md transition-colors duration-500 bg-blue-800";
-                msg.innerText = "Mfumo uko tayari. Hakuna miamala bado.";
-            } else {
-                bar.className = "text-white p-2 text-center text-sm font-bold shadow-md transition-colors duration-500 bg-green-700";
-                msg.innerText = "Mzunguko uko imara. Mauzo yanafunika matumizi ipasavyo.";
-            }
-        }
-
-        // --- CORE FUNCTIONS ---
-        function addLog(message) {
-            const logList = document.getElementById('logList');
-            logList.innerHTML = `<li class="pl-2 border-l-2 border-indigo-500 mb-1"><span class="text-gray-500">[${new Date().toLocaleTimeString()}]</span> ${message}</li>` + logList.innerHTML;
-        }
+        let data = { mauzo: [], matumizi: [], stocks: { chupa: { idadi: 20, bei: 3000 }, sementi: { idadi: 50, bei: 15000 } } };
 
         function updateUI() {
-            document.getElementById('lblMauzo').innerText = "Tsh " + totals.Mauzo;
-            document.getElementById('lblMatumizi').innerText = "Tsh " + totals.Matumizi;
-            
-            if(totals.Akiba < 2000) {
-                document.getElementById('cardAkiba').className = "bg-gray-800 p-5 rounded-2xl border border-red-600 cursor-pointer alarm-active";
-                document.getElementById('lblAkiba').className = "text-2xl font-bold text-red-400 mt-1";
-            } else {
-                document.getElementById('cardAkiba').className = "bg-gray-800 p-5 rounded-2xl border border-green-600 cursor-pointer";
-                document.getElementById('lblAkiba').className = "text-2xl font-bold text-green-400 mt-1";
+            // Update Stoki Display
+            let html = "";
+            for(let key in data.stocks) {
+                html += `<div class="flex justify-between border-b border-gray-700 py-1" onclick="editStock('${key}')">
+                            <span>${key}</span> <span class="font-bold text-green-400">${data.stocks[key].idadi}</span>
+                         </div>`;
             }
-            document.getElementById('lblAkiba').innerText = "Tsh " + totals.Akiba;
-
-            runAudit();
-            renderChart();
-            renderStockTableLite();
-            populateStockDropdown();
+            document.getElementById('stockListDisplay').innerHTML = html;
         }
 
-        function renderChart() {
-            if(myChart) myChart.destroy();
-            myChart = new Chart(document.getElementById('financeChart').getContext('2d'), {
-                type: 'doughnut',
-                data: { labels: ['Mauzo', 'Matumizi', 'Akiba'], datasets: [{ data: [totals.Mauzo, totals.Matumizi, totals.Akiba], backgroundColor: ['#4ade80', '#facc15', '#ef4444'], borderWidth: 0 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: {color: 'white'} } } }
-            });
-        }
-
-        function renderStockTableLite() {
-            let html = '';
-            for(let item in stocks) {
-                html += `<tr class="border-b border-gray-700"><td class="p-2 capitalize">${item}</td><td class="p-2 font-bold text-green-400">${stocks[item].idadi}</td></tr>`;
-            }
-            document.getElementById('stockTableLite').innerHTML = html;
-        }
-
-        function populateStockDropdown() {
-            let sel = document.getElementById('smBidhaa');
-            sel.innerHTML = '<option value="">Chagua Bidhaa</option>';
-            for(let item in stocks) { sel.innerHTML += `<option value="${item}">${item} (@${stocks[item].bei})</option>`; }
-        }
-
-        // --- MAUZO ADVANCED ---
-        function openMauzoLedger() {
-            document.getElementById('mauzoModal').style.display = "block";
-            renderMauzoTable();
-        }
-
-        function sajiliMauzo(mtejaNamba, mtejaJina, bidhaa, idadi, hali) {
-            if(!stocks[bidhaa]) return;
-            if(stocks[bidhaa].idadi < idadi) {
-                speakAlert(`Samahani, hakuna stoki ya kutosha kwa bidhaa ya ${bidhaa}.`, `Error. Insufficient stock for ${bidhaa}.`);
-                alert("Stoki haitoshi!");
-                return;
-            }
-            // Kata Stoki
-            stocks[bidhaa].idadi -= idadi;
-            let kiasi = stocks[bidhaa].bei * idadi;
-            let sn = "TRA-" + serialCounter++;
-            let dateStr = new Date().toLocaleString();
-
-            ledgers.Mauzo.push({ id: Date.now(), sn: sn, time: dateStr, namba: mtejaNamba, jina: mtejaJina, bidhaa: bidhaa, idadi: idadi, kiasi: kiasi, hali: hali });
-            totals.Mauzo += kiasi;
-            
-            addLog(`Mauzo mapya yamesajiliwa. Bidhaa: ${bidhaa}, Kiasi: ${kiasi}`);
-            updateUI();
-            renderMauzoTable();
-        }
-
-        function sajiliMauzoManual() {
-            let namba = document.getElementById('smNamba').value || "N/A";
-            let jina = document.getElementById('smJina').value || "Mteja wa Kawaida";
-            let bidhaa = document.getElementById('smBidhaa').value;
-            let idadi = parseInt(document.getElementById('smIdadi').value);
-            let hali = document.getElementById('smHali').value;
-
-            if(bidhaa && idadi > 0) {
-                sajiliMauzo(namba, jina, bidhaa, idadi, hali);
-            } else {
-                alert("Jaza Bidhaa na Idadi kwa usahihi.");
-            }
-        }
-
-        function renderMauzoTable() {
-            let tbody = document.getElementById('mauzoTableBody');
-            tbody.innerHTML = '';
-            ledgers.Mauzo.forEach(item => {
-                let badgeColor = item.hali === 'Imelipiwa' ? 'text-green-400' : 'text-red-400';
-                tbody.innerHTML += `
-                    <tr class="border-b border-gray-700 fade-in">
-                        <td class="p-2">${item.time}</td>
-                        <td class="p-2">${item.namba}</td>
-                        <td class="p-2">${item.jina}</td>
-                        <td class="p-2 capitalize">${item.bidhaa}</td>
-                        <td class="p-2">${item.idadi}</td>
-                        <td class="p-2 font-bold">${item.kiasi}</td>
-                        <td class="p-2 font-bold ${badgeColor}">${item.hali}</td>
-                        <td class="p-2">
-                            <button onclick="printPOSReceipt(${item.id})" class="bg-blue-600 text-white px-2 py-1 text-xs rounded hover:bg-blue-700"><i class="fas fa-print"></i> Risiti</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        function printPOSReceipt(id) {
-            let sale = ledgers.Mauzo.find(x => x.id === id);
-            let pWindow = window.open('', '', 'width=300,height=500');
-            pWindow.document.write(`
-                <html><head><style>
-                    body { font-family: monospace; font-size: 12px; margin: 0; padding: 10px; width: 58mm; text-align: center; }
-                    .header { font-weight: bold; font-size: 14px; margin-bottom: 5px; }
-                    .line { border-bottom: 1px dashed black; margin: 5px 0; }
-                    table { width: 100%; text-align: left; font-size: 12px; }
-                </style></head><body>
-                    <div class="header">JAWIZA FOOD PRODUCTS</div>
-                    <div>S/N: ${sale.sn}</div>
-                    <div>Tarehe: ${sale.time}</div>
-                    <div class="line"></div>
-                    <div>Mteja: ${sale.jina} (${sale.namba})</div>
-                    <div class="line"></div>
-                    <table>
-                        <tr><th>Bidhaa</th><th>Idadi</th><th>Kiasi</th></tr>
-                        <tr><td>${sale.bidhaa}</td><td>${sale.idadi}</td><td>${sale.kiasi}</td></tr>
-                    </table>
-                    <div class="line"></div>
-                    <div style="text-align: right; font-weight: bold; font-size: 14px;">Jumla: Tsh ${sale.kiasi}</div>
-                    <div class="line"></div>
-                    <div style="font-weight: bold;">Hali ya Malipo: ${sale.hali}</div>
-                    <div style="margin-top: 10px;">Asante kwa kufanya biashara na sisi!</div>
-                </body></html>
-            `);
-            pWindow.document.close();
-            pWindow.print();
-        }
-
-        function openLedger(type) {
-            currentActiveLedger = type;
-            document.getElementById('ledgerTitle').innerText = "Reja ya " + type;
-            document.getElementById('ledgerModal').style.display = "block";
-            let tbody = document.getElementById('ledgerTableBody');
-            tbody.innerHTML = '<tr><th>Muda</th><th>Maelezo</th><th>Kiasi</th></tr>';
-            ledgers[type].forEach(item => {
-                tbody.innerHTML += `<tr><td class="p-2">${item.time}</td><td class="p-2">${item.desc}</td><td class="p-2 font-bold">${item.amount}</td></tr>`;
-            });
-        }
-
-        function closeModal(id) { document.getElementById(id).style.display = "none"; }
-
-        // --- AI NLP ENGINE ---
-        function parseCommand(text) {
-            let cmd = text.toLowerCase();
-            let aiChat = document.getElementById('chatBox');
-            aiChat.innerHTML += `<div class="bg-indigo-900 p-3 rounded-lg max-w-[80%] ml-auto text-right text-white fade-in">${text}</div>`;
-            
-            let reply = "";
-            let amountMatch = text.match(/\d+/);
-            let namba = amountMatch ? parseInt(amountMatch[0]) : 1000;
-
-            if(cmd.includes("ongeza stoki") || cmd.includes("ongeza stoke")) {
-                reply = `Kujaza stoki, tafadhali andika fomu hapa chini (Mfano: ongeza bidhaa unga idadi 20 bei 2000) au tumia fomu maalum endapo itaunganishwa hapa.`;
-                // Simple voice parsing for direct add
-                let words = cmd.split(" ");
-                if(words.includes("bidhaa") && words.includes("idadi")) {
-                    let bIndex = words.indexOf("bidhaa") + 1;
-                    let iIndex = words.indexOf("idadi") + 1;
-                    if(words[bIndex] && words[iIndex]) {
-                        stocks[words[bIndex]] = { idadi: parseInt(words[iIndex]), bei: 5000 };
-                        reply = `Stoki ya ${words[bIndex]} imejazwa kikamilifu.`;
-                        updateUI();
-                    }
-                }
-            }
-            else if(cmd.includes('akiba')) {
-                totals.Akiba += namba;
-                ledgers.Akiba.push({ id: Date.now(), time: new Date().toLocaleTimeString(), desc: 'Sauti/AI', amount: namba });
-                reply = `Akiba ya Tsh ${namba} imesajiliwa. Ahsante kwa nidhamu ya kifedha.`;
+        function editStock(key) {
+            let newQty = prompt(`Badilisha idadi ya ${key}:`, data.stocks[key].idadi);
+            if(newQty !== null) {
+                data.stocks[key].idadi = parseInt(newQty);
                 updateUI();
             }
-            else if(cmd.includes('uza') || cmd.includes('mauzo')) {
-                let bidhaa = Object.keys(stocks).find(b => cmd.includes(b));
-                if(bidhaa) {
-                    sajiliMauzo("N/A", "Mteja wa AI", bidhaa, 1, "Imelipiwa");
-                    reply = `Nimerekodi mauzo ya ${bidhaa}. Pesa imesajiliwa.`;
-                } else {
-                    reply = "Tafadhali taja jina la bidhaa unayouza.";
-                }
-            } else {
-                reply = "Nimekusikia, lakini sikupata amri sahihi. Jaribu kusema 'Uza chupa' au 'Ongeza stoki'.";
-            }
-
-            setTimeout(() => {
-                aiChat.innerHTML += `<div class="bg-gray-700 p-3 rounded-lg max-w-[80%] text-indigo-300 fade-in"><b>AI:</b> ${reply}</div>`;
-                aiChat.scrollTop = aiChat.scrollHeight;
-            }, 500);
         }
 
-        function processTextInput() {
-            let el = document.getElementById('userInput');
-            if(el.value.trim() !== '') { parseCommand(el.value); el.value = ''; }
+        function sajiliMatumizi() {
+            let desc = document.getElementById('descMatumizi').value;
+            let amount = document.getElementById('kisiMatumizi').value;
+            data.matumizi.push({desc, amount, time: new Date().toLocaleTimeString()});
+            document.getElementById('lblMatumizi').innerText = "Tsh " + data.matumizi.reduce((a,b) => a + parseInt(b.amount), 0);
+            alert("Matumizi yamesajiliwa!");
+            closeModal('matumiziModal');
         }
 
-        function startVoiceRecognition() {
-            if (!('webkitSpeechRecognition' in window)) { alert("Kivinjari hiki hakina uwezo wa kunasa sauti."); return; }
-            const recognition = new webkitSpeechRecognition();
-            recognition.lang = 'sw-TZ'; 
-            document.getElementById('aiStatus').innerHTML = `<i class="fas fa-microphone fa-beat text-red-400 text-[10px] mr-1"></i> Anasikiliza...`;
-            recognition.start();
-            recognition.onresult = function(e) { parseCommand(e.results[0][0].transcript); };
-            recognition.onend = function() { document.getElementById('aiStatus').innerHTML = `<i class="fas fa-circle text-[8px] text-green-400 mr-1"></i> Iko Tayari`; };
-        }
+        function openModal(id) { document.getElementById(id).style.display = "block"; }
+        function closeModal(id) { document.getElementById(id).style.display = "none"; }
 
-        // --- 2 MINUTE ALARM ---
-        setInterval(() => {
-            if(totals.Akiba < 2000) {
-                speakAlert("Tafadhali weka akiba yako kabla ya masaa ishirini na nne kuisha. Ni muhimu sana.", 
-                           "Attention. Please deposit your savings before the 24 hour cycle ends. This is a strict reminder.");
-                addLog("Kikumbusho cha sauti kimetolewa kutokana na ukosefu wa akiba.");
-            }
-        }, 120000); // Kila baada ya dakika 2
-
-        // Initialization
+        // Initialize
         updateUI();
     </script>
 </body>
