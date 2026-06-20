@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jawiza Smart Wallet - Dr. William</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Jawiza Smart Wallet V2 - Dr. William</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -20,48 +19,65 @@
     <div class="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <!-- UPANDE WA CHAT NA ROBOTI WA SAUTI -->
-        <div class="bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700 flex flex-col h-[600px]">
+        <div class="bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700 flex flex-col h-[650px]">
             <div class="flex items-center justify-between border-b border-gray-700 pb-4">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-xl animate-bounce">W</div>
                     <div>
                         <h2 class="font-bold text-lg text-indigo-400">Dr. William AI Robot</h2>
-                        <span class="text-xs text-green-400"><i class="fas fa-circle text-[8px] mr-1"></i> Anasikiliza...</span>
+                        <span class="text-xs text-green-400"><i class="fas fa-circle text-[8px] mr-1"></i> Anasikiliza (Sauti/Maandishi)</span>
                     </div>
                 </div>
-                <div id="alarmIndicator" class="hidden p-2 bg-red-600 text-white rounded-lg text-xs font-bold alarm-active">
-                    <i class="fas fa-bell"></i> TAHADHARI!
+                <div id="alarmIndicator" class="p-2 bg-red-600 text-white rounded-lg text-xs font-bold alarm-active">
+                    <i class="fas fa-bell"></i> ALAMU: TAARIFA!
                 </div>
             </div>
 
             <!-- Sehemu ya Maongezi -->
             <div id="chatBox" class="flex-1 overflow-y-auto my-4 space-y-3 p-2 text-sm">
-                <div class="bg-gray-700 p-3 rounded-lg max-w-[80%]">Habari Dokta William! Niambie kwa sauti au andika hapa nikuandalie nini leo? Mfano: "Jaza mauzo sementi 15000" au "Matumizi mafuta 2000".</div>
+                <div class="bg-gray-700 p-3 rounded-lg max-w-[85%]">
+                    Habari Dokta William! Nimeboresha mfumo. Sasa unaweza kujaribu amri hizi kwa sauti au maandishi:
+                    <br><br>
+                    • <b>"Uza chupa 2"</b> au <b>"Nimeuza chupa 2"</b>
+                    <br>
+                    • <b>"Ongeza stoki chupa 10"</b>
+                    <br>
+                    • <b>"Weka akiba 2000"</b>
+                    <br>
+                    • <b>"Matumizi mafuta 2000"</b>
+                </div>
             </div>
 
             <!-- Sehemu ya kuingiza amri -->
             <div class="flex gap-2 items-center">
-                <input id="userInput" type="text" placeholder="Andika amri yako hapa..." class="flex-1 bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500">
+                <input id="userInput" type="text" placeholder="Andika au bonyeza mic..." class="flex-1 bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500">
                 <button onclick="processTextInput()" class="bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-xl"><i class="fas fa-paper-plane"></i></button>
-                <button onclick="startVoiceRecognition()" class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-xl text-lg"><i class="fas fa-microphone"></i></button>
+                <button onclick="startVoiceRecognition()" class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-xl text-lg animate-pulse"><i class="fas fa-microphone"></i></button>
             </div>
         </div>
 
-        <!-- UPANDE WA DASHBOARD NA USHAURI -->
+        <!-- UPANDE WA DASHBOARD NA VIASHIRIA -->
         <div class="lg:col-span-2 space-y-6">
-            <!-- Finacial Status Cards -->
+            
+            <!-- Financial Status Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700">
-                    <p class="text-gray-400 text-sm">Mauzo ya Leo</p>
+                    <p class="text-gray-400 text-sm"><i class="fas fa-money-bill-wave text-green-400"></i> Mauzo ya Leo</p>
                     <h3 id="lblMauzo" class="text-2xl font-bold text-green-400">Tsh 0</h3>
                 </div>
                 <div id="cardMatumizi" class="bg-gray-800 p-5 rounded-2xl border border-gray-700">
-                    <p class="text-gray-400 text-sm">Matumizi ya Leo</p>
+                    <p class="text-gray-400 text-sm"><i class="fas fa-wallet text-yellow-400"></i> Matumizi ya Leo</p>
                     <h3 id="lblMatumizi" class="text-2xl font-bold text-yellow-400">Tsh 0</h3>
                 </div>
                 <div id="cardAkiba" class="bg-gray-800 p-5 rounded-2xl border border-red-600 relative">
-                    <p class="text-gray-400 text-sm">Akiba ya Leo (Lengo: 2,000)</p>
-                    <h3 id="lblAkiba" class="text-2xl font-bold text-red-400">Tsh 0</h3>
+                    <p class="text-gray-400 text-sm"><i class="fas fa-piggy-bank text-red-400"></i> Akiba (Lengo: 2,000)</p>
+                    <div class="flex items-center gap-2 mt-1">
+                        <h3 id="lblAkiba" class="text-2xl font-bold text-red-400">Tsh 0</h3>
+                    </div>
+                    <div class="flex gap-1 mt-2">
+                        <input id="manualAkibaInput" type="number" placeholder="Kiasi" class="w-20 bg-gray-700 text-xs rounded p-1 text-white border border-gray-600">
+                        <button onclick="manualAkiba()" class="bg-red-600 text-[10px] px-2 py-1 rounded hover:bg-red-700">Weka</button>
+                    </div>
                     <span id="akibaAlert" class="absolute top-2 right-2 text-xs text-red-500 font-bold"><i class="fas fa-exclamation-triangle"></i> Hujaweka!</span>
                 </div>
             </div>
@@ -69,28 +85,45 @@
             <!-- Sehemu ya Ushauri na Mapendekezo -->
             <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700">
                 <h3 class="font-bold text-indigo-400 mb-2"><i class="fas fa-brain"></i> AI Ushauri na Mapendekezo</h3>
-                <p id="aiAdvice" class="text-sm text-gray-300">Mfumo unafanya tathmini ya biashara yako... weka rekodi kuona ushauri.</p>
+                <p id="aiAdvice" class="text-sm text-gray-300">Mfumo unafanya tathmini... Unatakiwa kuweka akiba ya Tsh 2,000 leo kulinda malengo yako.</p>
             </div>
 
-            <!-- Jedwali la Stoki na Kumbukumbu -->
+            <!-- JEDWALI LA STOKI (LINAWEZA KUHARIRIWA MOJA KWA MOJA) -->
             <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700">
-                <h3 class="font-bold text-gray-200 mb-3"><i class="fas fa-boxes"></i> Hali ya Stoki na Bidhaa</h3>
+                <h3 class="font-bold text-gray-200 mb-3"><i class="fas fa-boxes"></i> Sehemu ya Usimamizi wa Stoki</h3>
                 <div class="overflow-x-auto text-sm">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="border-b border-gray-700 text-gray-400">
-                                <th class="p-2">Bidhaa</th>
+                                <th class="p-2">Jina la Bidhaa</th>
                                 <th class="p-2">Idadi ya Stoki</th>
+                                <th class="p-2">Mabadiliko ya Haraka (Manual Edit)</th>
                             </tr>
                         </thead>
                         <tbody id="stockTable">
-                            <tr class="border-b border-gray-700">
-                                <td class="p-2">Sahani</td>
-                                <td class="p-2 idadi">10</td>
+                            <tr class="border-b border-gray-700" id="row-chupa">
+                                <td class="p-2 font-semibold text-indigo-300">Chupa</td>
+                                <td class="p-2 font-bold text-lg idadi text-green-400" id="stock-chupa">15</td>
+                                <td class="p-2">
+                                    <input type="number" id="input-chupa" placeholder="Weka idadi mpya" class="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-xs w-32 mr-2 text-white">
+                                    <button onclick="updateStockManual('chupa')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1 rounded">Update</button>
+                                </td >
                             </tr>
-                            <tr class="border-b border-gray-700">
-                                <td class="p-2">Nguo mpya</td>
-                                <td class="p-2 idadi">0</td>
+                            <tr class="border-b border-gray-700" id="row-sementi">
+                                <td class="p-2 font-semibold text-indigo-300">Sementi</td>
+                                <td class="p-2 font-bold text-lg idadi text-green-400" id="stock-sementi">50</td>
+                                <td class="p-2">
+                                    <input type="number" id="input-sementi" placeholder="Weka idadi mpya" class="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-xs w-32 mr-2 text-white">
+                                    <button onclick="updateStockManual('sementi')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1 rounded">Update</button>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-700" id="row-nguo">
+                                <td class="p-2 font-semibold text-indigo-300">Nguo</td>
+                                <td class="p-2 font-bold text-lg idadi text-green-400" id="stock-nguo">5</td>
+                                <td class="p-2">
+                                    <input type="number" id="input-nguo" placeholder="Weka idadi mpya" class="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-xs w-32 mr-2 text-white">
+                                    <button onclick="updateStockManual('nguo')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1 rounded">Update</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -99,17 +132,17 @@
 
             <!-- Sehemu ya Risiti na Logu za Mabadiliko -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 text-xs">
-                    <h4 class="font-bold text-yellow-500 mb-2">Kumbukumbu za Mabadiliko (Log)</h4>
+                <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 text-xs h-40 overflow-y-auto">
+                    <h4 class="font-bold text-yellow-500 mb-2">Kumbukumbu za Mabadiliko (Audit Log)</h4>
                     <ul id="logList" class="list-disc pl-4 space-y-1 text-gray-400">
-                        <li>Mfumo umezinduliwa salama.</li>
+                        <li>Mfumo umezinduliwa upya (V2) kwa mafanikio.</li>
                     </ul>
                 </div>
-                <div class="bg-white text-gray-900 p-4 rounded-xl shadow-inner font-mono text-xs">
+                <div class="bg-white text-gray-900 p-4 rounded-xl shadow-inner font-mono text-xs h-40 overflow-y-auto">
                     <h4 class="font-bold text-center border-b border-dashed border-gray-400 pb-1">JAWIZA FOOD PRODUCTS</h4>
-                    <p class="text-center text-[10px] mb-2">Risiti ya Majaribio</p>
+                    <p class="text-center text-[10px] mb-2">Risiti ya Kidijitali</p>
                     <div id="receiptContent">
-                        <p>Hakuna mauzo mapya yaliyofanyika.</p>
+                        <p>Hakuna mauzo mapya yaliyofanyika bado.</p>
                     </div>
                 </div>
             </div>
@@ -117,15 +150,19 @@
         </div>
     </div>
 
-    <!-- SOUND ALARM ELEMENT -->
+    <!-- AUDIO FOR ALARM -->
     <audio id="alarmSound" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg" preload="auto"></audio>
 
     <script>
         let dataMauzo = 0;
         let dataMatumizi = 0;
         let dataAkiba = 0;
-        let stokiSahani = 10;
-        let stokiNguo = 0;
+        
+        let stocks = {
+            chupa: 15,
+            sementi: 50,
+            nguo: 5
+        };
 
         function addLog(message) {
             const logList = document.getElementById('logList');
@@ -136,8 +173,12 @@
 
         function triggerAlarm(message) {
             document.getElementById('alarmIndicator').classList.remove('hidden');
-            document.getElementById('alarmSound').play().catch(e => console.log("Sound play delayed"));
+            document.getElementById('alarmIndicator').innerText = "⚠️ TAHADHARI MAPUNGUFU";
             addLog("ALARM: " + message);
+        }
+
+        function turnOffAlarm() {
+            document.getElementById('alarmIndicator').classList.add('hidden');
         }
 
         function checkFinancialHealth() {
@@ -145,74 +186,125 @@
             
             if(dataMatumizi > 10000) {
                 document.getElementById('cardMatumizi').classList.add('border-red-500');
-                advice = "⚠️ Dokta William, umetumia kiasi kikubwa sana cha fedha kwenye matumizi leo (Tsh " + dataMatumizi + "). Punguza matumizi yasiyo ya lazima! ";
-                triggerAlarm("Matumizi yamezidi kiwango cha salama!");
+                advice = "⚠️ Dokta William, matumizi yako yamekuwa makubwa sana leo (Tsh " + dataMatumizi + "). Rekebisha bajeti haraka! ";
+                triggerAlarm("Matumizi yamezidi kiwango kilichopangwa!");
             }
+            
             if(dataAkiba < 2000) {
-                advice += "Pia, Leo hujaweka akiba yako ya Tsh 2,000 bado. Mfumo unakukumbusha kuweka akiba mara moja.";
+                document.getElementById('cardAkiba').classList.remove('border-green-600');
+                document.getElementById('cardAkiba').classList.add('border-red-600');
+                document.getElementById('lblAkiba').className = "text-2xl font-bold text-red-400";
+                document.getElementById('akibaAlert').innerHTML = "<i class='fas fa-exclamation-triangle'></i> Hujaweka!";
+                advice += "Bado hujaweka akiba ya lazima ya Tsh 2,000 ya leo.";
+                triggerAlarm("Hujaweka akiba!");
             } else {
                 document.getElementById('cardAkiba').classList.remove('border-red-600');
                 document.getElementById('cardAkiba').classList.add('border-green-600');
-                document.getElementById('akibaAlert').innerHTML = "✔️ Imewekwa!";
+                document.getElementById('akibaAlert').innerHTML = "✔️ Imewekwa kikamilifu!";
                 document.getElementById('lblAkiba').className = "text-2xl font-bold text-green-400";
+                turnOffAlarm();
             }
             document.getElementById('aiAdvice').innerText = advice;
         }
 
+        // KUBADILISHA STOKI KWA MKONO (MANUAL)
+        function updateStockManual(item) {
+            const inputValue = document.getElementById(`input-${item}`).value;
+            if(inputValue !== "") {
+                stocks[item] = parseInt(inputValue);
+                document.getElementById(`stock-${item}`).innerText = stocks[item];
+                addLog(`Ulifanya marekebisho ya stoki ya ${item} kwa mkono kuwa ${inputValue}.`);
+                document.getElementById(`input-${item}`).value = "";
+                checkFinancialHealth();
+            }
+        }
+
+        // KUBADILISHA AKIBA KWA MKONO (MANUAL)
+        function manualAkiba() {
+            const val = document.getElementById('manualAkibaInput').value;
+            if(val !== "") {
+                dataAkiba += parseInt(val);
+                document.getElementById('lblAkiba').innerText = "Tsh " + dataAkiba;
+                addLog(`Ulifanya marekebisho ya kuongeza akiba ya Tsh ${val} kwa mkono.`);
+                document.getElementById('manualAkibaInput').value = "";
+                checkFinancialHealth();
+            }
+        }
+
+        // KUCHANGANUA MANENO YA SAUTI AU CHAT
         function parseCommand(text) {
             let cmd = text.toLowerCase();
-            let reply = "Sijakuelewa vizuri Dokta. Jaribu kusema kwa mtindo wa: 'Jaza mauzo sementi 15000'";
+            let reply = "Sijakuelewa vizuri Dokta William. Jaribu kusema mfano: 'Uza chupa 2' au 'Weka akiba 2000'";
+            
+            // Kutafuta namba yoyote kwenye sauti au maandishi
+            let matches = cmd.match(/\d+/);
+            let namba = matches ? parseInt(matches[0]) : null;
 
-            if(cmd.includes('mauzo') && cmd.includes('sementi')) {
-                dataMauzo += 15000;
-                document.getElementById('lblMauzo').innerText = "Tsh " + dataMauzo;
-                reply = "Nimefanikiwa kujaza mauzo ya Sementi ya thamani ya Tsh 15,000 kwenye mfumo Automatically.";
-                addLog("Ulifanya marekebisho ya mauzo ya sementi.");
-                
-                // Tengeneza risiti
-                document.getElementById('receiptContent').innerHTML = `<p>Tarehe: ${new Date().toLocaleTimeString()}</p><p>Mteja: Wa Sementi</p><hr class='border-dashed my-1'><p>Sementi: Tsh 15,000</p><p class='font-bold'>Jumla: Tsh 15,000</p>`;
-            } 
-            else if(cmd.includes('matumizi') && cmd.includes('mafuta')) {
-                dataMatumizi += 2000;
-                document.getElementById('lblMatumizi').innerText = "Tsh " + dataMatumizi;
-                reply = "Rekodi ya matumizi ya mafuta Tsh 2,000 imeshushwa na kuhifadhiwa kwenye database.";
-                addLog("Ulifanya marekebisho ya matumizi ya mafuta.");
-            }
-            else if(cmd.includes('ingiza bidhaa') || (cmd.includes('nguo') && cmd.includes('5'))) {
-                stokiNguo += 5;
-                document.getElementById('stockTable').rows[1].cells[1].innerText = stokiNguo;
-                reply = "Nguo mpya 5 zimeingizwa kwenye mfumo wa Stock kwa thamani ya Tsh 200,000.";
-                addLog("Ulifanya marekebisho ya kuongeza stoki ya nguo.");
-            }
-            else if(cmd.includes('uza sahani')) {
-                if(stokiSahani >= 2) {
-                    stokiSahani -= 2;
-                    dataMauzo += 5000; // Mfano wa bei ya sahani mbili
-                    document.getElementById('stockTable').rows[0].cells[1].innerText = stokiSahani;
-                    document.getElementById('lblMauzo').innerText = "Tsh " + dataMauzo;
-                    reply = "Nimefanya Shift! Sahani 2 zimetolewa kwenye stoki (Zimebaki " + stokiSahani + ") na mauzo yameongezeka.";
-                    addLog("Ulifanya marekebisho ya kuuza sahani.");
+            // AMRI: MAUZO YA CHUPA
+            if((cmd.includes('uza') || cmd.includes('nimeuza')) && cmd.includes('chupa')) {
+                let idadiYauzo = namba ? namba : 1; // Kama haikutajwa namba, chukua chupa 1
+                if(stocks.chupa >= idadiYauzo) {
+                    stocks.chupa -= idadiYauzo;
+                    let thamani = idadiYauzo * 3000; // Mfano kila chupa ni 3000
+                    dataMauzo += thamani;
                     
-                    document.getElementById('receiptContent').innerHTML = `<p>Tarehe: ${new Date().toLocaleTimeString()}</p><p>Mteja: Wa Sahani</p><hr class='border-dashed my-1'><p>Sahani x2: Tsh 5,000</p><p class='font-bold'>Jumla: Tsh 5,000</p>`;
+                    // Update kwenye Screen hapo hapo
+                    document.getElementById('stock-chupa').innerText = stocks.chupa;
+                    document.getElementById('lblMauzo').innerText = "Tsh " + dataMauzo;
+                    
+                    reply = `Nimefanya mabadiliko kikamilifu! Chupa ${idadiYauzo} zimetolewa kwenye stoki na mauzo yameongezeka kwa Tsh ${thamani}.`;
+                    addLog(`Ulifanya marekebisho ya kuuza chupa yaunga/tembe (Idadi: ${idadiYauzo}).`);
+                    
+                    // Tengeneza risiti
+                    document.getElementById('receiptContent').innerHTML = `
+                        <p>Tarehe: ${new Date().toLocaleTimeString()}</p>
+                        <p>Mteja: Wa Jumla</p>
+                        <hr class='border-dashed my-1'>
+                        <p>Chupa x${idadiYauzo}: Tsh ${thamani}</p>
+                        <p class='font-bold'>Jumla Kuu: Tsh ${thamani}</p>
+                    `;
                 } else {
-                    reply = "Stoki haina sahani za kutosha kufanya mauzo haya.";
+                    reply = `Huwezi kuuza chupa ${idadiYauzo}, stoki iliyopo ni chupa ${stocks.chupa} tu. Tafadhali ongeza stoki kwanza.`;
                 }
+            } 
+            // AMRI: ONGEZA STOKI YA CHUPA
+            else if(cmd.includes('ongeza') && cmd.includes('chupa')) {
+                let idadiOngeza = namba ? namba : 10;
+                stocks.chupa += idadiOngeza;
+                document.getElementById('stock-chupa').innerText = stocks.chupa;
+                reply = `Nimefanikiwa! Stoki ya chupa imeongezeka kwa idadi ya ${idadiOngeza} na sasa zipo ${stocks.chupa} kwenye mfumo.`;
+                addLog(`Ulifanya marekebisho ya kuongeza stoki ya chupa.`);
             }
+            // AMRI: WEKA AKIBA
             else if(cmd.includes('akiba')) {
-                dataAkiba += 2000;
+                let kiasiAkiba = namba ? namba : 2000;
+                dataAkiba += kiasiAkiba;
                 document.getElementById('lblAkiba').innerText = "Tsh " + dataAkiba;
-                reply = "Hongera Dokta William! Akiba yako ya leo ya Tsh 2,000 imewekwa salama.";
-                addLog("Ulifanya marekebisho ya kuweka akiba.");
+                reply = `Vizuri sana Dokta William! Kiasi cha Tsh ${kiasiAkiba} kimejazwa kwenye sehemu ya Akiba. Mfumo umehuishwa.`;
+                addLog(`Ulifanya marekebisho ya kuweka akiba ya siku.`);
             }
-            else if(cmd.includes('saa') || cmd.includes('muda')) {
-                reply = "Muda wa sasa hivi ni " + new Date().toLocaleTimeString();
+            // AMRI: MAUZO YA SEMENTI
+            else if(cmd.includes('mauzo') && cmd.includes('sementi')) {
+                let kiasi = namba ? namba : 15000;
+                dataMauzo += kiasi;
+                document.getElementById('lblMauzo').innerText = "Tsh " + dataMauzo;
+                reply = "Nimefanikiwa kujaza mauzo ya sementi ya thamani ya Tsh " + kiasi;
+                addLog("Ulifanya marekebisho ya mauzo ya sementi.");
             }
+            // AMRI: MATUMIZI
+            else if(cmd.includes('matumizi')) {
+                let kiasiMatumizi = namba ? namba : 2000;
+                dataMatumizi += kiasiMatumizi;
+                document.getElementById('lblMatumizi').innerText = "Tsh " + dataMatumizi;
+                reply = `Matumizi ya Tsh ${kiasiMatumizi} yameandikwa na kupunguzwa kwenye mzunguko wa fedha.`;
+                addLog(`Ulifanya marekebisho ya kuingiza matumizi.`);
+            }
+            // MAJIBU YA KAWAIDA YA MAZUNGUMZO
             else {
-                // Majibu ya kawaida ya AI kama ChatGPT/DeepSeek
-                reply = "Mimi kama AI yako ya Jawiza, nipo hapa kukusaidia Dokta William. Umesema: '" + text + "'. Kuhusu biashara yako, ninaona unapaswa kuboresha ufuatiliaji wa stoki ili usipoteze wateja.";
+                reply = `Mimi kama AI yako, nimepokea ujumbe wako: "${text}". Kujaza rekodi kwa usahihi, hakikisha unataja namba ya bidhaa au kiasi cha fedha.`;
             }
 
-            // Onyesha kwenye Chatbox
+            // Kuchapisha kwenye Chat Screen
             const chatBox = document.getElementById('chatBox');
             chatBox.innerHTML += `<div class="bg-indigo-900 p-3 rounded-lg max-w-[80%] ml-auto text-right text-white"> ${text} </div>`;
             chatBox.innerHTML += `<div class="bg-gray-700 p-3 rounded-lg max-w-[80%] text-indigo-300"><b>Robot:</b> ${reply} </div>`;
@@ -229,17 +321,17 @@
             }
         }
 
-        // SPEECH RECOGNITION (SAUTI)
+        // KAZI YA KUNASA SAUTI YA KISWAHILI
         function startVoiceRecognition() {
             if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                alert("Kivinjari chako hakisupport sauti. Tafadhali tumia Google Chrome.");
+                alert("Kivinjari hiki hakina uwezo wa kunasa sauti. Tafadhali tumia Google Chrome kwenye Kompyuta au Simu.");
                 return;
             }
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             const recognition = new SpeechRecognition();
-            recognition.lang = 'sw-TZ'; // Lugha ya Kiswahili
+            recognition.lang = 'sw-TZ'; 
             
-            addLog("AI inasikiliza sauti yako sasa...");
+            addLog("Maikrofoni ipo wazi, tafadhali ongea sasa...");
             recognition.start();
 
             recognition.onresult = function(event) {
@@ -248,9 +340,13 @@
             };
 
             recognition.onerror = function(event) {
-                console.error("Umakini wa sauti umeshindwa", event.error);
+                console.error("Shida ya Maikrofoni: ", event.error);
+                addLog("Maikrofoni imeshindwa kunasa sauti. Jaribu tena au andika.");
             };
         }
+
+        // Piga hesabu mara ya kwanza mfumo ukifunguka
+        checkFinancialHealth();
     </script>
 </body>
 </html>
