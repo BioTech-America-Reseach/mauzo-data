@@ -2,85 +2,124 @@
 <html lang="sw">
 <head>
     <meta charset="UTF-8">
-    <title>Jawiza Pro V3.0</title>
+    <title>Jawiza Expert System V3.5</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); }
-        .modal-content { background: #1f2937; margin: 5% auto; padding: 20px; width: 90%; max-width: 800px; border-radius: 15px; color: white; }
+        .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
+        .modal-content { background: #1f2937; margin: 3% auto; padding: 25px; width: 95%; max-width: 900px; border-radius: 15px; color: white; }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans p-4">
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 cursor-pointer" onclick="openModal('mauzoModal')">
-            <h2 class="text-gray-400">Mauzo</h2>
-            <p id="lblMauzo" class="text-3xl font-bold text-green-400">Tsh 0</p>
+    <div id="topAuditBar" class="bg-blue-800 p-3 mb-4 rounded-lg text-center font-bold">
+        <i class="fas fa-robot"></i> <span id="auditMessage">Mfumo wa Ukaguzi wa Jawiza V3.5</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 h-[600px] flex flex-col">
+            <h2 class="font-bold text-lg mb-4 text-indigo-400">Jawiza AI Command</h2>
+            <div id="chatBox" class="flex-1 overflow-y-auto mb-4 bg-gray-900 p-4 rounded-lg text-sm"></div>
+            <input id="userInput" type="text" placeholder="Andika amri (mfano: uza chupa)..." class="w-full bg-gray-700 p-3 rounded-xl border border-gray-600 outline-none">
         </div>
-        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 cursor-pointer" onclick="openModal('matumiziModal')">
-            <h2 class="text-gray-400">Matumizi</h2>
-            <p id="lblMatumizi" class="text-3xl font-bold text-yellow-400">Tsh 0</p>
-        </div>
-        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 cursor-pointer" onclick="openModal('stockModal')">
-            <h2 class="text-gray-400">Stoki (Bonyeza kuhariri)</h2>
-            <div id="stockListDisplay" class="text-sm"></div>
+
+        <div class="lg:col-span-2 space-y-6">
+            <div class="grid grid-cols-3 gap-4">
+                <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700 cursor-pointer hover:bg-gray-700" onclick="openModal('mauzoModal')">
+                    <p class="text-gray-400">Mauzo</p>
+                    <h3 id="lblMauzo" class="text-2xl font-bold text-green-400">Tsh 0</h3>
+                </div>
+                <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700 cursor-pointer hover:bg-gray-700" onclick="openModal('matumiziModal')">
+                    <p class="text-gray-400">Matumizi</p>
+                    <h3 id="lblMatumizi" class="text-2xl font-bold text-yellow-400">Tsh 0</h3>
+                </div>
+                <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700 cursor-pointer hover:bg-gray-700" onclick="openModal('stockModal')">
+                    <p class="text-gray-400">Stoki (Edit)</p>
+                    <h3 id="lblStoki" class="text-2xl font-bold text-blue-400">Bofya Hapa</h3>
+                </div>
+            </div>
+            
+            <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 h-64 overflow-y-auto">
+                <h3 class="font-bold mb-3">Logi za Matukio</h3>
+                <ul id="logList" class="text-sm text-gray-400 space-y-2"></ul>
+            </div>
         </div>
     </div>
 
     <div id="stockModal" class="modal">
         <div class="modal-content">
-            <h2 class="text-xl mb-4 font-bold">Hariri Stoki</h2>
-            <div id="stockEditor" class="space-y-2"></div>
-            <button onclick="closeModal('stockModal')" class="mt-4 bg-red-600 px-4 py-2 rounded">Funga</button>
+            <h2 class="text-2xl font-bold mb-4">Dhibiti Stoki</h2>
+            <table class="w-full text-left">
+                <thead><tr class="border-b border-gray-600"><th>Bidhaa</th><th>Idadi</th><th>Bei</th><th>Kitendo</th></tr></thead>
+                <tbody id="stockTableBody"></tbody>
+            </table>
+            <button onclick="closeModal('stockModal')" class="mt-6 bg-red-600 px-6 py-2 rounded">Funga</button>
         </div>
     </div>
 
     <div id="matumiziModal" class="modal">
         <div class="modal-content">
-            <h2 class="text-xl mb-4">Ongeza Matumizi</h2>
-            <input id="descMatumizi" type="text" placeholder="Maelezo" class="w-full bg-gray-700 p-2 mb-2 rounded">
-            <input id="kisiMatumizi" type="number" placeholder="Kiasi" class="w-full bg-gray-700 p-2 mb-2 rounded">
-            <button onclick="sajiliMatumizi()" class="bg-yellow-600 px-4 py-2 rounded">Sajili</button>
-            <button onclick="closeModal('matumiziModal')" class="ml-2 bg-gray-600 px-4 py-2 rounded">Funga</button>
+            <h2 class="text-2xl font-bold mb-4">Matumizi</h2>
+            <input id="newMatumiziDesc" placeholder="Maelezo ya matumizi" class="w-full p-2 mb-2 bg-gray-700 rounded">
+            <input id="newMatumiziAmount" type="number" placeholder="Kiasi" class="w-full p-2 mb-4 bg-gray-700 rounded">
+            <button onclick="addMatumizi()" class="bg-green-600 px-6 py-2 rounded">Ongeza</button>
+            <button onclick="closeModal('matumiziModal')" class="ml-2 bg-gray-600 px-6 py-2 rounded">Funga</button>
         </div>
     </div>
 
     <script>
-        let data = { mauzo: [], matumizi: [], stocks: { chupa: { idadi: 20, bei: 3000 }, sementi: { idadi: 50, bei: 15000 } } };
+        let state = { mauzo: 0, matumizi: 0, stocks: { chupa: { idadi: 20, bei: 3000 }, sementi: { idadi: 50, bei: 15000 } } };
 
         function updateUI() {
-            // Update Stoki Display
-            let html = "";
-            for(let key in data.stocks) {
-                html += `<div class="flex justify-between border-b border-gray-700 py-1" onclick="editStock('${key}')">
-                            <span>${key}</span> <span class="font-bold text-green-400">${data.stocks[key].idadi}</span>
-                         </div>`;
-            }
-            document.getElementById('stockListDisplay').innerHTML = html;
+            document.getElementById('lblMauzo').innerText = "Tsh " + state.mauzo;
+            document.getElementById('lblMatumizi').innerText = "Tsh " + state.matumizi;
+            renderStockTable();
         }
 
-        function editStock(key) {
-            let newQty = prompt(`Badilisha idadi ya ${key}:`, data.stocks[key].idadi);
-            if(newQty !== null) {
-                data.stocks[key].idadi = parseInt(newQty);
-                updateUI();
+        function renderStockTable() {
+            let body = document.getElementById('stockTableBody');
+            body.innerHTML = '';
+            for(let key in state.stocks) {
+                body.innerHTML += `<tr>
+                    <td class="p-2 capitalize">${key}</td>
+                    <td class="p-2"><input type="number" value="${state.stocks[key].idadi}" onchange="editStoki('${key}', 'idadi', this.value)"></td>
+                    <td class="p-2"><input type="number" value="${state.stocks[key].bei}" onchange="editStoki('${key}', 'bei', this.value)"></td>
+                    <td class="p-2 text-red-400 cursor-pointer" onclick="deleteStock('${key}')">Futa</td>
+                </tr>`;
             }
         }
 
-        function sajiliMatumizi() {
-            let desc = document.getElementById('descMatumizi').value;
-            let amount = document.getElementById('kisiMatumizi').value;
-            data.matumizi.push({desc, amount, time: new Date().toLocaleTimeString()});
-            document.getElementById('lblMatumizi').innerText = "Tsh " + data.matumizi.reduce((a,b) => a + parseInt(b.amount), 0);
-            alert("Matumizi yamesajiliwa!");
+        function editStoki(key, field, val) { state.stocks[key][field] = parseInt(val); updateUI(); }
+        function deleteStock(key) { delete state.stocks[key]; updateUI(); }
+        
+        function addMatumizi() {
+            let kiasi = parseInt(document.getElementById('newMatumiziAmount').value);
+            state.matumizi += kiasi;
+            updateUI();
             closeModal('matumiziModal');
         }
 
         function openModal(id) { document.getElementById(id).style.display = "block"; }
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
 
-        // Initialize
+        // AI Command Logic
+        document.getElementById('userInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                let text = this.value.toLowerCase();
+                if(text.includes('uza')) {
+                    let item = text.replace('uza', '').trim();
+                    if(state.stocks[item]) {
+                        state.mauzo += state.stocks[item].bei;
+                        state.stocks[item].idadi -= 1;
+                        document.getElementById('chatBox').innerHTML += `<p class="text-green-400">AI: Umeuza ${item}!</p>`;
+                    }
+                }
+                updateUI();
+                this.value = '';
+            }
+        });
+
         updateUI();
     </script>
 </body>
