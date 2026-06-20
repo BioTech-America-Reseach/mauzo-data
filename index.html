@@ -624,7 +624,1202 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-<script src="i18n.js"></script>
-<script src="app.js"></script>
+<script>
+// ============ JAWIZA i18n: Kiswahili / English ============
+const I18N = {
+  sw: {
+    "nav.home": "Nyumbani",
+    "nav.sales": "Mauzo",
+    "nav.stock": "Stoki",
+    "nav.expenses": "Matumizi",
+    "nav.finance": "Ushauri wa Fedha",
+    "orb.tap": "Bofya kuongea na Jawiza",
+    "orb.listening": "Nakusikiliza...",
+    "orb.speaking": "Jawiza anaongea...",
+    "orb.hint": 'Mfano: "Nimeuza chupa mbili kwa mteja Juma" au "ongeza stoki sementi mifuko kumi"',
+    "orb.placeholder": "Au andika amri hapa...",
+    "orb.send": "Tuma",
+    "stat.sales": "Mauzo Leo",
+    "stat.expenses": "Matumizi Leo",
+    "stat.profit": "Faida Leo",
+    "feed.title": "Logi za Matukio",
+    "feed.empty": "Bado hakuna shughuli. Anza kwa kuongea na Jawiza.",
+    "sales.title": "Jedwali la Mauzo",
+    "sales.sub": "Mauzo yote, tarehe, wateja na hali ya malipo",
+    "sales.clearFilter": "Onyesha zote",
+    "sales.new": "Mauzo Mapya",
+    "sales.col.no": "Na.",
+    "sales.col.date": "Tarehe",
+    "sales.col.customer": "Mteja",
+    "sales.col.phone": "Namba",
+    "sales.col.item": "Bidhaa",
+    "sales.col.qty": "Idadi",
+    "sales.col.total": "Jumla",
+    "sales.col.status": "Hali",
+    "sales.col.action": "Kitendo",
+    "sales.empty": 'Hakuna mauzo bado. Bofya "Mauzo Mapya" au sema "uza..." kwa Jawiza.',
+    "stockpg.title": "Dhibiti Stoki",
+    "stockpg.sub": "Bidhaa, idadi iliyopo, bei na thamani ya stoki",
+    "stockpg.new": "Bidhaa Mpya",
+    "stockpg.col.item": "Bidhaa",
+    "stockpg.col.qty": "Idadi",
+    "stockpg.col.price": "Bei (Tsh)",
+    "stockpg.col.value": "Thamani",
+    "stockpg.col.action": "Kitendo",
+    "exp.title": "Matumizi",
+    "exp.sub": "Gharama zote za duka",
+    "exp.new": "Ongeza Matumizi",
+    "exp.col.date": "Tarehe",
+    "exp.col.desc": "Maelezo",
+    "exp.col.amount": "Kiasi",
+    "exp.col.action": "Kitendo",
+    "exp.empty": "Hakuna matumizi bado.",
+    "fin.title": "Ushauri wa Fedha wa Jawiza",
+    "fin.sub": "Uchambuzi wa moja kwa moja wa hali ya biashara yako",
+    "audit.title": "Ukaguzi wa Stoki",
+    "audit.sub": "Vitu visivyokuwa na mwendo mzuri (havijauzwa kwa muda)",
+    "modal.newSale.title": "Mauzo Mapya",
+    "modal.newSale.customer": "Jina la Mteja",
+    "modal.newSale.phone": "Namba ya Mteja",
+    "modal.newSale.addItem": "Ongeza Bidhaa Nyingine",
+    "modal.newSale.status": "Hali ya Malipo",
+    "modal.newSale.total": "Jumla (Tsh)",
+    "modal.newSale.confirm": "Kamilisha Mauzo",
+    "modal.cancel": "Ghairi",
+    "modal.close": "Funga",
+    "status.paid": "Imelipiwa",
+    "status.unpaid": "Haijalipiwa",
+    "modal.newStock.title": "Bidhaa Mpya",
+    "modal.newStock.name": "Jina la Bidhaa",
+    "modal.newStock.qty": "Idadi",
+    "modal.newStock.price": "Bei kwa Kipande (Tsh)",
+    "modal.newStock.confirm": "Ongeza",
+    "modal.newExpense.title": "Matumizi Mapya",
+    "modal.newExpense.desc": "Maelezo",
+    "modal.newExpense.amount": "Kiasi (Tsh)",
+    "modal.newExpense.confirm": "Hifadhi",
+    "modal.receipt.title": "Risiti",
+    "modal.receipt.print": "Chapisha / PDF",
+    "modal.backup.title": "Kumbukumbu ya Akiba",
+    "modal.backup.text": "Imepita masaa 24 tangu uhifadhi nakala ya akiba (backup) ya mwisho. Tafadhali pakua faili ya akiba sasa ili usipoteze taarifa za biashara yako.",
+    "modal.backup.later": "Baadaye",
+    "modal.backup.now": "Pakua Akiba Sasa",
+    "voice.notSupported": "Samahani, kivinjari chako hakitumii sauti. Tumia maandishi.",
+    "voice.itemNotFound": (item) => `Sijapata bidhaa "${item}" kwenye stoki. Tafadhali angalia jina au ongeza bidhaa hiyo kwanza.`,
+    "voice.notEnoughStock": (item, have, want) => `Samahani, stoki ya ${item} ina vipande ${have} tu, huwezi kuuza ${want}.`,
+    "voice.saleDone": (item, qty, total) => `Sawa, nimeuza ${item} vipande ${qty}, jumla Tsh ${total}.`,
+    "voice.stockAdded": (item, qty) => `Nimeongeza ${item} vipande ${qty} kwenye stoki.`,
+    "voice.expenseAdded": (desc, amt) => `Nimeongeza matumizi ya ${desc}, Tsh ${amt}.`,
+    "voice.lowStock": (item, qty) => `Tahadhari: stoki ya ${item} imebaki vipande ${qty} tu.`,
+    "voice.outOfStock": (item) => `Tahadhari: stoki ya ${item} imeisha kabisa.`,
+    "voice.didNotUnderstand": "Samahani, sijaelewa amri hiyo. Jaribu tena, mfano: uza chupa mbili.",
+    "voice.reportToday": (sales, exp, profit, count) => `Ripoti ya leo: mauzo Tsh ${sales}, matumizi Tsh ${exp}, faida Tsh ${profit}, kutoka mauzo ${count}.`,
+    "voice.backupReminder": "Tafadhali kumbuka kuhifadhi nakala ya akiba ya data yako kabla ya masaa ishirini na nne kuisha.",
+    "voice.financeWarning": "Tahadhari ya fedha: matumizi yako yanazidi mauzo leo.",
+    "voice.greeting": "Habari, mimi ni Jawiza, msaidizi wako wa duka. Niambie nifanye nini.",
+    "voice.customerSet": (name) => `Sawa, mteja ni ${name}.`,
+    "audit.noIssues": "Hakuna tatizo lililoonekana kwenye stoki kwa sasa.",
+    "audit.staleItem": (item, days) => `${item} — haijauzwa kwa siku ${days}.`,
+    "fin.noData": "Bado hakuna taarifa za kutosha kutoa ushauri. Anza kuongeza mauzo na matumizi.",
+    "fin.healthy": "Biashara yako inaonekana kuwa na faida nzuri leo. Endelea hivyo hivyo!",
+    "fin.lowProfit": "Faida yako leo ni ndogo. Angalia matumizi yasiyo ya lazima.",
+    "fin.loss": "Tahadhari: leo umetumia zaidi ya ulivyouza. Punguza matumizi au ongeza mauzo.",
+    "fin.lowStockWarning": (count) => `Una bidhaa ${count} zenye stoki ndogo (chini ya 5). Angalia ukurasa wa Stoki.`,
+  },
+  en: {
+    "nav.home": "Home",
+    "nav.sales": "Sales",
+    "nav.stock": "Stock",
+    "nav.expenses": "Expenses",
+    "nav.finance": "Financial Advice",
+    "orb.tap": "Tap to talk to Jawiza",
+    "orb.listening": "Listening...",
+    "orb.speaking": "Jawiza is speaking...",
+    "orb.hint": 'Example: "Sold two bottles to customer Juma" or "add stock cement ten bags"',
+    "orb.placeholder": "Or type a command here...",
+    "orb.send": "Send",
+    "stat.sales": "Today's Sales",
+    "stat.expenses": "Today's Expenses",
+    "stat.profit": "Today's Profit",
+    "feed.title": "Activity Log",
+    "feed.empty": "No activity yet. Start by talking to Jawiza.",
+    "sales.title": "Sales Table",
+    "sales.sub": "All sales, dates, customers and payment status",
+    "sales.clearFilter": "Show all",
+    "sales.new": "New Sale",
+    "sales.col.no": "No.",
+    "sales.col.date": "Date",
+    "sales.col.customer": "Customer",
+    "sales.col.phone": "Phone",
+    "sales.col.item": "Item",
+    "sales.col.qty": "Qty",
+    "sales.col.total": "Total",
+    "sales.col.status": "Status",
+    "sales.col.action": "Action",
+    "sales.empty": 'No sales yet. Click "New Sale" or tell Jawiza "sold..."',
+    "stockpg.title": "Manage Stock",
+    "stockpg.sub": "Items, quantity on hand, price and stock value",
+    "stockpg.new": "New Item",
+    "stockpg.col.item": "Item",
+    "stockpg.col.qty": "Qty",
+    "stockpg.col.price": "Price (Tsh)",
+    "stockpg.col.value": "Value",
+    "stockpg.col.action": "Action",
+    "exp.title": "Expenses",
+    "exp.sub": "All shop expenses",
+    "exp.new": "Add Expense",
+    "exp.col.date": "Date",
+    "exp.col.desc": "Description",
+    "exp.col.amount": "Amount",
+    "exp.col.action": "Action",
+    "exp.empty": "No expenses yet.",
+    "fin.title": "Jawiza Financial Advice",
+    "fin.sub": "Live analysis of your business health",
+    "audit.title": "Stock Audit",
+    "audit.sub": "Items with poor movement (not sold for a while)",
+    "modal.newSale.title": "New Sale",
+    "modal.newSale.customer": "Customer Name",
+    "modal.newSale.phone": "Customer Phone",
+    "modal.newSale.addItem": "Add Another Item",
+    "modal.newSale.status": "Payment Status",
+    "modal.newSale.total": "Total (Tsh)",
+    "modal.newSale.confirm": "Complete Sale",
+    "modal.cancel": "Cancel",
+    "modal.close": "Close",
+    "status.paid": "Paid",
+    "status.unpaid": "Unpaid",
+    "modal.newStock.title": "New Item",
+    "modal.newStock.name": "Item Name",
+    "modal.newStock.qty": "Quantity",
+    "modal.newStock.price": "Price per Unit (Tsh)",
+    "modal.newStock.confirm": "Add",
+    "modal.newExpense.title": "New Expense",
+    "modal.newExpense.desc": "Description",
+    "modal.newExpense.amount": "Amount (Tsh)",
+    "modal.newExpense.confirm": "Save",
+    "modal.receipt.title": "Receipt",
+    "modal.receipt.print": "Print / PDF",
+    "modal.backup.title": "Backup Reminder",
+    "modal.backup.text": "It has been 24 hours since your last backup. Please download a backup now so you don't lose your business data.",
+    "modal.backup.later": "Later",
+    "modal.backup.now": "Download Backup Now",
+    "voice.notSupported": "Sorry, your browser does not support voice. Please use text.",
+    "voice.itemNotFound": (item) => `I couldn't find "${item}" in stock. Please check the name or add this item first.`,
+    "voice.notEnoughStock": (item, have, want) => `Sorry, ${item} only has ${have} units in stock, you can't sell ${want}.`,
+    "voice.saleDone": (item, qty, total) => `Done, sold ${qty} units of ${item}, total Tsh ${total}.`,
+    "voice.stockAdded": (item, qty) => `Added ${qty} units of ${item} to stock.`,
+    "voice.expenseAdded": (desc, amt) => `Added expense for ${desc}, Tsh ${amt}.`,
+    "voice.lowStock": (item, qty) => `Warning: ${item} stock is down to ${qty} units.`,
+    "voice.outOfStock": (item) => `Warning: ${item} is completely out of stock.`,
+    "voice.didNotUnderstand": "Sorry, I didn't understand that command. Try again, for example: sell two bottles.",
+    "voice.reportToday": (sales, exp, profit, count) => `Today's report: sales Tsh ${sales}, expenses Tsh ${exp}, profit Tsh ${profit}, from ${count} sales.`,
+    "voice.backupReminder": "Please remember to back up your data before the 24 hour window closes.",
+    "voice.financeWarning": "Financial warning: your expenses exceed your sales today.",
+    "voice.greeting": "Hello, I am Jawiza, your shop assistant. Tell me what to do.",
+    "voice.customerSet": (name) => `Okay, customer is ${name}.`,
+    "audit.noIssues": "No issues found in your stock right now.",
+    "audit.staleItem": (item, days) => `${item} — not sold for ${days} days.`,
+    "fin.noData": "Not enough data yet for advice. Start adding sales and expenses.",
+    "fin.healthy": "Your business looks healthy today. Keep it up!",
+    "fin.lowProfit": "Your profit today is low. Check for unnecessary expenses.",
+    "fin.loss": "Warning: today you spent more than you earned. Cut expenses or increase sales.",
+    "fin.lowStockWarning": (count) => `You have ${count} items with low stock (under 5). Check the Stock page.`,
+  }
+};
+
+let currentLang = localStorage.getItem('jawiza_lang') || 'sw';
+
+function t(key, ...args) {
+  const dict = I18N[currentLang] || I18N.sw;
+  const val = dict[key] !== undefined ? dict[key] : I18N.sw[key];
+  if (typeof val === 'function') return val(...args);
+  return val;
+}
+
+function applyI18nToDOM() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    el.textContent = t(key);
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    el.setAttribute('placeholder', t(key));
+  });
+  document.documentElement.lang = currentLang;
+}
+
+</script>
+<script>
+// ============================================================
+// JAWIZA — Msaidizi wa Duka (AI-driven, voice + text)
+// Single-file app logic. All data stored in localStorage (device only).
+// ============================================================
+
+// ---------- STORAGE KEYS ----------
+const STORAGE_KEY = 'jawiza_state_v1';
+const LAST_BACKUP_KEY = 'jawiza_last_backup';
+
+// ---------- DEFAULT STATE ----------
+function defaultState() {
+  return {
+    stocks: {
+      'chupa': { idadi: 20, bei: 3000, lastSold: null },
+      'sementi': { idadi: 50, bei: 15000, lastSold: null },
+    },
+    sales: [],       // {id, dateISO, customerName, customerPhone, items:[{name,qty,price}], total, status}
+    expenses: [],     // {id, dateISO, desc, amount}
+    saleCounter: 1000, // for receipt series numbers
+    activityLog: [],   // {id, ts, kind, text, meta}
+    settings: { shopName: 'Duka Langu', lang: 'sw' }
+  };
+}
+
+let state = loadState();
+let pendingSaleItems = []; // working items for the "new sale" modal
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultState();
+    const parsed = JSON.parse(raw);
+    // merge with defaults to survive schema changes
+    return Object.assign(defaultState(), parsed);
+  } catch (e) {
+    console.error('Failed to load state', e);
+    return defaultState();
+  }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    document.getElementById('saveDot').classList.remove('stale');
+    document.getElementById('saveText').textContent = currentLang === 'sw' ? 'Imehifadhiwa' : 'Saved';
+  } catch (e) {
+    console.error('Failed to save state', e);
+    document.getElementById('saveDot').classList.add('stale');
+    document.getElementById('saveText').textContent = currentLang === 'sw' ? 'Hitilafu ya kuhifadhi' : 'Save error';
+  }
+}
+
+// ---------- UTIL ----------
+function fmtMoney(n) {
+  n = Math.round(n || 0);
+  return n.toLocaleString('en-US');
+}
+function todayKey(d = new Date()) {
+  return d.toISOString().slice(0, 10);
+}
+function nowISO() { return new Date().toISOString(); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+function isToday(iso) {
+  return iso.slice(0, 10) === todayKey();
+}
+
+// ---------- LANGUAGE ----------
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('jawiza_lang', lang);
+  document.getElementById('langSw').classList.toggle('active', lang === 'sw');
+  document.getElementById('langEn').classList.toggle('active', lang === 'en');
+  applyI18nToDOM();
+  renderAll();
+}
+
+// ---------- NAVIGATION ----------
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector(`.nav-tab[data-page="${name}"]`).classList.add('active');
+  if (name === 'mauzo') renderSalesTable();
+  if (name === 'stock') renderStockTable();
+  if (name === 'matumizi') renderExpenseTable();
+  if (name === 'fedha') renderFinanceAdvice();
+}
+
+// ---------- MODALS ----------
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  if (id === 'newSaleModal') {
+    pendingSaleItems = [{ name: '', qty: 1 }];
+    document.getElementById('saleCustomerName').value = '';
+    document.getElementById('saleCustomerPhone').value = '';
+    document.getElementById('salePaidStatus').value = 'paid';
+    renderSaleItemRows();
+  }
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ---------- TOASTS ----------
+function showToast(text, type = '') {
+  const stack = document.getElementById('toastStack');
+  const el = document.createElement('div');
+  el.className = 'toast' + (type ? ' ' + type : '');
+  el.textContent = text;
+  stack.appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity .3s'; setTimeout(() => el.remove(), 300); }, 5000);
+}
+
+// ---------- ACTIVITY LOG ----------
+function logActivity(kind, text, meta = {}) {
+  state.activityLog.unshift({ id: uid(), ts: nowISO(), kind, text, meta });
+  if (state.activityLog.length > 200) state.activityLog.length = 200;
+  saveState();
+  renderFeed();
+}
+
+function renderFeed() {
+  const body = document.getElementById('feedBody');
+  const count = document.getElementById('feedCount');
+  count.textContent = state.activityLog.length + (currentLang === 'sw' ? ' matukio' : ' events');
+  if (state.activityLog.length === 0) {
+    body.innerHTML = `<div class="receipt-empty">${t('feed.empty')}</div>`;
+    return;
+  }
+  body.innerHTML = state.activityLog.slice(0, 60).map(item => {
+    const time = new Date(item.ts).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    return `<div class="receipt-line kind-${item.kind}">
+      <div class="rl-top"><span>${escapeHtml(item.text)}</span><span>${time}</span></div>
+      ${item.meta.sub ? `<div class="rl-meta">${escapeHtml(item.meta.sub)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// ---------- RENDER: STATS ----------
+function renderStats() {
+  const todaySales = state.sales.filter(s => isToday(s.dateISO));
+  const todayExpenses = state.expenses.filter(e => isToday(e.dateISO));
+  const salesTotal = todaySales.reduce((a, s) => a + s.total, 0);
+  const expTotal = todayExpenses.reduce((a, e) => a + e.amount, 0);
+  const profit = salesTotal - expTotal;
+
+  document.getElementById('statMauzo').textContent = 'Tsh ' + fmtMoney(salesTotal);
+  document.getElementById('statMatumizi').textContent = 'Tsh ' + fmtMoney(expTotal);
+  const profitEl = document.getElementById('statFaida');
+  profitEl.textContent = 'Tsh ' + fmtMoney(profit);
+  profitEl.className = 'stat-value mono ' + (profit >= 0 ? 'green' : 'red');
+}
+
+// ---------- RENDER: STOCK TABLE ----------
+function renderStockTable() {
+  const body = document.getElementById('stockTableBody');
+  const keys = Object.keys(state.stocks);
+  if (keys.length === 0) {
+    body.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-faint); padding:30px;">${currentLang==='sw'?'Hakuna bidhaa kwenye stoki.':'No items in stock.'}</td></tr>`;
+    return;
+  }
+  body.innerHTML = keys.map(key => {
+    const s = state.stocks[key];
+    const value = s.idadi * s.bei;
+    const lowStock = s.idadi <= 5;
+    return `<tr>
+      <td style="text-transform:capitalize; font-weight:600;">${escapeHtml(key)}${lowStock ? ` <span class="badge badge-unpaid" style="margin-left:6px;">${currentLang==='sw'?'Stoki Pungufu':'Low Stock'}</span>` : ''}</td>
+      <td><input type="number" value="${s.idadi}" min="0" onchange="editStockField('${key}','idadi',this.value)"></td>
+      <td><input type="number" value="${s.bei}" min="0" onchange="editStockField('${key}','bei',this.value)"></td>
+      <td class="mono">Tsh ${fmtMoney(value)}</td>
+      <td><button class="btn btn-red btn-sm" onclick="deleteStockItem('${key}')"><i class="fa-solid fa-trash"></i></button></td>
+    </tr>`;
+  }).join('');
+}
+
+function editStockField(key, field, val) {
+  if (!state.stocks[key]) return;
+  state.stocks[key][field] = Math.max(0, parseInt(val) || 0);
+  saveState();
+  renderStockTable();
+  renderStats();
+}
+
+function deleteStockItem(key) {
+  if (!confirm((currentLang === 'sw' ? 'Una uhakika unataka kufuta ' : 'Are you sure you want to delete ') + key + '?')) return;
+  delete state.stocks[key];
+  saveState();
+  renderStockTable();
+  logActivity('ai', (currentLang === 'sw' ? 'Bidhaa imefutwa: ' : 'Item deleted: ') + key);
+}
+
+function confirmNewStock() {
+  const name = document.getElementById('stockNewName').value.trim().toLowerCase();
+  const qty = parseInt(document.getElementById('stockNewQty').value) || 0;
+  const price = parseInt(document.getElementById('stockNewPrice').value) || 0;
+  if (!name) { showToast(currentLang === 'sw' ? 'Andika jina la bidhaa' : 'Enter item name', 'warn'); return; }
+  addOrUpdateStock(name, qty, price);
+  closeModal('newStockModal');
+  document.getElementById('stockNewName').value = '';
+  document.getElementById('stockNewQty').value = '';
+  document.getElementById('stockNewPrice').value = '';
+}
+
+function addOrUpdateStock(name, qty, price) {
+  name = name.toLowerCase().trim();
+  if (state.stocks[name]) {
+    state.stocks[name].idadi += qty;
+    if (price > 0) state.stocks[name].bei = price;
+  } else {
+    state.stocks[name] = { idadi: qty, bei: price, lastSold: null };
+  }
+  saveState();
+  renderStockTable();
+  renderStats();
+  logActivity('ai', t('voice.stockAdded', name, qty));
+}
+
+// ---------- RENDER: SALES TABLE ----------
+function clearSalesFilter() {
+  document.getElementById('salesDateFilter').value = '';
+  renderSalesTable();
+}
+
+function renderSalesTable() {
+  const body = document.getElementById('salesTableBody');
+  const empty = document.getElementById('salesEmpty');
+  const filterDate = document.getElementById('salesDateFilter').value;
+  let list = [...state.sales].sort((a, b) => new Date(b.dateISO) - new Date(a.dateISO));
+  if (filterDate) list = list.filter(s => s.dateISO.slice(0, 10) === filterDate);
+
+  if (list.length === 0) {
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  body.innerHTML = list.map((sale, idx) => {
+    const itemsLabel = sale.items.map(i => `${i.name} x${i.qty}`).join(', ');
+    const totalQty = sale.items.reduce((a, i) => a + i.qty, 0);
+    const d = new Date(sale.dateISO);
+    const dateLabel = d.toLocaleDateString('en-GB') + ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    return `<tr>
+      <td class="mono">#${sale.seriesNo}</td>
+      <td class="mono">${dateLabel}</td>
+      <td>${escapeHtml(sale.customerName || (currentLang==='sw'?'Hajulikani':'Unknown'))}</td>
+      <td class="mono">${escapeHtml(sale.customerPhone || '-')}</td>
+      <td>${escapeHtml(itemsLabel)}</td>
+      <td class="mono">${totalQty}</td>
+      <td class="mono" style="font-weight:600;">Tsh ${fmtMoney(sale.total)}</td>
+      <td><span class="badge ${sale.status === 'paid' ? 'badge-paid' : 'badge-unpaid'}">${sale.status === 'paid' ? t('status.paid') : t('status.unpaid')}</span></td>
+      <td style="display:flex; gap:6px;">
+        <button class="btn btn-ghost btn-sm" onclick="viewReceipt('${sale.id}')"><i class="fa-solid fa-receipt"></i></button>
+        ${sale.status === 'unpaid' ? `<button class="btn btn-green btn-sm" onclick="markSalePaid('${sale.id}')"><i class="fa-solid fa-check"></i></button>` : ''}
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function markSalePaid(id) {
+  const sale = state.sales.find(s => s.id === id);
+  if (!sale) return;
+  sale.status = 'paid';
+  saveState();
+  renderSalesTable();
+  logActivity('sale', (currentLang === 'sw' ? 'Malipo yamethibitishwa: ' : 'Payment confirmed: ') + (sale.customerName || ''));
+}
+
+// ---------- NEW SALE MODAL: item rows ----------
+function renderSaleItemRows() {
+  const container = document.getElementById('saleItemsContainer');
+  const stockNames = Object.keys(state.stocks);
+  container.innerHTML = pendingSaleItems.map((item, idx) => `
+    <div class="field-row" style="grid-template-columns: 2fr 1fr 1fr auto; align-items:end; margin-bottom:10px;">
+      <div class="field" style="margin-bottom:0;">
+        <label>${currentLang === 'sw' ? 'Bidhaa' : 'Item'}</label>
+        <select onchange="updateSaleItem(${idx},'name',this.value)">
+          <option value="">--</option>
+          ${stockNames.map(n => `<option value="${n}" ${item.name===n?'selected':''}>${n} (${state.stocks[n].idadi} ${currentLang==='sw'?'zipo':'left'})</option>`).join('')}
+        </select>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>${currentLang === 'sw' ? 'Idadi' : 'Qty'}</label>
+        <input type="number" min="1" value="${item.qty}" onchange="updateSaleItem(${idx},'qty',this.value)">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>${currentLang === 'sw' ? 'Bei/kipande' : 'Unit Price'}</label>
+        <input type="text" class="mono" readonly value="${item.name && state.stocks[item.name] ? fmtMoney(state.stocks[item.name].bei) : '0'}">
+      </div>
+      <button class="btn btn-red btn-sm" onclick="removeSaleItemRow(${idx})" style="height:42px;"><i class="fa-solid fa-trash"></i></button>
+    </div>
+  `).join('');
+  updateSaleTotal();
+}
+function addSaleItemRow() {
+  pendingSaleItems.push({ name: '', qty: 1 });
+  renderSaleItemRows();
+}
+function removeSaleItemRow(idx) {
+  pendingSaleItems.splice(idx, 1);
+  if (pendingSaleItems.length === 0) pendingSaleItems.push({ name: '', qty: 1 });
+  renderSaleItemRows();
+}
+function updateSaleItem(idx, field, val) {
+  pendingSaleItems[idx][field] = field === 'qty' ? Math.max(1, parseInt(val) || 1) : val;
+  renderSaleItemRows();
+}
+function updateSaleTotal() {
+  let total = 0;
+  pendingSaleItems.forEach(item => {
+    if (item.name && state.stocks[item.name]) total += state.stocks[item.name].bei * item.qty;
+  });
+  document.getElementById('saleTotalDisplay').value = fmtMoney(total);
+}
+
+function confirmNewSale() {
+  const customerName = document.getElementById('saleCustomerName').value.trim();
+  const customerPhone = document.getElementById('saleCustomerPhone').value.trim();
+  const status = document.getElementById('salePaidStatus').value;
+  const validItems = pendingSaleItems.filter(i => i.name && state.stocks[i.name]);
+
+  if (validItems.length === 0) {
+    showToast(currentLang === 'sw' ? 'Chagua angalau bidhaa moja' : 'Select at least one item', 'warn');
+    return;
+  }
+  // check stock availability
+  for (const item of validItems) {
+    if (state.stocks[item.name].idadi < item.qty) {
+      showToast(t('voice.notEnoughStock', item.name, state.stocks[item.name].idadi, item.qty), 'warn');
+      return;
+    }
+  }
+
+  const result = recordSale(validItems.map(i => ({ name: i.name, qty: i.qty, price: state.stocks[i.name].bei })), customerName, customerPhone, status);
+  closeModal('newSaleModal');
+  viewReceipt(result.id);
+}
+
+// ---------- CORE: RECORD SALE ----------
+function recordSale(items, customerName, customerPhone, status) {
+  let total = 0;
+  items.forEach(i => { total += i.price * i.qty; });
+
+  state.saleCounter += 1;
+  const sale = {
+    id: uid(),
+    seriesNo: state.saleCounter,
+    dateISO: nowISO(),
+    customerName: customerName || '',
+    customerPhone: customerPhone || '',
+    items, total, status: status || 'paid'
+  };
+  state.sales.push(sale);
+
+  // deduct stock
+  items.forEach(i => {
+    if (state.stocks[i.name]) {
+      state.stocks[i.name].idadi -= i.qty;
+      state.stocks[i.name].lastSold = nowISO();
+      if (state.stocks[i.name].idadi < 0) state.stocks[i.name].idadi = 0;
+    }
+  });
+
+  saveState();
+  renderAll();
+
+  const itemsLabel = items.map(i => `${i.name} x${i.qty}`).join(', ');
+  logActivity('sale', `${currentLang==='sw'?'Mauzo':'Sale'}: ${itemsLabel}`, { sub: `Tsh ${fmtMoney(total)} — ${customerName || (currentLang==='sw'?'Bila jina':'No name')}` });
+
+  // post-sale stock checks
+  items.forEach(i => {
+    const remaining = state.stocks[i.name] ? state.stocks[i.name].idadi : 0;
+    if (remaining === 0) {
+      speak(t('voice.outOfStock', i.name));
+      logActivity('warn', t('voice.outOfStock', i.name));
+    } else if (remaining <= 5) {
+      speak(t('voice.lowStock', i.name, remaining));
+      logActivity('warn', t('voice.lowStock', i.name, remaining));
+    }
+  });
+
+  return sale;
+}
+
+// ---------- EXPENSES ----------
+function renderExpenseTable() {
+  const body = document.getElementById('expenseTableBody');
+  const empty = document.getElementById('expenseEmpty');
+  const list = [...state.expenses].sort((a, b) => new Date(b.dateISO) - new Date(a.dateISO));
+  if (list.length === 0) {
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  body.innerHTML = list.map(e => {
+    const d = new Date(e.dateISO);
+    return `<tr>
+      <td class="mono">${d.toLocaleDateString('en-GB')}</td>
+      <td>${escapeHtml(e.desc)}</td>
+      <td class="mono" style="color:var(--gold); font-weight:600;">Tsh ${fmtMoney(e.amount)}</td>
+      <td><button class="btn btn-red btn-sm" onclick="deleteExpense('${e.id}')"><i class="fa-solid fa-trash"></i></button></td>
+    </tr>`;
+  }).join('');
+}
+
+function confirmNewExpense() {
+  const desc = document.getElementById('expenseDesc').value.trim();
+  const amount = parseInt(document.getElementById('expenseAmount').value) || 0;
+  if (!desc || amount <= 0) {
+    showToast(currentLang === 'sw' ? 'Jaza maelezo na kiasi sahihi' : 'Fill in description and a valid amount', 'warn');
+    return;
+  }
+  recordExpense(desc, amount);
+  closeModal('newExpenseModal');
+  document.getElementById('expenseDesc').value = '';
+  document.getElementById('expenseAmount').value = '';
+}
+
+function recordExpense(desc, amount) {
+  state.expenses.push({ id: uid(), dateISO: nowISO(), desc, amount });
+  saveState();
+  renderAll();
+  logActivity('expense', `${currentLang==='sw'?'Matumizi':'Expense'}: ${desc}`, { sub: 'Tsh ' + fmtMoney(amount) });
+}
+
+function deleteExpense(id) {
+  state.expenses = state.expenses.filter(e => e.id !== id);
+  saveState();
+  renderExpenseTable();
+  renderStats();
+}
+
+// ---------- RECEIPT ----------
+function viewReceipt(saleId) {
+  const sale = state.sales.find(s => s.id === saleId);
+  if (!sale) return;
+  const container = document.getElementById('receiptPaperContainer');
+  const d = new Date(sale.dateISO);
+  container.innerHTML = `
+    <div class="receipt-paper" id="receiptPaper">
+      <div class="rp-logo">${escapeHtml(state.settings.shopName)}</div>
+      <div class="rp-sub">${currentLang==='sw'?'Risiti ya Mauzo':'Sales Receipt'}</div>
+      <hr>
+      <div class="rp-row"><span>${currentLang==='sw'?'Na. Risiti':'Receipt No'}</span><span>#${sale.seriesNo}</span></div>
+      <div class="rp-row"><span>${currentLang==='sw'?'Tarehe':'Date'}</span><span>${d.toLocaleDateString('en-GB')} ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}</span></div>
+      <div class="rp-row"><span>${currentLang==='sw'?'Mteja':'Customer'}</span><span>${escapeHtml(sale.customerName || '-')}</span></div>
+      <div class="rp-row"><span>${currentLang==='sw'?'Namba':'Phone'}</span><span>${escapeHtml(sale.customerPhone || '-')}</span></div>
+      <hr>
+      ${sale.items.map(i => `<div class="rp-row"><span>${escapeHtml(i.name)} x${i.qty}</span><span>${fmtMoney(i.price*i.qty)}</span></div>`).join('')}
+      <hr>
+      <div class="rp-row rp-total"><span>${currentLang==='sw'?'JUMLA':'TOTAL'}</span><span>Tsh ${fmtMoney(sale.total)}</span></div>
+      <div class="rp-row" style="margin-top:6px;"><span>${currentLang==='sw'?'Hali':'Status'}</span><span style="font-weight:700;">${sale.status==='paid' ? (currentLang==='sw'?'IMELIPIWA':'PAID') : (currentLang==='sw'?'HAIJALIPIWA':'UNPAID')}</span></div>
+      <hr>
+      <div style="text-align:center; font-size:10px; color:#777; margin-top:8px;">${currentLang==='sw'?'Asante kwa kununua nasi':'Thank you for your business'}</div>
+    </div>
+  `;
+  container.dataset.saleId = saleId;
+  openModal('receiptModal');
+}
+
+function printReceipt() {
+  const node = document.getElementById('receiptPaper');
+  if (!node) return;
+  if (window.jspdf) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'pt', format: [320, 500] });
+    doc.html(node, {
+      callback: function (doc) { doc.save('risiti-' + Date.now() + '.pdf'); },
+      x: 10, y: 10, width: 280, windowWidth: 300
+    });
+  } else {
+    window.print();
+  }
+}
+
+// ---------- FINANCE ADVICE ----------
+function renderFinanceAdvice() {
+  const container = document.getElementById('financeAdvice');
+  const todaySales = state.sales.filter(s => isToday(s.dateISO));
+  const todayExpenses = state.expenses.filter(e => isToday(e.dateISO));
+  const salesTotal = todaySales.reduce((a, s) => a + s.total, 0);
+  const expTotal = todayExpenses.reduce((a, e) => a + e.amount, 0);
+  const profit = salesTotal - expTotal;
+
+  let cards = [];
+  if (todaySales.length === 0 && todayExpenses.length === 0) {
+    cards.push({ type: '', text: t('fin.noData') });
+  } else if (profit < 0) {
+    cards.push({ type: 'warn', text: t('fin.loss') });
+  } else if (salesTotal > 0 && profit < salesTotal * 0.15) {
+    cards.push({ type: 'warn', text: t('fin.lowProfit') });
+  } else {
+    cards.push({ type: 'ok', text: t('fin.healthy') });
+  }
+
+  const lowStockCount = Object.values(state.stocks).filter(s => s.idadi <= 5).length;
+  if (lowStockCount > 0) cards.push({ type: 'warn', text: t('fin.lowStockWarning', lowStockCount) });
+
+  const unpaidCount = state.sales.filter(s => s.status === 'unpaid').length;
+  if (unpaidCount > 0) {
+    const unpaidTotal = state.sales.filter(s => s.status === 'unpaid').reduce((a, s) => a + s.total, 0);
+    cards.push({ type: 'warn', text: (currentLang === 'sw' ? `Una madeni ${unpaidCount} ya wateja, jumla Tsh ${fmtMoney(unpaidTotal)}.` : `You have ${unpaidCount} unpaid customer debts, total Tsh ${fmtMoney(unpaidTotal)}.`) });
+  }
+
+  container.innerHTML = cards.map(c => `
+    <div class="receipt-line kind-${c.type === 'warn' ? 'warn' : c.type === 'ok' ? 'sale' : 'ai'}" style="border:1px solid var(--line); border-radius:12px; padding:14px;">
+      <div class="rl-top" style="font-family:'Inter'; font-size:13.5px;">${c.text}</div>
+    </div>
+  `).join('');
+
+  renderAuditList();
+}
+
+function renderAuditList() {
+  const container = document.getElementById('auditList');
+  const now = Date.now();
+  const staleItems = [];
+  Object.keys(state.stocks).forEach(key => {
+    const s = state.stocks[key];
+    if (s.idadi > 0) {
+      let days;
+      if (!s.lastSold) {
+        days = null; // never sold
+      } else {
+        days = Math.floor((now - new Date(s.lastSold).getTime()) / 86400000);
+      }
+      if (days === null || days >= 7) {
+        staleItems.push({ key, days });
+      }
+    }
+  });
+
+  if (staleItems.length === 0) {
+    container.innerHTML = `<div class="receipt-empty" style="text-align:left; padding:6px 0;">${t('audit.noIssues')}</div>`;
+    return;
+  }
+  container.innerHTML = staleItems.map(si => `
+    <div class="receipt-line kind-warn" style="border:1px solid var(--line); border-radius:12px; padding:12px 14px;">
+      <div class="rl-top" style="font-family:'Inter'; font-size:13.5px;">
+        ${t('audit.staleItem', si.key, si.days === null ? (currentLang==='sw'?'∞ (kamwe)':'∞ (never)') : si.days)}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ---------- RENDER ALL ----------
+function renderAll() {
+  renderStats();
+  renderFeed();
+  renderStockTable();
+  renderSalesTable();
+  renderExpenseTable();
+  if (document.getElementById('page-fedha').classList.contains('active')) renderFinanceAdvice();
+}
+
+// ---------- CLOCK ----------
+function tickClock() {
+  document.getElementById('clockDisplay').textContent = new Date().toLocaleTimeString('en-GB');
+}
+setInterval(tickClock, 1000);
+tickClock();
+
+// ============================================================
+// AI COMMAND ENGINE (rule/pattern based NLU, bilingual)
+// ============================================================
+
+function fillExample(text) {
+  document.getElementById('commandInput').value = text;
+  document.getElementById('commandInput').focus();
+}
+
+function submitTypedCommand() {
+  const input = document.getElementById('commandInput');
+  const text = input.value.trim();
+  if (!text) return;
+  processCommand(text);
+  input.value = '';
+}
+document.getElementById('commandInput').addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    submitTypedCommand();
+  }
+});
+
+// Normalize numbers written as Swahili words (basic set) -> digits
+const SW_NUMBERS = {
+  'sifuri': 0, 'moja': 1, 'mbili': 2, 'tatu': 3, 'nne': 4, 'tano': 5,
+  'sita': 6, 'saba': 7, 'nane': 8, 'tisa': 9, 'kumi': 10,
+  'kumi na moja': 11, 'kumi na mbili': 12, 'kumi na tatu': 13, 'kumi na nne': 14, 'kumi na tano': 15,
+  'ishirini': 20, 'thelathini': 30, 'arobaini': 40, 'hamsini': 50,
+  'sitini': 60, 'sabini': 70, 'themanini': 80, 'tisini': 90, 'mia': 100
+};
+
+function wordsToNumber(text) {
+  // try direct multi-word matches first (longest first)
+  const entries = Object.entries(SW_NUMBERS).sort((a, b) => b[0].length - a[0].length);
+  for (const [word, num] of entries) {
+    if (text.includes(word)) return num;
+  }
+  return null;
+}
+
+function extractNumber(text) {
+  const digitMatch = text.match(/\d+/);
+  if (digitMatch) return parseInt(digitMatch[0]);
+  const wordNum = wordsToNumber(text);
+  if (wordNum !== null) return wordNum;
+  return null;
+}
+
+function extractPhone(text) {
+  const m = text.match(/0\d{8,9}|\+255\d{8,9}/);
+  return m ? m[0] : null;
+}
+
+function findClosestStockItem(name) {
+  if (!name) return null;
+  name = name.trim().toLowerCase();
+  if (state.stocks[name]) return name;
+  // partial match
+  const keys = Object.keys(state.stocks);
+  let best = null, bestScore = 0;
+  for (const k of keys) {
+    if (k.includes(name) || name.includes(k)) {
+      const score = Math.min(k.length, name.length);
+      if (score > bestScore) { best = k; bestScore = score; }
+    }
+  }
+  return best;
+}
+
+// Main NLU dispatcher
+function processCommand(rawText) {
+  const text = rawText.trim();
+  const lower = text.toLowerCase();
+  logActivity('ai', (currentLang === 'sw' ? 'Amri: ' : 'Command: ') + text);
+
+  // ---- REPORT / RIPOTI ----
+  if (/\b(ripoti|report|muhtasari|summary)\b/.test(lower)) {
+    return handleReport();
+  }
+
+  // ---- EXPENSE: "matumizi <desc> <amount>" / "expense <desc> <amount>" / "tumia ... kwa ..." ----
+  if (/\b(matumizi|tumia|gharama|expense|spent)\b/.test(lower)) {
+    return handleExpenseCommand(lower, text);
+  }
+
+  // ---- STOCK ADD: "ongeza stoki/stock <item> idadi <n> bei <n>" ----
+  if (/\b(ongeza stoki|ongeza stock|add stock|weka stoki|jaza stoki|restock)\b/.test(lower)) {
+    return handleAddStockCommand(lower);
+  }
+
+  // ---- SALE: "uza <item> <qty> kwa <customer> <phone>" / "sold/sell ..." ----
+  if (/\b(uza|nimeuza|sold|sell|sale)\b/.test(lower)) {
+    return handleSaleCommand(lower, text);
+  }
+
+  // ---- GREETING ----
+  if (/\b(habari|mambo|hujambo|hello|hi|hey)\b/.test(lower) && lower.length < 25) {
+    speak(t('voice.greeting'));
+    logActivity('ai', t('voice.greeting'));
+    return;
+  }
+
+  // ---- FALLBACK ----
+  speak(t('voice.didNotUnderstand'));
+  logActivity('ai', t('voice.didNotUnderstand'));
+}
+
+function handleReport() {
+  const todaySales = state.sales.filter(s => isToday(s.dateISO));
+  const todayExpenses = state.expenses.filter(e => isToday(e.dateISO));
+  const salesTotal = todaySales.reduce((a, s) => a + s.total, 0);
+  const expTotal = todayExpenses.reduce((a, e) => a + e.amount, 0);
+  const profit = salesTotal - expTotal;
+  const msg = t('voice.reportToday', fmtMoney(salesTotal), fmtMoney(expTotal), fmtMoney(profit), todaySales.length);
+  speak(msg);
+  logActivity('ai', msg);
+  showPage('fedha');
+}
+
+function handleExpenseCommand(lower, original) {
+  // remove trigger words
+  let cleaned = lower.replace(/\b(matumizi|tumia|gharama|expense|spent|ya|kwa|on|for)\b/g, ' ').trim();
+  const amount = extractNumber(cleaned);
+  let desc = cleaned.replace(/\d+/g, '').trim();
+  // remove number words from desc
+  Object.keys(SW_NUMBERS).forEach(w => { desc = desc.replace(new RegExp('\\b' + w + '\\b', 'g'), ''); });
+  desc = desc.replace(/\s+/g, ' ').trim();
+  if (!desc) desc = currentLang === 'sw' ? 'matumizi ya jumla' : 'general expense';
+  if (!amount) {
+    speak(currentLang === 'sw' ? 'Tafadhali niambie kiasi cha matumizi.' : 'Please tell me the expense amount.');
+    return;
+  }
+  recordExpense(desc, amount);
+  const msg = t('voice.expenseAdded', desc, fmtMoney(amount));
+  speak(msg);
+}
+
+function handleAddStockCommand(lower) {
+  let cleaned = lower.replace(/\b(ongeza stoki|ongeza stock|add stock|weka stoki|jaza stoki|restock|stock|stoki)\b/g, ' ');
+
+  let qty = null, price = null;
+  const idadiMatch = cleaned.match(/idadi\s+(\d+|[a-z\s]+?)(?=\s+bei|\s*$)/);
+  const beiMatch = cleaned.match(/bei\s+(\d+)/);
+  const qtyMatch = cleaned.match(/qty\s+(\d+)/);
+  const priceMatch = cleaned.match(/price\s+(\d+)/);
+
+  if (idadiMatch) qty = extractNumber(idadiMatch[1]);
+  if (qtyMatch) qty = parseInt(qtyMatch[1]);
+  if (beiMatch) price = parseInt(beiMatch[1]);
+  if (priceMatch) price = parseInt(priceMatch[1]);
+
+  // item name = text before "idadi"/"qty"/numbers
+  let namePart = cleaned.split(/idadi|qty|bei|price/)[0].trim();
+  namePart = namePart.replace(/\d+/g, '').trim();
+  Object.keys(SW_NUMBERS).forEach(w => { namePart = namePart.replace(new RegExp('\\b' + w + '\\b', 'g'), ''); });
+  namePart = namePart.replace(/\s+/g, ' ').trim();
+
+  if (!namePart) {
+    speak(currentLang === 'sw' ? 'Niambie jina la bidhaa unayoongeza.' : 'Tell me the item name to add.');
+    return;
+  }
+  if (qty === null) qty = 1;
+
+  const existingKey = findClosestStockItem(namePart);
+  const finalName = existingKey || namePart;
+  const finalPrice = price !== null ? price : (existingKey ? state.stocks[existingKey].bei : 0);
+
+  addOrUpdateStock(finalName, qty, finalPrice);
+  speak(t('voice.stockAdded', finalName, qty));
+}
+
+function handleSaleCommand(lower, original) {
+  let cleaned = lower.replace(/\b(uza|nimeuza|sold|sell|sale)\b/g, ' ').trim();
+
+  const phone = extractPhone(original);
+  if (phone) cleaned = cleaned.replace(phone, ' ');
+
+  // customer: after "kwa" or "to" / "for"
+  let customerName = '';
+  const kwaMatch = cleaned.match(/\b(kwa|to|for)\s+([a-zA-Z\u00C0-\u024F\s]+)$/);
+  if (kwaMatch) {
+    customerName = kwaMatch[2].trim();
+    cleaned = cleaned.slice(0, kwaMatch.index).trim();
+  }
+
+  // quantity: number word or digit anywhere remaining
+  const qty = extractNumber(cleaned) || 1;
+
+  // item name: remove numbers/number-words from cleaned
+  let itemPart = cleaned.replace(/\d+/g, '');
+  Object.keys(SW_NUMBERS).forEach(w => { itemPart = itemPart.replace(new RegExp('\\b' + w + '\\b', 'g'), ''); });
+  itemPart = itemPart.replace(/\s+/g, ' ').trim();
+
+  const matchedItem = findClosestStockItem(itemPart);
+  if (!matchedItem) {
+    speak(t('voice.itemNotFound', itemPart || '?'));
+    logActivity('warn', t('voice.itemNotFound', itemPart || '?'));
+    return;
+  }
+  const stockItem = state.stocks[matchedItem];
+  if (stockItem.idadi < qty) {
+    speak(t('voice.notEnoughStock', matchedItem, stockItem.idadi, qty));
+    logActivity('warn', t('voice.notEnoughStock', matchedItem, stockItem.idadi, qty));
+    return;
+  }
+
+  const sale = recordSale(
+    [{ name: matchedItem, qty, price: stockItem.bei }],
+    customerName, phone || '', 'paid'
+  );
+  speak(t('voice.saleDone', matchedItem, qty, fmtMoney(sale.total)));
+}
+
+// ============================================================
+// VOICE: Web Speech API (recognition + synthesis) — no API key needed
+// ============================================================
+let recognition = null;
+let isListening = false;
+let isSpeaking = false;
+
+function initSpeechRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return null;
+  const rec = new SR();
+  rec.continuous = false;
+  rec.interimResults = false;
+  rec.maxAlternatives = 1;
+  rec.lang = currentLang === 'sw' ? 'sw-TZ' : 'en-US';
+
+  rec.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    document.getElementById('commandInput').value = transcript;
+    processCommand(transcript);
+  };
+  rec.onerror = (event) => {
+    console.warn('Speech recognition error', event.error);
+    setOrbState('idle');
+  };
+  rec.onend = () => {
+    isListening = false;
+    setOrbState('idle');
+  };
+  return rec;
+}
+
+function toggleListening() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    showToast(t('voice.notSupported'), 'warn');
+    speak(t('voice.notSupported'));
+    return;
+  }
+  if (isListening) {
+    recognition && recognition.stop();
+    isListening = false;
+    setOrbState('idle');
+    return;
+  }
+  recognition = initSpeechRecognition();
+  if (!recognition) {
+    showToast(t('voice.notSupported'), 'warn');
+    return;
+  }
+  recognition.lang = currentLang === 'sw' ? 'sw-TZ' : 'en-US';
+  try {
+    recognition.start();
+    isListening = true;
+    setOrbState('listening');
+  } catch (e) {
+    console.warn(e);
+  }
+}
+
+function setOrbState(mode) {
+  const orb = document.getElementById('orbButton');
+  const status = document.getElementById('orbStatus');
+  orb.classList.remove('listening', 'speaking');
+  if (mode === 'listening') {
+    orb.classList.add('listening');
+    status.textContent = t('orb.listening');
+    status.classList.add('live');
+  } else if (mode === 'speaking') {
+    orb.classList.add('speaking');
+    status.textContent = t('orb.speaking');
+    status.classList.add('live');
+  } else {
+    status.textContent = t('orb.tap');
+    status.classList.remove('live');
+  }
+}
+
+function speak(text, opts = {}) {
+  if (!('speechSynthesis' in window)) return;
+  try {
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = (opts.forceLang || currentLang) === 'sw' ? 'sw-TZ' : 'en-US';
+    utter.rate = 1.0;
+    utter.onstart = () => { isSpeaking = true; setOrbState('speaking'); };
+    utter.onend = () => { isSpeaking = false; setOrbState('idle'); };
+    window.speechSynthesis.speak(utter);
+  } catch (e) {
+    console.warn('Speech synthesis failed', e);
+  }
+}
+
+// ============================================================
+// REMINDERS: every 2 minutes check + 24h backup nudge
+// ============================================================
+function getLastBackupTime() {
+  const raw = localStorage.getItem(LAST_BACKUP_KEY);
+  return raw ? parseInt(raw) : null;
+}
+function setLastBackupTime(ts) {
+  localStorage.setItem(LAST_BACKUP_KEY, String(ts));
+}
+
+function downloadBackup() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'jawiza-akiba-' + todayKey() + '.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  setLastBackupTime(Date.now());
+  showToast(currentLang === 'sw' ? 'Akiba imepakuliwa.' : 'Backup downloaded.', 'ok');
+  logActivity('ai', currentLang === 'sw' ? 'Nakala ya akiba imepakuliwa.' : 'Backup downloaded.');
+}
+
+const TWO_MIN = 2 * 60 * 1000;
+const TWENTYFOUR_HR = 24 * 60 * 60 * 1000;
+
+function backupReminderTick() {
+  const last = getLastBackupTime();
+  const elapsed = last ? Date.now() - last : Infinity;
+
+  if (elapsed >= TWENTYFOUR_HR) {
+    // urgent: open modal + speak in English for emphasis as requested, plus show modal
+    document.getElementById('backupModalText').textContent = t('modal.backup.text');
+    openModal('backupModal');
+    speak('Warning. It has been over 24 hours since your last backup. Please back up your data now.', { forceLang: 'force-en' });
+    // small correction: ensure english explicitly
+    speakEnglishForce('Warning. It has been over 24 hours since your last backup. Please back up your data now.');
+    logActivity('warn', currentLang === 'sw' ? 'Onyo: hujahifadhi akiba kwa zaidi ya masaa 24!' : 'Warning: no backup for over 24 hours!');
+  } else if (last) {
+    // gentle periodic nudge every 2 minutes only if more than 10 min since backup (avoid spamming right after backup)
+    if (elapsed >= 10 * 60 * 1000) {
+      logActivity('ai', t('voice.backupReminder'));
+    }
+  } else {
+    // never backed up at all
+    logActivity('warn', currentLang === 'sw' ? 'Bado hujawahi kuhifadhi akiba. Tumia kitufe cha Pakua Akiba.' : 'You have never backed up yet. Use the Download Backup button.');
+  }
+}
+
+function speakEnglishForce(text) {
+  if (!('speechSynthesis' in window)) return;
+  try {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'en-US';
+    utter.rate = 1.0;
+    window.speechSynthesis.speak(utter);
+  } catch (e) { console.warn(e); }
+}
+
+setInterval(backupReminderTick, TWO_MIN);
+
+// Finance health check every 2 minutes too (lightweight, only logs/speaks if there's an actual issue)
+function financeHealthTick() {
+  const todaySales = state.sales.filter(s => isToday(s.dateISO));
+  const todayExpenses = state.expenses.filter(e => isToday(e.dateISO));
+  if (todaySales.length === 0 && todayExpenses.length === 0) return;
+  const salesTotal = todaySales.reduce((a, s) => a + s.total, 0);
+  const expTotal = todayExpenses.reduce((a, e) => a + e.amount, 0);
+  if (expTotal > salesTotal) {
+    speak(t('voice.financeWarning'));
+    logActivity('warn', t('voice.financeWarning'));
+  }
+}
+setInterval(financeHealthTick, TWO_MIN);
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  setLang(currentLang);
+  applyI18nToDOM();
+  renderAll();
+  if (!getLastBackupTime()) {
+    // seed so we don't immediately nag on first load; give a grace period
+    setLastBackupTime(Date.now());
+  }
+}
+document.addEventListener('DOMContentLoaded', init);
+if (document.readyState !== 'loading') init();
+
+</script>
 </body>
 </html>
