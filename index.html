@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. William Premium Series - Live Gemini AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ================================================================
+           CLASSIC BLACK & GOLD THEME
+           ================================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #111116;
+            color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 15px;
+        }
+
+        header h1 {
+            color: #ffcc00;
+            font-size: 28px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* ================================================================
+           NAVIGATION TABS (SECTIONS)
+           ================================================================ */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: #222;
+            color: #ccc;
+            border: 1px solid #333;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-btn:hover {
+            border-color: #ffcc00;
+            color: #ffcc00;
+        }
+
+        .tab-btn.active {
+            background-color: #ffcc00;
+            color: #111;
+            border-color: #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+        }
+
+        /* ================================================================
+           PAGES CONTENT (ANIMATIONS)
+           ================================================================ */
+        .page-panel {
+            display: none;
+            background-color: #1a1a1f;
+            border: 1px solid #2a2a35;
+            border-radius: 12px;
+            padding: 25px;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        .page-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #ffcc00;
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ================================================================
+           VOICE CONTROLS INTERFACE
+           ================================================================ */
+        .voice-box {
+            background: #22222a;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffcc00;
+        }
+
+        .mic-trigger {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #ffcc00;
+            border: none;
+            color: #111;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2);
+        }
+
+        .mic-trigger.listening {
+            background-color: #ff3333;
+            color: #fff;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 51, 51, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); }
+        }
+
+        .transcript-preview {
+            background: #111;
+            padding: 12px;
+            border-radius: 6px;
+            font-style: italic;
+            color: #aaa;
+            margin-top: 10px;
+            font-size: 13px;
+            min-height: 40px;
+        }
+
+        /* ================================================================
+           FORMS & TABLES
+           ================================================================ */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group input {
+            width: 100%;
+            background-color: #111;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .form-group input:focus {
+            border-color: #ffcc00;
+            outline: none;
+        }
+
+        .btn-action {
+            background-color: #ffcc00;
+            color: #111;
+            font-weight: bold;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-action:hover {
+            background-color: #e6b800;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #2a2a35;
+        }
+
+        th {
+            background-color: #222;
+            color: #ffcc00;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .badge-status {
+            background: rgba(255, 51, 51, 0.2);
+            color: #ff3333;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Dr. William Series AI</h1>
+            <p>Voice Identity & Automated Analytical Inventory Control</p>
+        </header>
+
+        <!-- Navigation Tabs Selector -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" id="btn-stock-page" onclick="switchTab('stock-page')"><i class="fa-solid fa-box-archive"></i> 1. Store / Stock</button>
+            <button class="tab-btn" id="btn-sales-page" onclick="switchTab('sales-page')"><i class="fa-solid fa-cart-shopping"></i> 2. Sehemu ya Mauzo</button>
+            <button class="tab-btn" id="btn-expenses-page" onclick="switchTab('expenses-page')"><i class="fa-solid fa-wallet"></i> 3. Sehemu ya Matumizi</button>
+        </nav>
+
+        <!-- ================================================================
+             TAB 1: STORE MANAGEMENT & SECURITY SETUP
+             ================================================================ -->
+        <div id="stock-page" class="page-panel active">
+            <h2><i class="fa-solid fa-key"></i> 1. Ulinzi wa Mfumo (Weka Ufunguo wa Gemini AI)</h2>
+            <div class="form-row" style="grid-template-columns: 1fr auto; margin-bottom: 30px;">
+                <div class="form-group">
+                    <input type="password" id="geminiApiKey" placeholder="Weka Token/API Key yako hapa...">
+                </div>
+                <button class="btn-action" onclick="saveApiKey()">Hifadhi Key Safely</button>
+            </div>
+
+            <h2><i class="fa-solid fa-box-archive"></i> 2. Sajili Mzigo kwa Mkono (Manual Stock Setup)</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="text" id="stockItemName" placeholder="Jina la Bidhaa mf. aloe vera">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="stockItemQty" placeholder="Idadi iliyopo (Stock Qty)">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="stockItemPrice" placeholder="Bei ya kuuzia kila kimoja">
+                </div>
+                <button class="btn-action" onclick="addStockItemManual()">Weka Kwenye Store</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jina la Bidhaa</th>
+                        <th>Zilizopo Store (Stock)</th>
+                        <th>Bei kwa Kila Moja</th>
+                        <th>Hali ya Bidhaa</th>
+                    </tr>
+                </thead>
+                <tbody id="stockTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- ================================================================
+             TAB 2: SALES PAGE PEKEE (LIVE VOICE INTERACTION)
+             ================================================================ -->
+        <div id="sales-page" class="page-panel">
+            <h2><i class="fa-solid fa-cart-shopping"></i> Ukurasa wa Mauzo pekee (Msaidizi wa AI)</h2>
+            
+            <div class="voice-box">
+                <p>Bonyeza mic kisha tamka mauzo yako (Mfano: *"Nimeuza aloe vera mbili"* au *"Biskuti sita"*)</p>
+                <button class="mic-trigger" id="salesMic"><i class="fa-solid fa-microphone"></i></button>
+                <div class="transcript-preview" id="salesTranscript">Bonyeza mic uongee...</div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bidhaa Iliyouzwa</th>
+                        <th>Idadi</th>
+                        <th>Jumla Kuu</th>
+                    </tr>
+                </thead>
+                <tbody id="salesTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- ================================================================
+             TAB 3: EXPENSES PAGE PEKEE (LIVE VOICE INTERACTION)
+             ================================================================ -->
+        <div id="expenses-page" class="page-panel">
+            <h2><i class="fa-solid fa-wallet"></i> Ukurasa wa Matumizi pekee (Msaidizi wa AI)</h2>
+            
+            <div class="voice-box">
+                <p>Tamka matumizi yako kwa sauti (Mfano: *"Nimenunua maji ya elfu tano"* au *"Dagaa ya elfu mbili"*)</p>
+                <button class="mic-trigger" id="expensesMic"><i class="fa-solid fa-microphone"></i></button>
+                <div class="transcript-preview" id="expensesTranscript">Bonyeza mic uongee...</div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aina ya Matumizi (Kitu)</th>
+                        <th>Kiasi Kilicholipwa</th>
+                    </tr>
+                </thead>
+                <tbody id="expensesTableBody"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- ================================================================
+         JAVASCRIPT ENGINE ARCHITECTURE
+         ================================================================ -->
+    <script>
+        // Core Reactive States
+        let storeInventory = {
+            "aloe vera": { qty: 20, price: 5000 },
+            "biskuti": { qty: 50, price: 1000 }
+        };
+        let transactionsSales = [];
+        let transactionsExpenses = [];
+        let GEMINI_API_KEY = localStorage.getItem('gemini_key') || '';
+
+        window.onload = function() {
+            if(GEMINI_API_KEY) {
+                document.getElementById('geminiApiKey').value = GEMINI_API_KEY;
+            }
+            renderStockTable();
+            initVoiceSystem('salesMic', 'salesTranscript', 'sales');
+            initVoiceSystem('expensesMic', 'expensesTranscript', 'expenses');
+        };
+
+        // Secure Key Vault Storage Local
+        function saveApiKey() {
+            let key = document.getElementById('geminiApiKey').value.trim();
+            if(key) {
+                localStorage.setItem('gemini_key', key);
+                GEMINI_API_KEY = key;
+                alert('Ufunguo umehifadhiwa salama kwenye kifaa chako!');
+            } else {
+                alert('Tafadhali weka ufunguo halali.');
+            }
+        }
+
+        // Independent Tab System Switcher
+        function switchTab(pageId) {
+            document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('btn-' + pageId).classList.add('active');
+        }
+
+        // Manual Data Registration Logic
+        function addStockItemManual() {
+            let name = document.getElementById('stockItemName').value.trim().toLowerCase();
+            let qty = parseInt(document.getElementById('stockItemQty').value);
+            let price = parseInt(document.getElementById('stockItemPrice').value);
+
+            if(name && !isNaN(qty) && !isNaN(price)) {
+                storeInventory[name] = { qty: qty, price: price };
+                renderStockTable();
+                
+                document.getElementById('stockItemName').value = '';
+                document.getElementById('stockItemQty').value = '';
+                document.getElementById('stockItemPrice').value = '';
+            } else {
+                alert('Tafadhali jaza fomu nzima kwa usahihi.');
+            }
+        }
+
+        function renderStockTable() {
+            let tbody = document.getElementById('stockTableBody');
+            tbody.innerHTML = '';
+            for (let item in storeInventory) {
+                let status = storeInventory[item].qty <= 3 ? '<span class="badge-status">Inaisha!</span>' : 'Inajitosheleza';
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="text-transform:capitalize;"><strong>${item}</strong></td>
+                        <td>${storeInventory[item].qty} Pisi</td>
+                        <td>${storeInventory[item].price.toLocaleString()} TZS</td>
+                        <td>${status}</td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Web Speech API Interface Configuration
+        function initVoiceSystem(btnId, transcriptId, mode) {
+            let btn = document.getElementById(btnId);
+            let output = document.getElementById(transcriptId);
+
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'sw-TZ';
+                recognition.continuous = false;
+
+                btn.onclick = () => recognition.start();
+
+                recognition.onstart = () => {
+                    btn.classList.add('listening');
+                    output.innerText = "Ninasikiliza sauti...";
+                };
+
+                recognition.onresult = async (event) => {
+                    let text = event.results[0][0].transcript;
+                    output.innerText = `Umesema: "${text}" (AI Inachambua...)`;
+                    await sendToGeminiAI(text, mode, output);
+                };
+
+                recognition.onend = () => {
+                    btn.classList.remove('listening');
+                };
+            } else {
+                output.innerText = "Kivinjari hiki hakisupport kubadili sauti kuwa maandishi.";
+            }
+        }
+
+        // Core Live AI Connection Layer
+        async function sendToGeminiAI(userSpeech, mode, outputElement) {
+            if (!GEMINI_API_KEY) {
+                outputElement.innerText = "Kosa: Tafadhali nenda kwenye Tab ya Store uweke Ufunguo wako wa AI kwanza!";
+                speakFeedback("Tafadhali weka ufunguo kwanza");
+                return;
+            }
+
+            let prompt = `Wewe ni msaidizi wa akili wa duka la Dr. William. Kazi yako ni kuchambua maongezi haya ya Kiswahili: "${userSpeech}". 
+            Toa majibu yako TU katika mfumo wa JSON safi bila maneno ya ziada kabisa nje ya mabano ya JSON. 
+            Kama mode ni 'sales', rudisha muundo huu sahihi wa JSON pekee: {"item": "jina la bidhaa kwa herufi ndogo pekee zilizorekebishwa", "qty": idadi_kama_namba}.
+            Kama mode ni 'expenses', rudisha muundo huu sahihi wa JSON pekee: {"item": "maelezo mafupi ya matumizi", "amount": kiasi_cha_fedha_kama_namba}.`;
+
+            try {
+                let response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
+
+                let data = await response.json();
+                let aiTextResponse = data.candidates[0].content.parts[0].text;
+                
+                // Sanitization pattern for clear raw JSON strings execution
+                let cleanJsonString = aiTextResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+                let result = JSON.parse(cleanJsonString);
+
+                if (mode === 'sales') {
+                    executeVoiceSale(result, outputElement);
+                } else {
+                    executeVoiceExpense(result, outputElement);
+                }
+            } catch (error) {
+                outputElement.innerText = "Mawasiliano na AI yamefeli au ufunguo sio sahihi.";
+                console.error(error);
+            }
+        }
+
+        // Execution of Adaptive AI Parsed Functions
+        function executeVoiceSale(data, outputElement) {
+            let item = data.item;
+            let qty = parseInt(data.qty) || 1;
+
+            if (storeInventory[item]) {
+                if (storeInventory[item].qty >= qty) {
+                    storeInventory[item].qty -= qty;
+                    let total = qty * storeInventory[item].price;
+                    transactionsSales.push({ name: item, qty: qty, total: total });
+                    
+                    renderStockTable();
+                    renderSalesTable();
+                    outputElement.innerText = `AI Imepunguza: ${qty} za ${item}`;
+                    speakFeedback(`Nimekata ${qty} za ${item} kwenye store`);
+                } else {
+                    outputElement.innerText = `Mzigo hautoshi! Zimebaki ${storeInventory[item].qty} tu.`;
+                    speakFeedback(`Mzigo hautoshi stoo`);
+                }
+            } else {
+                outputElement.innerText = `Bidhaa ya "${item}" haijasajiliwa stoo bado!`;
+                speakFeedback(`Bidhaa hiyo haipo stoo`);
+            }
+        }
+
+        function executeVoiceExpense(data, outputElement) {
+            let desc = data.item || "Matumizi ya jumla";
+            let amount = parseInt(data.amount) || 0;
+
+            transactionsExpenses.push({ desc: desc, cost: amount });
+            
+            let tbody = document.getElementById('expensesTableBody');
+            tbody.innerHTML = '';
+            transactionsExpenses.forEach(e => {
+                tbody.innerHTML += `<tr><td style="text-transform:capitalize;">${e.desc}</td><td>${e.cost.toLocaleString()} TZS</td></tr>`;
+            });
+            outputElement.innerText = `AI Imerekodi Matumizi: ${desc} - ${amount.toLocaleString()} TZS`;
+            speakFeedback(`Matumizi ya ${desc} yameandikwa`);
+        }
+
+        function renderSalesTable() {
+            let tbody = document.getElementById('salesTableBody');
+            tbody.innerHTML = '';
+            transactionsSales.forEach(t => {
+                tbody.innerHTML += `<tr><td style="text-transform:capitalize;">${t.name}</td><td>${t.qty}</td><td>${t.total.toLocaleString()} TZS</td></tr>`;
+            });
+        }
+
+        // Swahili Natural Audio Synthesis Response Engine
+        function speakFeedback(phrase) {
+            if ('speechSynthesis' in window) {
+                let utterance = new SpeechSynthesisUtterance(phrase);
+                utterance.lang = 'sw-TZ';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+    </script>
+</body>
+</html>
