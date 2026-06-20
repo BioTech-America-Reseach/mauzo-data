@@ -2,263 +2,1768 @@
 <html lang="sw">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr. William Premium Series - Live Voice</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dr. William Live Voice AI</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+    </script>
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: #111116; color: #f5f5f5; padding: 20px; }
-        .container { max-width: 1100px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #ffcc00; padding-bottom: 15px; }
-        header h1 { color: #ffcc00; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; }
-        header p { color: #888; font-size: 13px; margin-top: 5px; }
-        
-        .nav-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
-        .tab-btn { background-color: #222; color: #ccc; border: 1px solid #333; padding: 12px 20px; cursor: pointer; font-weight: 600; border-radius: 6px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
-        .tab-btn:hover { border-color: #ffcc00; color: #ffcc00; }
-        .tab-btn.active { background-color: #ffcc00; color: #111; border-color: #ffcc00; box-shadow: 0 0 15px rgba(255, 204, 0, 0.3); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
 
-        .page-panel { display: none; background-color: #1a1a1f; border: 1px solid #2a2a35; border-radius: 12px; padding: 25px; }
-        .page-panel.active { display: block; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        h2 { color: #ffcc00; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px; }
-        .voice-box { background: #22222a; border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 20px; border-left: 4px solid #ffcc00; }
-        
-        .mic-trigger { width: 70px; height: 70px; border-radius: 50%; background-color: #ffcc00; border: none; color: #111; font-size: 24px; cursor: pointer; transition: all 0.3s; margin: 10px 0; }
-        .mic-trigger.listening { background-color: #ff3333; color: #fff; animation: pulse 1s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 51, 51, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); } }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #f5f5f5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-        .transcript-preview { background: #111; padding: 12px; border-radius: 6px; font-style: italic; color: #aaa; margin-top: 10px; font-size: 13px; min-height: 40px; }
-        
-        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .form-group input { width: 100%; background-color: #111; border: 1px solid #333; color: #fff; padding: 10px; border-radius: 6px; }
-        .form-group input:focus { border-color: #ffcc00; outline: none; }
-        
-        .btn-action { background-color: #ffcc00; color: #111; font-weight: bold; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #2a2a35; font-size: 14px; }
-        th { background-color: #222; color: #ffcc00; }
-        .badge-status { background: rgba(255, 51, 51, 0.2); color: #ff3333; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f5c518;
+            border-radius: 100px;
+        }
+
+        /* ================================================================
+                   ANIMATIONS
+                   ================================================================ */
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseGlow {
+            0%,
+            100% { box-shadow: 0 0 20px rgba(245, 197, 24, 0.15); }
+            50% { box-shadow: 0 0 60px rgba(245, 197, 24, 0.3); }
+        }
+        @keyframes shimmerGold {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes voiceWave {
+            0%,
+            100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.5); opacity: 1; }
+        }
+        @keyframes pulseDot {
+            0%,
+            100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(0.7); }
+        }
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes listeningPulse {
+            0% { box-shadow: 0 0 0 0 rgba(245, 197, 24, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(245, 197, 24, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 197, 24, 0); }
+        }
+
+        .animate-fade-up { animation: fadeInUp 0.6s ease forwards; }
+        .animate-slide-up { animation: slideUp 0.5s ease forwards; }
+        .animate-pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+
+        /* ================================================================
+                   HEADER
+                   ================================================================ */
+        .header {
+            background: #0d0d0d;
+            border-bottom: 1px solid rgba(245, 197, 24, 0.08);
+            padding: 8px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+        }
+
+        .header .container {
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header .logo .icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #f5c518, #ffd700);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0a0a0a;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .header .logo h1 {
+            font-size: 15px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #f5c518, #ffd700, #f5c518);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmerGold 3s linear infinite;
+        }
+
+        .header .logo .sub {
+            font-size: 7px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.2);
+            display: block;
+            margin-top: -2px;
+            letter-spacing: 0.5px;
+        }
+
+        .header .status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9px;
+            font-weight: 600;
+            color: #f5c518;
+            padding: 3px 12px;
+            border-radius: 100px;
+            background: rgba(245, 197, 24, 0.04);
+            border: 1px solid rgba(245, 197, 24, 0.04);
+        }
+
+        .header .status .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #f5c518;
+            animation: pulseDot 1.2s infinite;
+        }
+
+        /* ================================================================
+                   VOICE BAR - LIVE MIC (HAIKATI)
+                   ================================================================ */
+        .voice-bar {
+            background: #121212;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin: 8px 0 12px;
+            border: 1px solid rgba(245, 197, 24, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .voice-bar.active {
+            border-color: #f5c518;
+            box-shadow: 0 0 40px rgba(245, 197, 24, 0.04);
+        }
+
+        .voice-bar .left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .voice-bar .left .mic-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 2px solid #f5c518;
+            background: rgba(245, 197, 24, 0.04);
+            color: #f5c518;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .voice-bar .left .mic-btn.active {
+            background: rgba(245, 197, 24, 0.12);
+            animation: listeningPulse 1.5s infinite;
+        }
+
+        .voice-bar .left .mic-btn .waves {
+            display: none;
+            gap: 3px;
+            align-items: center;
+        }
+
+        .voice-bar .left .mic-btn.active .waves {
+            display: flex;
+        }
+        .voice-bar .left .mic-btn.active .mic-icon {
+            display: none;
+        }
+
+        .voice-bar .left .mic-btn .wave {
+            width: 3px;
+            height: 14px;
+            background: #f5c518;
+            border-radius: 2px;
+        }
+        .voice-bar .left .mic-btn .wave:nth-child(1) { animation: voiceWave 0.6s infinite; }
+        .voice-bar .left .mic-btn .wave:nth-child(2) { animation: voiceWave 0.8s infinite 0.2s; }
+        .voice-bar .left .mic-btn .wave:nth-child(3) { animation: voiceWave 0.7s infinite 0.4s; }
+        .voice-bar .left .mic-btn .wave:nth-child(4) { animation: voiceWave 0.9s infinite 0.1s; }
+
+        .voice-bar .left .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .voice-bar .left .info .state {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .voice-bar .left .info .state .gold {
+            color: #f5c518;
+        }
+
+        .voice-bar .left .info .state .listening-text {
+            color: #f5c518;
+            animation: pulseDot 0.8s infinite;
+        }
+
+        .voice-bar .left .info .sub {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.25);
+            margin-top: 2px;
+        }
+
+        .voice-bar .left .info .sub .live-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #e74c3c;
+            border-radius: 50%;
+            animation: pulseDot 0.6s infinite;
+            margin-right: 4px;
+        }
+
+        .voice-bar .right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ================================================================
+                   CHAT - LIVE CONVERSATION
+                   ================================================================ */
+        .chat-area {
+            background: #121212;
+            border-radius: 12px;
+            padding: 10px 14px;
+            min-height: 50px;
+            max-height: 100px;
+            overflow-y: auto;
+            border: 1px solid rgba(245, 197, 24, 0.02);
+            margin-bottom: 12px;
+        }
+
+        .chat-area .msg {
+            font-size: 11px;
+            padding: 3px 8px;
+            margin-bottom: 2px;
+            border-radius: 4px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .chat-area .msg.user {
+            background: rgba(245, 197, 24, 0.04);
+            text-align: right;
+            color: #f5c518;
+        }
+
+        .chat-area .msg.ai {
+            background: rgba(255, 255, 255, 0.01);
+            color: rgba(255, 255, 255, 0.4);
+            border-left: 2px solid #f5c518;
+        }
+
+        .chat-area .msg.ai .speaker {
+            color: #f5c518;
+            margin-right: 4px;
+        }
+
+        /* ================================================================
+                   MAIN CONTENT
+                   ================================================================ */
+        .main-content {
+            max-width: 100%;
+            padding: 0 16px 80px;
+        }
+
+        /* ================================================================
+                   STATS
+                   ================================================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 500px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: #121212;
+            border-radius: 10px;
+            padding: 12px 14px;
+            border: 1px solid rgba(245, 197, 24, 0.03);
+        }
+
+        .stat-card .label {
+            font-size: 8px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.15);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #f5c518;
+            margin-top: 3px;
+        }
+
+        .stat-card .value.white {
+            color: #ffffff;
+        }
+
+        .stat-card .sub {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.1);
+            margin-top: 2px;
+        }
+
+        /* ================================================================
+                   SECTIONS
+                   ================================================================ */
+        .section-card {
+            background: #121212;
+            border-radius: 12px;
+            padding: 14px 16px;
+            border: 1px solid rgba(245, 197, 24, 0.03);
+            margin-bottom: 12px;
+        }
+
+        .section-card .s-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .section-card .s-header h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-card .s-header h3 i {
+            color: #f5c518;
+        }
+
+        .section-card .s-header .btn {
+            padding: 4px 14px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 9px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            background: linear-gradient(135deg, #f5c518, #ffd700);
+            color: #0a0a0a;
+        }
+
+        .section-card .s-header .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(245, 197, 24, 0.1);
+        }
+
+        .section-card .s-header .btn.outline {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(245, 197, 24, 0.04);
+        }
+
+        /* ================================================================
+                   TABLE
+                   ================================================================ */
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        table th {
+            text-align: left;
+            padding: 4px 6px;
+            color: rgba(255, 255, 255, 0.15);
+            font-weight: 600;
+            font-size: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            border-bottom: 1px solid rgba(245, 197, 24, 0.03);
+        }
+
+        table td {
+            padding: 4px 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 10px;
+        }
+
+        table tr:hover td {
+            background: rgba(245, 197, 24, 0.01);
+        }
+
+        /* ================================================================
+                   RECEIPT - FULL PREMIUM
+                   ================================================================ */
+        .receipt {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 12px 14px;
+            border: 1px solid rgba(245, 197, 24, 0.04);
+            font-family: 'Courier New', monospace;
+        }
+
+        .receipt .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            font-size: 10px;
+        }
+
+        .receipt .row .lbl {
+            color: rgba(255, 255, 255, 0.15);
+        }
+        .receipt .row .val {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .receipt .divider {
+            border-top: 1px dashed rgba(245, 197, 24, 0.04);
+            margin: 3px 0;
+        }
+
+        .receipt .total {
+            font-size: 14px;
+            font-weight: 800;
+            color: #f5c518;
+            text-align: right;
+            margin-top: 3px;
+        }
+
+        .receipt .stamp {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+            padding-top: 3px;
+            border-top: 2px solid #f5c518;
+            font-size: 7px;
+        }
+
+        .receipt .stamp .tin {
+            color: rgba(255, 255, 255, 0.1);
+        }
+        .receipt .stamp .s {
+            color: #f5c518;
+            font-weight: 700;
+        }
+
+        /* ================================================================
+                   RECEIPT MODAL - POPS UP AFTER SALE
+                   ================================================================ */
+        .receipt-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .receipt-modal.show {
+            display: flex;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .receipt-modal .modal-content {
+            background: #121212;
+            border-radius: 20px;
+            padding: 24px 28px;
+            max-width: 420px;
+            width: 100%;
+            border: 1px solid rgba(245, 197, 24, 0.06);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .receipt-modal .modal-content .close-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 18px;
+            cursor: pointer;
+            float: right;
+            transition: all 0.3s;
+        }
+
+        .receipt-modal .modal-content .close-btn:hover {
+            color: #f5c518;
+        }
+
+        .receipt-modal .modal-content .receipt-title {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .receipt-modal .modal-content .receipt-title h2 {
+            font-size: 18px;
+            font-weight: 900;
+            color: #f5c518;
+        }
+
+        .receipt-modal .modal-content .receipt-title p {
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .receipt-modal .modal-content .receipt-body {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            padding: 8px 0;
+        }
+
+        .receipt-modal .modal-content .receipt-body .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+        }
+
+        .receipt-modal .modal-content .receipt-body .row .lbl {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .receipt-modal .modal-content .receipt-body .row .val {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .receipt-modal .modal-content .receipt-body .divider {
+            border-top: 1px dashed rgba(245, 197, 24, 0.06);
+            margin: 4px 0;
+        }
+
+        .receipt-modal .modal-content .receipt-body .total {
+            font-size: 16px;
+            font-weight: 800;
+            color: #f5c518;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        .receipt-modal .modal-content .receipt-body .stamp {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            padding-top: 4px;
+            border-top: 2px solid #f5c518;
+            font-size: 8px;
+        }
+
+        .receipt-modal .modal-content .receipt-body .stamp .tin {
+            color: rgba(255, 255, 255, 0.1);
+        }
+        .receipt-modal .modal-content .receipt-body .stamp .s {
+            color: #f5c518;
+            font-weight: 700;
+        }
+
+        .receipt-modal .modal-content .btn-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .receipt-modal .modal-content .btn-group button {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .receipt-modal .modal-content .btn-group .btn-print {
+            background: linear-gradient(135deg, #f5c518, #ffd700);
+            color: #0a0a0a;
+        }
+
+        .receipt-modal .modal-content .btn-group .btn-print:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(245, 197, 24, 0.15);
+        }
+
+        .receipt-modal .modal-content .btn-group .btn-pdf {
+            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+            border: 1px solid rgba(245, 197, 24, 0.04);
+        }
+
+        .receipt-modal .modal-content .btn-group .btn-pdf:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .receipt-modal .modal-content .btn-group .btn-close-modal {
+            background: rgba(255, 255, 255, 0.02);
+            color: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .receipt-modal .modal-content .btn-group .btn-close-modal:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* ================================================================
+                   TOAST
+                   ================================================================ */
+        .toast {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #121212;
+            padding: 6px 18px;
+            border-radius: 8px;
+            border: 1px solid rgba(245, 197, 24, 0.04);
+            font-size: 11px;
+            color: #ffffff;
+            font-weight: 500;
+            z-index: 9999;
+            max-width: 90%;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .toast.show {
+            display: flex;
+            animation: slideUp 0.4s ease;
+        }
+
+        .toast i {
+            color: #f5c518;
+        }
+
+        /* ================================================================
+                   MODAL
+                   ================================================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 9998;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #121212;
+            border-radius: 14px;
+            padding: 20px 24px;
+            max-width: 380px;
+            width: 100%;
+            border: 1px solid rgba(245, 197, 24, 0.04);
+            animation: slideUp 0.4s ease;
+        }
+
+        .modal-box .title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-box .title i {
+            color: #f5c518;
+        }
+
+        .modal-box .close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .modal-box .form-group {
+            margin-bottom: 10px;
+        }
+
+        .modal-box .form-group label {
+            display: block;
+            font-size: 9px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 3px;
+        }
+
+        .modal-box .form-group input {
+            width: 100%;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(245, 197, 24, 0.04);
+            background: #0d0d0d;
+            color: #ffffff;
+            font-size: 12px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .modal-box .form-group input:focus {
+            border-color: #f5c518;
+        }
+
+        .modal-box .btn-primary {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: none;
+            background: linear-gradient(135deg, #f5c518, #ffd700);
+            color: #0a0a0a;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .modal-box .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(245, 197, 24, 0.1);
+        }
+
+        /* ================================================================
+                   FOOTER
+                   ================================================================ */
+        .footer {
+            text-align: center;
+            padding: 8px 0;
+            font-size: 7px;
+            color: rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(245, 197, 24, 0.01);
+            margin-top: 4px;
+        }
+        .footer strong {
+            color: #f5c518;
+        }
+
+        /* ================================================================
+                   RESPONSIVE
+                   ================================================================ */
+        @media (max-width: 600px) {
+            .voice-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .voice-bar .left {
+                flex-wrap: wrap;
+            }
+            .voice-bar .left .mic-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 18px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .receipt-modal .modal-content {
+                padding: 16px 18px;
+            }
+            .receipt-modal .modal-content .btn-group {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .header .logo h1 {
+                font-size: 13px;
+            }
+            .header .logo .icon {
+                width: 30px;
+                height: 30px;
+                font-size: 13px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Dr. William Series AI</h1>
-            <p>Smart Voice Inventory & Analytics (GitHub Stable Version)</p>
-        </header>
+    <!-- ================================================================
+    TOAST
+    ================================================================ -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg">Imefanikiwa!</span>
+    </div>
 
-        <nav class="nav-tabs">
-            <button class="tab-btn active" id="btn-stock-page" onclick="switchTab('stock-page')"><i class="fa-solid fa-box-archive"></i> 1. Store / Stock</button>
-            <button class="tab-btn" id="btn-sales-page" onclick="switchTab('sales-page')"><i class="fa-solid fa-cart-shopping"></i> 2. Sehemu ya Mauzo</button>
-            <button class="tab-btn" id="btn-expenses-page" onclick="switchTab('expenses-page')"><i class="fa-solid fa-wallet"></i> 3. Sehemu ya Matumizi</button>
-        </nav>
+    <!-- ================================================================
+    RECEIPT MODAL - POPS UP AFTER SALE
+    ================================================================ -->
+    <div class="receipt-modal" id="receiptModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeReceiptModal()"><i class="fas fa-times"></i></button>
 
-        <!-- TAB 1: STORE -->
-        <div id="stock-page" class="page-panel active">
-            <h2><i class="fa-solid fa-box-archive"></i> Sajili Mzigo kwa Mkono (Manual Stock Setup)</h2>
-            <div class="form-row">
-                <div class="form-group"><input type="text" id="stockItemName" placeholder="Jina la Bidhaa mf. aloe vera"></div>
-                <div class="form-group"><input type="number" id="stockItemQty" placeholder="Idadi iliyopo (Stock Qty)"></div>
-                <div class="form-group"><input type="number" id="stockItemPrice" placeholder="Bei ya kuuzia kila kimoja"></div>
-                <button class="btn-action" onclick="addStockItemManual()">Weka Store</button>
+            <div class="receipt-title">
+                <h2>🧾 DR. WILLIAM STORE</h2>
+                <p>Smart Voice Inventory · Simu: +255 762 286 282</p>
             </div>
 
-            <table>
-                <thead>
-                    <tr><th>Jina la Bidhaa</th><th>Zilizopo Store</th><th>Bei ya Kila Moja</th><th>Hali</th></tr>
-                </thead>
-                <tbody id="stockTableBody"></tbody>
-            </table>
-        </div>
-
-        <!-- TAB 2: SALES -->
-        <div id="sales-page" class="page-panel">
-            <h2><i class="fa-solid fa-cart-shopping"></i> Ukurasa wa Mauzo pekee (Sauti)</h2>
-            <div class="voice-box">
-                <p>Bonyeza mic kisha tamka mauzo (Mfano: *"aloe vera 2"* au *"nimeuza biskuti 5"*)</p>
-                <button class="mic-trigger" id="salesMic"><i class="fa-solid fa-microphone"></i></button>
-                <div class="transcript-preview" id="salesTranscript">Bonyeza mic uongee...</div>
+            <div class="receipt-body" id="receiptBody">
+                <div class="row"><span class="lbl">Namba</span><span class="val" id="rNumber">-</span></div>
+                <div class="row"><span class="lbl">Tarehe</span><span class="val" id="rDate">-</span></div>
+                <div class="row"><span class="lbl">Mteja</span><span class="val" id="rClient">-</span></div>
+                <div class="divider"></div>
+                <div class="row"><span class="lbl">Bidhaa</span><span class="val" id="rItem">-</span></div>
+                <div class="row"><span class="lbl">Wingi</span><span class="val" id="rQty">-</span></div>
+                <div class="row"><span class="lbl">Bei</span><span class="val" id="rPrice">-</span></div>
+                <div class="divider"></div>
+                <div class="row"><span class="lbl">Jumla</span><span class="val" id="rTotal">-</span></div>
+                <div class="total" id="rGrandTotal">TSh 0</div>
+                <div class="stamp">
+                    <span class="tin">TIN: TIN-2026-001</span>
+                    <span class="s"><i class="fas fa-check-circle"></i> Imethibitishwa</span>
+                </div>
             </div>
-            <table>
-                <thead><tr><th>Bidhaa Iliyouzwa</th><th>Idadi</th><th>Jumla Kuu</th></tr></thead>
-                <tbody id="salesTableBody"></tbody>
-            </table>
-        </div>
 
-        <!-- TAB 3: EXPENSES -->
-        <div id="expenses-page" class="page-panel">
-            <h2><i class="fa-solid fa-wallet"></i> Ukurasa wa Matumizi pekee (Sauti)</h2>
-            <div class="voice-box">
-                <p>Tamka matumizi (Mfano: *"nimenunua maji ya 5000"* au *"dagaa ya 2000"*)</p>
-                <button class="mic-trigger" id="expensesMic"><i class="fa-solid fa-microphone"></i></button>
-                <div class="transcript-preview" id="expensesTranscript">Bonyeza mic uongee...</div>
+            <div class="btn-group">
+                <button class="btn-print" onclick="printReceiptModal()"><i class="fas fa-print"></i> Chapisha</button>
+                <button class="btn-pdf" onclick="downloadReceiptPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="btn-close-modal" onclick="closeReceiptModal()"><i class="fas fa-times"></i> Funga</button>
             </div>
-            <table>
-                <thead><tr><th>Aina ya Matumizi</th><th>Kiasi Kilicholipwa</th></tr></thead>
-                <tbody id="expensesTableBody"></tbody>
-            </table>
         </div>
     </div>
 
+    <!-- ================================================================
+    MODAL
+    ================================================================ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <div class="title">
+                <i class="fas fa-plus-circle"></i>
+                <span>Ongeza Bidhaa</span>
+                <button class="close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="form-group">
+                <label>Jina la Bidhaa</label>
+                <input type="text" id="mItem" placeholder="Aloe Vera">
+            </div>
+            <div class="form-group">
+                <label>Wingi</label>
+                <input type="number" id="mQty" placeholder="12">
+            </div>
+            <div class="form-group">
+                <label>Bei (TSh)</label>
+                <input type="number" id="mPrice" placeholder="15000">
+            </div>
+            <button class="btn-primary" onclick="saveModalStock()"><i class="fas fa-save"></i> Hifadhi</button>
+        </div>
+    </div>
+
+    <!-- ================================================================
+    HEADER
+    ================================================================ -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="icon">⚕️</div>
+                <div>
+                    <h1>DR. WILLIAM LIVE AI</h1>
+                    <span class="sub">Smart Voice Assistant</span>
+                </div>
+            </div>
+            <div class="status">
+                <span class="dot"></span>
+                <span id="statusText">Live Ready</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================================================================
+    MAIN
+    ================================================================ -->
+    <div class="main-content">
+
+        <!-- ================================================================
+        VOICE BAR - LIVE MIC
+        ================================================================ -->
+        <div class="voice-bar" id="voiceBar">
+            <div class="left">
+                <button class="mic-btn" id="micBtn" onclick="toggleVoice()">
+                    <span class="mic-icon"><i class="fas fa-microphone"></i></span>
+                    <span class="waves">
+                        <span class="wave"></span><span class="wave"></span>
+                        <span class="wave"></span><span class="wave"></span>
+                    </span>
+                </button>
+                <div class="info">
+                    <div class="state" id="aiState">
+                        <span class="gold">🎤</span> Bonyeza mic <span class="listening-text">●</span>
+                    </div>
+                    <div class="sub" id="aiSub">
+                        <span id="subText">Sema: "Nimeongeza Aloe Vera 12 bei 15000"</span>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <i class="fas fa-robot"></i>
+                <span id="aiStatusIcon">●</span>
+            </div>
+        </div>
+
+        <!-- ================================================================
+        CHAT
+        ================================================================ -->
+        <div class="chat-area" id="chatArea">
+            <div class="msg ai"><span class="speaker">🔊</span> 👋 Karibu! Mimi ni Live Voice AI.</div>
+            <div class="msg ai"><span class="speaker">💡</span> Sema: <strong>"Nimeongeza Aloe Vera 12 bei 15000"</strong></div>
+            <div class="msg ai"><span class="speaker">💡</span> Au: <strong>"Nimeuza Aloe Vera 3"</strong></div>
+        </div>
+
+        <!-- ================================================================
+        STATS
+        ================================================================ -->
+        <div class="stats-grid">
+            <div class="stat-card animate-fade-up">
+                <div class="label"><i class="fas fa-boxes"></i> Stock</div>
+                <div class="value" id="statStock">0</div>
+                <div class="sub">Bidhaa zilizopo</div>
+            </div>
+            <div class="stat-card animate-fade-up" style="animation-delay:0.1s;">
+                <div class="label"><i class="fas fa-shopping-cart"></i> Mauzo</div>
+                <div class="value white" id="statSales">TSh 0</div>
+                <div class="sub">Miamala: <span id="statSalesCount">0</span></div>
+            </div>
+            <div class="stat-card animate-fade-up" style="animation-delay:0.2s;">
+                <div class="label"><i class="fas fa-wallet"></i> Matumizi</div>
+                <div class="value white" id="statExpenses">TSh 0</div>
+                <div class="sub">Miamala: <span id="statExpensesCount">0</span></div>
+            </div>
+            <div class="stat-card animate-fade-up" style="animation-delay:0.3s;">
+                <div class="label"><i class="fas fa-exchange-alt"></i> Jumla</div>
+                <div class="value" id="statTotal">0</div>
+                <div class="sub">Shughuli zote</div>
+            </div>
+        </div>
+
+        <!-- ================================================================
+        STOCK TABLE
+        ================================================================ -->
+        <div class="section-card">
+            <div class="s-header">
+                <h3><i class="fas fa-boxes"></i> Stock</h3>
+                <button class="btn" onclick="openModal()"><i class="fas fa-plus"></i> Ongeza</button>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>#</th><th>Bidhaa</th><th>Wingi</th><th>Bei</th><th>Jumla</th></tr></thead>
+                    <tbody id="stockBody">
+                        <tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.06);padding:14px;">Hakuna bidhaa. Sema: "Nimeongeza..."</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================================================================
+        ACTIVITY
+        ================================================================ -->
+        <div class="section-card">
+            <div class="s-header">
+                <h3><i class="fas fa-list"></i> Shughuli</h3>
+                <span style="font-size:8px;color:rgba(255,255,255,0.08);">Mauzo · Matumizi</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>#</th><th>Aina</th><th>Bidhaa</th><th>Wingi</th><th>Jumla</th><th>Tarehe</th></tr></thead>
+                    <tbody id="activityBody">
+                        <tr><td colspan="6" style="text-align:center;color:rgba(255,255,255,0.06);padding:14px;">Hakuna shughuli. Sema: "Nimeuza..."</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================================================================
+        RECEIPT PREVIEW
+        ================================================================ -->
+        <div class="section-card">
+            <div class="s-header">
+                <h3><i class="fas fa-receipt"></i> Risiti</h3>
+                <button class="btn" onclick="printReceipt()"><i class="fas fa-print"></i> Chapisha</button>
+            </div>
+            <div class="receipt" id="receiptPreview">
+                <div style="text-align:center; margin-bottom:4px;">
+                    <div style="font-size:13px; font-weight:900; color:#f5c518;">DR. WILLIAM STORE</div>
+                    <div style="font-size:7px; color:rgba(255,255,255,0.08);">Smart Voice Inventory</div>
+                </div>
+                <div class="row"><span class="lbl">Namba</span><span class="val" id="receiptNumber">-</span></div>
+                <div class="row"><span class="lbl">Tarehe</span><span class="val" id="receiptDate">-</span></div>
+                <div class="divider"></div>
+                <div class="row"><span class="lbl">Bidhaa</span><span class="val" id="receiptItem">-</span></div>
+                <div class="row"><span class="lbl">Wingi</span><span class="val" id="receiptQty">-</span></div>
+                <div class="row"><span class="lbl">Bei</span><span class="val" id="receiptPrice">-</span></div>
+                <div class="divider"></div>
+                <div class="row"><span class="lbl">Jumla</span><span class="val" id="receiptTotal">-</span></div>
+                <div class="total" id="receiptGrandTotal">TSh 0</div>
+                <div class="stamp">
+                    <span class="tin">TIN: TIN-2026-001</span>
+                    <span class="s"><i class="fas fa-check-circle"></i> Imethibitishwa</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================
+        FOOTER
+        ================================================================ -->
+        <div class="footer">
+            <p><strong>DR. WILLIAM LIVE AI</strong> — Smart Voice Assistant<br>© 2026 <strong>Baraka Richard Nonya</strong></p>
+        </div>
+
+    </div>
+
+    <!-- ================================================================
+    SCRIPTS - FULL LIVE ENGINE
+    ================================================================ -->
     <script>
-        // Core Inventory Engine (Data saved locally so it doesn't clear on refresh)
-        let storeInventory = JSON.parse(localStorage.getItem('dr_w_store')) || {
-            "aloe vera": { qty: 25, price: 5000 },
-            "biskuti": { qty: 40, price: 1000 }
-        };
-        let transactionsSales = [];
-        let transactionsExpenses = [];
-
-        window.onload = function() {
-            renderStockTable();
-            initVoiceSystem('salesMic', 'salesTranscript', 'sales');
-            initVoiceSystem('expensesMic', 'expensesTranscript', 'expenses');
+        // ================================================================
+        // DATA STORE
+        // ================================================================
+        let db = JSON.parse(localStorage.getItem('dw_live_ai_v2')) || {
+            stock: [],
+            sales: [],
+            expenses: [],
+            receiptCounter: 1
         };
 
-        function switchTab(pageId) {
-            document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            document.getElementById('btn-' + pageId).classList.add('active');
+        // ================================================================
+        // STATE
+        // ================================================================
+        let isListening = false;
+        let recognition = null;
+        let synth = window.speechSynthesis;
+        let isProcessing = false;
+
+        // ================================================================
+        // DOM REFS
+        // ================================================================
+        const micBtn = document.getElementById('micBtn');
+        const aiState = document.getElementById('aiState');
+        const aiSub = document.getElementById('subText');
+        const chatArea = document.getElementById('chatArea');
+        const voiceBar = document.getElementById('voiceBar');
+
+        // ================================================================
+        // TOAST
+        // ================================================================
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            t.classList.add('show');
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
         }
 
-        function addStockItemManual() {
-            let name = document.getElementById('stockItemName').value.trim().toLowerCase();
-            let qty = parseInt(document.getElementById('stockItemQty').value);
-            let price = parseInt(document.getElementById('stockItemPrice').value);
+        // ================================================================
+        // SPEECH SYNTHESIS
+        // ================================================================
+        function speak(text) {
+            if (!synth) return;
+            try { synth.cancel(); } catch (e) {}
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'sw-TZ';
+            utter.rate = 0.9;
+            utter.pitch = 1;
+            utter.volume = 1;
+            const voices = synth.getVoices();
+            const swVoice = voices.find(v => v.lang.includes('sw'));
+            if (swVoice) utter.voice = swVoice;
+            synth.speak(utter);
+        }
 
-            if(name && !isNaN(qty) && !isNaN(price)) {
-                storeInventory[name] = { qty: qty, price: price };
-                saveData();
-                renderStockTable();
-                document.getElementById('stockItemName').value = '';
-                document.getElementById('stockItemQty').value = '';
-                document.getElementById('stockItemPrice').value = '';
+        // ================================================================
+        // VOICE RECOGNITION - CONTINUOUS
+        // ================================================================
+        function initVoice() {
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SR) {
+                aiState.innerHTML = '❌ <span style="color:#e74c3c;">Tumia Google Chrome</span>';
+                return null;
             }
-        }
 
-        function renderStockTable() {
-            let tbody = document.getElementById('stockTableBody');
-            tbody.innerHTML = '';
-            for (let item in storeInventory) {
-                let status = storeInventory[item].qty <= 3 ? '<span class="badge-status">Inaisha!</span>' : 'Sawa';
-                tbody.innerHTML += `<tr><td style="text-transform:capitalize;"><strong>${item}</strong></td><td>${storeInventory[item].qty} Pisi</td><td>${storeInventory[item].price.toLocaleString()} TZS</td><td>${status}</td></tr>`;
-            }
-        }
+            const recog = new SR();
+            recog.lang = 'sw-TZ';
+            recog.continuous = true;
+            recog.interimResults = true;
+            recog.maxAlternatives = 1;
 
-        function saveData() {
-            localStorage.setItem('dr_w_store', JSON.stringify(storeInventory));
-        }
+            recog.onstart = function() {
+                isListening = true;
+                micBtn.classList.add('active');
+                voiceBar.classList.add('active');
+                aiState.innerHTML = '🎤 <span style="color:#f5c518;">Live · Inasikiliza...</span>';
+                aiSub.innerHTML = '<span style="color:#e74c3c;">🔴 Live</span> Sema sasa...';
+                document.getElementById('statusText').textContent = '🔴 Live';
+                document.getElementById('aiStatusIcon').textContent = '🔴';
+                document.getElementById('aiStatusIcon').style.color = '#e74c3c';
+            };
 
-        // Hybrid Voice Processing Engine
-        function initVoiceSystem(btnId, transcriptId, mode) {
-            let btn = document.getElementById(btnId);
-            let output = document.getElementById(transcriptId);
-
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (speechRecognition) {
-                const recognition = new SpeechRecognition();
-                recognition.lang = 'sw-TZ';
-                recognition.continuous = false;
-                recognition.interimResults = false;
-
-                btn.onclick = () => {
-                    try { recognition.start(); } catch(e) { console.log("Tayari inasikiliza"); }
-                };
-
-                recognition.onstart = () => { btn.classList.add('listening'); output.innerText = "Ninasikiliza sauti yako sasa..."; };
-                
-                recognition.onresult = (event) => {
-                    let text = event.results[0][0].transcript.toLowerCase();
-                    output.innerText = `Nimesikia: "${text}"`;
-                    
-                    if (mode === 'sales') {
-                        processLocalSales(text, output);
-                    } else {
-                        processLocalExpenses(text, output);
+            recog.onend = function() {
+                if (isListening) {
+                    try { recog.start(); } catch (e) {
+                        setTimeout(() => { try { recog.start(); } catch (e) {} }, 300);
                     }
-                };
-
-                recognition.onend = () => { btn.classList.remove('listening'); };
-                recognition.onerror = (e) => { btn.classList.remove('listening'); output.innerText = "Kosa la Maiki. Hakikisha umeruhusu Microphone!"; };
-            } else {
-                output.innerText = "Kivinjari chako hakikubali sauti. Tumia Google Chrome au Safari halisi!";
-            }
-        }
-
-        // Robust Local Swahili Natural Parsing Algorithm
-        function extractNumber(text) {
-            if(text.includes("elfu tano") || text.includes("5000")) return 5000;
-            if(text.includes("elfu mbili") || text.includes("2000")) return 2000;
-            if(text.includes("elfu moja") || text.includes("1000")) return 1000;
-            if(text.includes("mia tano") || text.includes("500")) return 500;
-            
-            let match = text.match(/\d+/);
-            return match ? parseInt(match[0]) : 1;
-        }
-
-        function processLocalSales(text, outputElement) {
-            let foundItem = null;
-            let qty = extractNumber(text);
-
-            for (let key in storeInventory) {
-                if (text.includes(key)) { foundItem = key; break; }
-            }
-
-            if (foundItem) {
-                if (storeInventory[foundItem].qty >= qty) {
-                    storeInventory[foundItem].qty -= qty;
-                    let total = qty * storeInventory[foundItem].price;
-                    transactionsSales.push({ name: foundItem, qty: qty, total: total });
-                    
-                    saveData();
-                    renderStockTable();
-                    renderSalesTable();
-                    outputElement.innerText = `Imefanikiwa: Imeuzwa ${qty} za ${foundItem}`;
-                    speakFeedback(`Nimekata ${qty} za ${foundItem}`);
                 } else {
-                    outputElement.innerText = `Mzigo hautoshi! Zimebaki ${storeInventory[foundItem].qty}`;
-                    speakFeedback(`Mzigo hautoshi stoo`);
+                    micBtn.classList.remove('active');
+                    voiceBar.classList.remove('active');
+                    aiState.innerHTML = '🎤 <span style="color:#f5c518;">Bonyeza mic</span> ●';
+                    aiSub.innerHTML = 'Sema: "Nimeongeza Aloe Vera 12 bei 15000"';
+                    document.getElementById('statusText').textContent = 'Tayari';
+                    document.getElementById('aiStatusIcon').textContent = '●';
+                    document.getElementById('aiStatusIcon').style.color = 'rgba(255,255,255,0.1)';
                 }
+            };
+
+            recog.onerror = function(e) {
+                if (e.error === 'not-allowed') {
+                    showToast('❌ Tafadhali ruhusu mikrofoni.');
+                    isListening = false;
+                    micBtn.classList.remove('active');
+                    voiceBar.classList.remove('active');
+                    aiState.innerHTML = '❌ <span style="color:#e74c3c;">Ruhusu mikrofoni</span>';
+                } else if (e.error !== 'no-speech' && e.error !== 'aborted') {
+                    console.log('Speech error:', e.error);
+                }
+            };
+
+            recog.onresult = function(event) {
+                let final = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) {
+                        final += event.results[i][0].transcript;
+                    }
+                }
+                if (final) {
+                    addChat('user', '🎤 ' + final);
+                    aiSub.innerHTML = '⏳ Inachakata...';
+                    processVoice(final);
+                }
+            };
+
+            return recog;
+        }
+
+        // ================================================================
+        // TOGGLE VOICE
+        // ================================================================
+        function toggleVoice() {
+            if (!recognition) {
+                recognition = initVoice();
+                if (!recognition) return;
+                synth.getVoices();
+                synth.onvoiceschanged = function() { synth.getVoices(); };
+            }
+
+            if (isListening) {
+                isListening = false;
+                try { recognition.stop(); } catch (e) {}
+                micBtn.classList.remove('active');
+                voiceBar.classList.remove('active');
+                aiState.innerHTML = '🎤 <span style="color:#f5c518;">Bonyeza mic</span> ●';
+                aiSub.innerHTML = 'Sema: "Nimeongeza Aloe Vera 12 bei 15000"';
+                document.getElementById('statusText').textContent = 'Tayari';
+                document.getElementById('aiStatusIcon').textContent = '●';
+                document.getElementById('aiStatusIcon').style.color = 'rgba(255,255,255,0.1)';
+                showToast('⏹️ Mikrofoni imezimwa.');
             } else {
-                outputElement.innerText = "Sijatambua bidhaa hiyo kwenye stoo yako.";
-                speakFeedback("Bidhaa haitambuliki stoo");
+                try {
+                    recognition.start();
+                    isListening = true;
+                    showToast('🎤 Live! Ninasikiliza...');
+                    speak('Live. Ninasikiliza.');
+                } catch (e) {
+                    if (e.message.includes('already started')) {
+                        recognition.stop();
+                        setTimeout(() => { try { recognition.start(); } catch (e) {} }, 300);
+                    } else {
+                        showToast('❌ Hitilafu: ' + e.message);
+                    }
+                }
             }
         }
 
-        function processLocalExpenses(text, outputElement) {
-            let amount = extractNumber(text);
-            let cleanText = text.replace("nimenunua", "").replace("ya", "").replace("wa", "").replace(/\d+/g, "").trim();
-            let desc = cleanText || "Matumizi mengine";
-
-            transactionsExpenses.push({ desc: desc, cost: amount });
-            
-            let tbody = document.getElementById('expensesTableBody');
-            tbody.innerHTML = '';
-            transactionsExpenses.forEach(e => {
-                tbody.innerHTML += `<tr><td style="text-transform:capitalize;">${e.desc}</td><td>${e.cost.toLocaleString()} TZS</td></tr>`;
-            });
-            outputElement.innerText = `Imerekodiwa: ${desc} - ${amount} TZS`;
-            speakFeedback(`Matumizi yameandikwa`);
-        }
-
-        function renderSalesTable() {
-            let tbody = document.getElementById('salesTableBody');
-            tbody.innerHTML = '';
-            transactionsSales.forEach(t => {
-                tbody.innerHTML += `<tr><td style="text-transform:capitalize;">${t.name}</td><td>${t.qty}</td><td>${t.total.toLocaleString()} TZS</td></tr>`;
-            });
-        }
-
-        function speakFeedback(phrase) {
-            if ('speechSynthesis' in window) {
-                let utterance = new SpeechSynthesisUtterance(phrase);
-                utterance.lang = 'sw-TZ';
-                window.speechSynthesis.speak(utterance);
+        // ================================================================
+        // CHAT
+        // ================================================================
+        function addChat(type, text) {
+            const msg = document.createElement('div');
+            msg.className = 'msg ' + type;
+            msg.textContent = text;
+            chatArea.appendChild(msg);
+            chatArea.scrollTop = chatArea.scrollHeight;
+            if (chatArea.children.length > 12) {
+                chatArea.removeChild(chatArea.firstChild);
             }
         }
+
+        // ================================================================
+        // PROCESS VOICE
+        // ================================================================
+        function processVoice(input) {
+            if (isProcessing) return;
+            isProcessing = true;
+
+            const c = input.toLowerCase().trim();
+
+            // === ADD TO STOCK ===
+            if (c.includes('nimeongeza') || c.includes('ongeza')) {
+                handleAddStock(input);
+                isProcessing = false;
+                return;
+            }
+
+            // === SALE ===
+            if (c.includes('nimeuza') || c.includes('uza')) {
+                handleSale(input);
+                isProcessing = false;
+                return;
+            }
+
+            // === EXPENSE ===
+            if (c.includes('nimenunua') || c.includes('matumizi') || c.includes('nunua')) {
+                handleExpense(input);
+                isProcessing = false;
+                return;
+            }
+
+            // === COMMANDS ===
+            if (c.includes('mauzo leo') || c.includes('mauzo')) {
+                showSalesSummary();
+                isProcessing = false;
+                return;
+            }
+            if (c.includes('stock') || c.includes('stoke')) {
+                showStockSummary();
+                isProcessing = false;
+                return;
+            }
+            if (c.includes('matumizi yangu')) {
+                showExpensesSummary();
+                isProcessing = false;
+                return;
+            }
+            if (c.includes('help') || c.includes('msaada')) {
+                showHelp();
+                isProcessing = false;
+                return;
+            }
+
+            // === DEFAULT ===
+            const response = 'Samahani, sikuelewa. Sema: "Nimeongeza Aloe Vera 12 bei 15000" au "Nimeuza Aloe Vera 3"';
+            speak(response);
+            addChat('ai', '🔊 ' + response);
+            aiSub.innerHTML = '❌ Sijaelewa. Jaribu tena.';
+            isProcessing = false;
+        }
+
+        // ================================================================
+        // EXTRACT ITEM, QTY, PRICE
+        // ================================================================
+        function extractItemQtyPrice(input) {
+            const words = input.split(' ');
+            let item = 'Bidhaa';
+            let qty = 1;
+            let price = 0;
+
+            const numbers = input.match(/\d+/g);
+            if (!numbers) return null;
+
+            if (numbers.length >= 2) {
+                qty = parseInt(numbers[0]);
+                price = parseInt(numbers[numbers.length - 1]);
+            } else {
+                if (input.includes('bei')) {
+                    price = parseInt(numbers[0]);
+                    qty = 1;
+                } else {
+                    qty = parseInt(numbers[0]);
+                }
+            }
+
+            let itemParts = words.filter(w =>
+                !w.match(/\d+/) &&
+                !['bei', 'za', 'ya', 'na', 'kwa', 'moja', 'mbili', 'tatu', 'nne', 'tano', 'sita', 'saba', 'nane', 'tisa',
+                    'kumi'
+                ].includes(w.toLowerCase())
+            );
+
+            const actions = ['nimeongeza', 'ongeza', 'nimeuza', 'uza', 'nimenunua', 'nunua', 'matumizi'];
+            itemParts = itemParts.filter(w => !actions.includes(w.toLowerCase()));
+
+            item = itemParts.join(' ').trim();
+            if (!item || item.length < 2) item = 'Bidhaa';
+            item = item.charAt(0).toUpperCase() + item.slice(1);
+
+            return { item, qty, price };
+        }
+
+        // ================================================================
+        // HANDLE ADD STOCK
+        // ================================================================
+        function handleAddStock(input) {
+            const result = extractItemQtyPrice(input);
+            if (!result) {
+                speak('Samahani, sikupata bidhaa, wingi na bei.');
+                addChat('ai', '🔊 Samahani, sikupata bidhaa, wingi na bei.');
+                return;
+            }
+
+            const existing = db.stock.find(s => s.item.toLowerCase() === result.item.toLowerCase());
+            if (existing) {
+                existing.qty += result.qty;
+                existing.total = existing.qty * existing.price;
+                speak(`Nimeongeza ${result.qty} ${result.item}. Sasa ziko ${existing.qty}.`);
+                addChat('ai', `🔊 ✅ ${result.qty} ${result.item} imeongezwa! Sasa ziko ${existing.qty}.`);
+            } else {
+                db.stock.push({
+                    id: db.stock.length + 1,
+                    item: result.item,
+                    qty: result.qty,
+                    price: result.price,
+                    total: result.qty * result.price
+                });
+                speak(`Nimeongeza ${result.qty} ${result.item} kwenye stock.`);
+                addChat('ai', `🔊 ✅ ${result.qty} ${result.item} imeongezwa kwenye stock!`);
+            }
+
+            saveData();
+            refreshAll();
+            showToast(`✅ ${result.qty} ${result.item} imeongezwa!`);
+            aiSub.innerHTML = `✅ ${result.qty} ${result.item} imeongezwa!`;
+        }
+
+        // ================================================================
+        // HANDLE SALE - WITH RECEIPT POPUP
+        // ================================================================
+        function handleSale(input) {
+            const result = extractItemQtyPrice(input);
+            if (!result) {
+                speak('Samahani, sikupata bidhaa na wingi.');
+                addChat('ai', '🔊 Samahani, sikupata bidhaa na wingi.');
+                return;
+            }
+
+            const stockItem = db.stock.find(s => s.item.toLowerCase() === result.item.toLowerCase());
+            if (!stockItem) {
+                speak(`Samahani, ${result.item} haipo kwenye stock.`);
+                addChat('ai', `🔊 ⚠️ ${result.item} haipo kwenye stock.`);
+                return;
+            }
+
+            if (stockItem.qty < result.qty) {
+                speak(`Samahani, ${result.item} zipo ${stockItem.qty} tu.`);
+                addChat('ai', `🔊 ⚠️ ${result.item} zipo ${stockItem.qty} tu.`);
+                return;
+            }
+
+            stockItem.qty -= result.qty;
+            stockItem.total = stockItem.qty * stockItem.price;
+
+            const total = result.qty * stockItem.price;
+            const sale = {
+                id: db.sales.length + 1,
+                item: result.item,
+                qty: result.qty,
+                price: stockItem.price,
+                total: total,
+                client: 'Mteja',
+                date: new Date().toLocaleString('sw-TZ')
+            };
+            db.sales.push(sale);
+
+            speak(`Mauzo ya ${result.qty} ${result.item} yamehifadhiwa. Jumla TSh ${total.toLocaleString()}`);
+            addChat('ai', `🔊 ✅ Mauzo! ${result.qty} ${result.item} = TSh ${total.toLocaleString()}`);
+            showToast(`✅ ${result.qty} ${result.item} imeuzwa!`);
+
+            // === SHOW RECEIPT POPUP ===
+            showReceiptModal(result.item, result.qty, stockItem.price, total, 'Mteja');
+
+            saveData();
+            refreshAll();
+            aiSub.innerHTML = `✅ ${result.qty} ${result.item} imeuzwa!`;
+        }
+
+        // ================================================================
+        // HANDLE EXPENSE
+        // ================================================================
+        function handleExpense(input) {
+            const result = extractItemQtyPrice(input);
+            if (!result) {
+                speak('Samahani, sikupata bidhaa na bei.');
+                addChat('ai', '🔊 Samahani, sikupata bidhaa na bei.');
+                return;
+            }
+
+            const expense = {
+                id: db.expenses.length + 1,
+                item: result.item,
+                qty: result.qty,
+                price: result.price,
+                total: result.qty * result.price,
+                date: new Date().toLocaleString('sw-TZ')
+            };
+            db.expenses.push(expense);
+
+            speak(`Matumizi ya ${result.item} yamehifadhiwa. TSh ${expense.total.toLocaleString()}`);
+            addChat('ai', `🔊 ✅ Matumizi! ${result.item} = TSh ${expense.total.toLocaleString()}`);
+            showToast(`✅ Matumizi ya ${result.item} yamehifadhiwa!`);
+            saveData();
+            refreshAll();
+            aiSub.innerHTML = `✅ Matumizi yamehifadhiwa!`;
+        }
+
+        // ================================================================
+        // RECEIPT MODAL - POPS UP
+        // ================================================================
+        function showReceiptModal(item, qty, price, total, client) {
+            const now = new Date();
+            const number = 'RCP-' + String(db.receiptCounter++).padStart(4, '0');
+
+            document.getElementById('rNumber').textContent = number;
+            document.getElementById('rDate').textContent = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+            document.getElementById('rClient').textContent = client || 'Mteja';
+            document.getElementById('rItem').textContent = item;
+            document.getElementById('rQty').textContent = qty;
+            document.getElementById('rPrice').textContent = 'TSh ' + price.toLocaleString();
+            document.getElementById('rTotal').textContent = 'TSh ' + total.toLocaleString();
+            document.getElementById('rGrandTotal').textContent = 'TSh ' + total.toLocaleString();
+
+            document.getElementById('receiptModal').classList.add('show');
+
+            // Also update the preview
+            document.getElementById('receiptNumber').textContent = number;
+            document.getElementById('receiptDate').textContent = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+            document.getElementById('receiptItem').textContent = item;
+            document.getElementById('receiptQty').textContent = qty;
+            document.getElementById('receiptPrice').textContent = 'TSh ' + price.toLocaleString();
+            document.getElementById('receiptTotal').textContent = 'TSh ' + total.toLocaleString();
+            document.getElementById('receiptGrandTotal').textContent = 'TSh ' + total.toLocaleString();
+
+            saveData();
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receiptModal').classList.remove('show');
+        }
+
+        function printReceiptModal() {
+            const content = document.getElementById('receiptBody').innerHTML;
+            const title = document.getElementById('receipt-title');
+            const win = window.open('', '_blank');
+            win.document.write(
+                `<html><head><title>Risiti</title><style>body{font-family:'Courier New',monospace;background:#0a0a0a;color:#fff;padding:20px;max-width:400px;margin:0 auto;}.r{background:#121212;padding:16px;border:1px solid rgba(245,197,24,0.06);}.g{color:#f5c518;}.d{border-top:1px dashed rgba(245,197,24,0.06);margin:4px 0;}.row{display:flex;justify-content:space-between;padding:2px 0;}.l{color:rgba(255,255,255,0.2);}.v{color:#fff;font-weight:500;}.t{font-size:16px;font-weight:800;color:#f5c518;text-align:right;margin-top:4px;}.s{display:flex;justify-content:space-between;margin-top:6px;padding-top:4px;border-top:2px solid #f5c518;font-size:8px;}.stamp{color:#f5c518;font-weight:700;}@media print{body{background:#fff;color:#000;}.r{background:#fff;border:1px solid #ddd;}.g{color:#000;}.l{color:#666;}.v{color:#000;}.t{color:#000;}.s{border-top:2px solid #000;}.stamp{color:#000;}}</style></head><body><div class="r"><div style="text-align:center;margin-bottom:8px;"><h2 style="font-size:16px;font-weight:900;color:#f5c518;">DR. WILLIAM STORE</h2><p style="font-size:8px;color:rgba(255,255,255,0.15);">Smart Voice Inventory</p></div>${content}</div><script>window.print();<\/script></body></html>`
+                );
+            win.document.close();
+            showToast('🖨️ Inachapishwa...');
+        }
+
+        function downloadReceiptPDF() {
+            const content = document.getElementById('receiptBody').innerHTML;
+            const element = document.createElement('div');
+            element.innerHTML =
+                `<div style="font-family:'Courier New',monospace;background:#fff;color:#000;padding:20px;max-width:400px;margin:0 auto;"><div style="text-align:center;margin-bottom:8px;"><h2 style="font-size:16px;font-weight:900;color:#000;">DR. WILLIAM STORE</h2><p style="font-size:8px;color:#666;">Smart Voice Inventory</p></div>${content}</div>`;
+            document.body.appendChild(element);
+            html2pdf().set({
+                margin: 10,
+                filename: `Risiti_${Date.now()}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a6', orientation: 'portrait' }
+            }).from(element).save().then(() => {
+                document.body.removeChild(element);
+            });
+            showToast('📄 PDF inatengenezwa...');
+        }
+
+        function printReceipt() {
+            const content = document.getElementById('receiptPreview').innerHTML;
+            const win = window.open('', '_blank');
+            win.document.write(
+                `<html><head><title>Risiti</title><style>body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;padding:16px;max-width:380px;margin:0 auto;}.r{background:#121212;padding:12px;border:1px solid rgba(245,197,24,0.04);}.g{color:#f5c518;}.d{border-top:1px dashed rgba(245,197,24,0.04);margin:3px 0;}.row{display:flex;justify-content:space-between;padding:2px 0;}.l{color:rgba(255,255,255,0.15);}.v{color:#fff;font-weight:500;}.t{font-size:14px;font-weight:800;color:#f5c518;text-align:right;margin-top:3px;}.s{display:flex;justify-content:space-between;margin-top:3px;padding-top:3px;border-top:2px solid #f5c518;font-size:7px;}.stamp{color:#f5c518;font-weight:700;}@media print{body{background:#fff;color:#000;}.r{background:#fff;border:1px solid #ddd;}.g{color:#000;}.l{color:#666;}.v{color:#000;}.t{color:#000;}.s{border-top:2px solid #000;}.stamp{color:#000;}}</style></head><body><div class="r">${content}</div><script>window.print();<\/script></body></html>`
+                );
+            win.document.close();
+            showToast('🖨️ Inachapishwa...');
+        }
+
+        // ================================================================
+        // SUMMARY FUNCTIONS
+        // ================================================================
+        function showSalesSummary() {
+            const total = db.sales.reduce((sum, s) => sum + s.total, 0);
+            const msg = `Mauzo: ${db.sales.length} miamala, Jumla TSh ${total.toLocaleString()}`;
+            speak(msg);
+            addChat('ai', '🔊 ' + msg);
+        }
+
+        function showStockSummary() {
+            const total = db.stock.reduce((sum, s) => sum + s.qty, 0);
+            const msg = `Stock: Jumla ${total} bidhaa.`;
+            speak(msg);
+            addChat('ai', '🔊 ' + msg);
+        }
+
+        function showExpensesSummary() {
+            const total = db.expenses.reduce((sum, s) => sum + s.total, 0);
+            const msg = `Matumizi: ${db.expenses.length} miamala, Jumla TSh ${total.toLocaleString()}`;
+            speak(msg);
+            addChat('ai', '🔊 ' + msg);
+        }
+
+        function showHelp() {
+            const msg =
+                `Msaada: "Nimeongeza Aloe Vera 12 bei 15000" - Ongeza stock | "Nimeuza Aloe Vera 3" - Mauzo | "Nimenunua Maji 5000" - Matumizi | "Mauzo leo" - Angalia mauzo | "Stock" - Angalia stock`;
+            speak('Msaada. Sema nimeongeza Aloe Vera 12 bei 15000.');
+            addChat('ai', '🔊 ' + msg);
+        }
+
+        // ================================================================
+        // RENDER FUNCTIONS
+        // ================================================================
+        function renderStock() {
+            const tbody = document.getElementById('stockBody');
+            if (db.stock.length === 0) {
+                tbody.innerHTML =
+                    '<tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.06);padding:14px;">Hakuna bidhaa. Sema: "Nimeongeza..."</td></tr>';
+                return;
+            }
+            tbody.innerHTML = db.stock.map(s =>
+                `<tr><td>${s.id}</td><td>${s.item}</td><td>${s.qty}</td><td>TSh ${s.price.toLocaleString()}</td><td>TSh ${(s.qty * s.price).toLocaleString()}</td></tr>`
+            ).join('');
+        }
+
+        function renderActivity() {
+            const tbody = document.getElementById('activityBody');
+            const all = [...db.sales.map(s => ({ ...s, type: 'MAUZO' })), ...db.expenses.map(e => ({ ...e, type: 'MATUMIZI' }))]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 15);
+
+            if (all.length === 0) {
+                tbody.innerHTML =
+                    '<tr><td colspan="6" style="text-align:center;color:rgba(255,255,255,0.06);padding:14px;">Hakuna shughuli. Sema: "Nimeuza..."</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = all.map(s =>
+                `<tr>
+                            <td>${s.id}</td>
+                            <td style="color:${s.type === 'MAUZO' ? '#f5c518' : '#ff6b6b'};">${s.type}</td>
+                            <td>${s.item}</td>
+                            <td>${s.qty}</td>
+                            <td>TSh ${(s.total || 0).toLocaleString()}</td>
+                            <td style="font-size:8px;color:rgba(255,255,255,0.15);">${s.date}</td>
+                        </tr>`
+            ).join('');
+        }
+
+        function updateDashboard() {
+            const totalStock = db.stock.reduce((sum, s) => sum + s.qty, 0);
+            const totalSales = db.sales.reduce((sum, s) => sum + s.total, 0);
+            const totalExpenses = db.expenses.reduce((sum, s) => sum + s.total, 0);
+            const totalTransactions = db.sales.length + db.expenses.length;
+
+            document.getElementById('statStock').textContent = totalStock;
+            document.getElementById('statSales').textContent = 'TSh ' + totalSales.toLocaleString();
+            document.getElementById('statExpenses').textContent = 'TSh ' + totalExpenses.toLocaleString();
+            document.getElementById('statSalesCount').textContent = db.sales.length;
+            document.getElementById('statExpensesCount').textContent = db.expenses.length;
+            document.getElementById('statTotal').textContent = totalTransactions;
+        }
+
+        function refreshAll() {
+            renderStock();
+            renderActivity();
+            updateDashboard();
+        }
+
+        // ================================================================
+        // MODAL
+        // ================================================================
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        function saveModalStock() {
+            const item = document.getElementById('mItem').value.trim();
+            const qty = parseInt(document.getElementById('mQty').value) || 0;
+            const price = parseInt(document.getElementById('mPrice').value) || 0;
+
+            if (!item || qty <= 0 || price <= 0) {
+                showToast('⚠️ Jaza bidhaa, wingi na bei.');
+                return;
+            }
+
+            const existing = db.stock.find(s => s.item.toLowerCase() === item.toLowerCase());
+            if (existing) {
+                existing.qty += qty;
+                existing.total = existing.qty * existing.price;
+            } else {
+                db.stock.push({ id: db.stock.length + 1, item, qty, price, total: qty * price });
+            }
+
+            saveData();
+            refreshAll();
+            closeModal();
+            showToast(`✅ ${qty} ${item} imeongezwa!`);
+            speak(`${qty} ${item} imeongezwa kwenye stock.`);
+            addChat('ai', `🔊 ✅ ${qty} ${item} imeongezwa kwenye stock!`);
+        }
+
+        // ================================================================
+        // SAVE / LOAD
+        // ================================================================
+        function saveData() {
+            localStorage.setItem('dw_live_ai_v2', JSON.stringify(db));
+        }
+
+        // ================================================================
+        // KEYBOARD SHORTCUT
+        // ================================================================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' && e.target === document.body) {
+                e.preventDefault();
+                toggleVoice();
+            }
+        });
+
+        // ================================================================
+        // INIT
+        // ================================================================
+        window.addEventListener('load', function() {
+            synth.getVoices();
+            synth.onvoiceschanged = function() { synth.getVoices(); };
+
+            recognition = initVoice();
+            if (recognition) {
+                addChat('ai', '🔊 ✅ Live Voice AI iko tayari!');
+                addChat('ai', '💡 Sema: "Nimeongeza Aloe Vera 12 bei 15000"');
+                document.getElementById('statusText').textContent = 'Live Ready';
+                speak('Karibu. Bonyeza mic na useme.');
+            } else {
+                addChat('ai', '⚠️ Tumia Google Chrome.');
+            }
+
+            if (db.stock.length === 0) {
+                db.stock = [
+                    { id: 1, item: 'Aloe Vera', qty: 50, price: 15000, total: 750000 },
+                    { id: 2, item: 'Mpera Extract', qty: 30, price: 20000, total: 600000 },
+                ];
+                saveData();
+            }
+
+            refreshAll();
+            console.log('✅ DR. WILLIAM LIVE AI imeanzishwa!');
+            console.log('🎤 Bonyeza SPACE kuwasha mic.');
+            console.log('📝 Sema: "Nimeongeza Aloe Vera 12 bei 15000"');
+            console.log('🧾 Risiti ina-pop up baada ya mauzo!');
+            console.log('© 2026 Baraka Richard Nonya');
+        });
     </script>
+
 </body>
 </html>
