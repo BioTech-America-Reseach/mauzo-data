@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Jawiza">
 <meta name="theme-color" content="#D4A24E">
-<title>Jawiza — Live Mic Sales</title>
+<title>Jawiza — Ultimate Live Recording</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -65,16 +65,6 @@
   .brand-sub{ font-size:11px; color:var(--text-dim); }
   .topbar-right{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 
-  .pill-btn{
-    display:flex; align-items:center; gap:6px;
-    background:var(--panel-2); border:1px solid var(--line); color:var(--text-dim);
-    padding:8px 14px; border-radius:999px; font-size:13px; cursor:pointer;
-    transition:all .15s ease; font-family:'Inter'; font-weight:500;
-  }
-  .pill-btn:hover{ border-color:var(--gold); color:var(--text); }
-  .clock{ font-family:'JetBrains Mono'; font-size:13px; color:var(--text-dim); }
-
-  /* LIVE MIC BUTTON */
   .mic-live-btn{
     display:flex; align-items:center; gap:10px;
     padding:10px 20px; border-radius:999px;
@@ -224,7 +214,6 @@
   .receipt-line.kind-ai .rl-top{ color:#6fc8ff; }
   .receipt-line.kind-savings .rl-top{ color:var(--gold); }
   .receipt-line.kind-reminder .rl-top{ color:#f2c14e; }
-  .receipt-line.kind-live .rl-top{ color:var(--blue); }
   .receipt-empty{ color:var(--text-faint); font-size:13px; padding:20px 0; text-align:center; }
 
   .panel{
@@ -271,7 +260,6 @@
   .badge{ padding:3px 9px; border-radius:7px; font-size:11px; font-weight:600; display:inline-block; }
   .badge-paid{ background:var(--green-soft); color:var(--green); }
   .badge-unpaid{ background:var(--red-soft); color:var(--red); }
-  .badge-live{ background:var(--blue-soft); color:var(--blue); }
 
   .modal-overlay{
     display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(3px);
@@ -322,41 +310,6 @@
   .save-dot{ width:7px; height:7px; border-radius:50%; background:var(--green); }
   .save-dot.stale{ background:var(--red); animation:blink 1s infinite; }
   @keyframes blink{ 50%{ opacity:0.3; } }
-
-  /* Live Sales Items */
-  .live-sale-item{
-    background:var(--panel-2); border:1px solid var(--line); border-radius:12px;
-    padding:12px 14px; margin-bottom:8px;
-    display:flex; align-items:center; gap:12px;
-    transition:all .2s;
-  }
-  .live-sale-item:hover{ border-color:var(--gold); }
-  .live-sale-item .index{
-    font-family:'JetBrains Mono'; font-size:14px; font-weight:700;
-    color:var(--text-faint); min-width:30px;
-  }
-  .live-sale-item .amount{
-    font-family:'Space Grotesk'; font-size:18px; font-weight:700;
-    color:var(--gold); flex:1;
-  }
-  .live-sale-item .time{
-    font-size:11px; color:var(--text-faint);
-    font-family:'JetBrains Mono';
-  }
-  .live-sale-item .status{
-    font-size:10px; padding:2px 8px; border-radius:999px;
-  }
-  .live-sale-item .status.pending{ background:var(--gold-soft); color:var(--gold); }
-  .live-sale-item .status.done{ background:var(--green-soft); color:var(--green); }
-  .live-sale-item .status.warn{ background:var(--red-soft); color:var(--red); }
-
-  .live-counter{
-    font-size:13px; color:var(--text-dim);
-    padding:8px 14px; background:var(--panel-2);
-    border-radius:10px; text-align:center;
-    margin-top:10px;
-  }
-  .live-counter strong{ color:var(--gold); font-size:20px; }
 
   .savings-card{
     background:var(--panel-2); border:1px solid var(--gold); border-radius:12px;
@@ -457,92 +410,55 @@
     .bottom-nav .nav-item svg { width: 20px; height: 20px; }
     .mic-live-btn{ padding: 8px 14px; font-size: 12px; }
     .mic-live-btn .count{ font-size: 10px; padding: 2px 8px; }
-    .live-sale-item .amount{ font-size: 15px; }
   }
   @media (min-width: 641px){
     .download-pwa-btn{ display: flex; }
   }
 
-  .ai-chat-panel{
-    background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
-    display: flex; flex-direction: column; overflow: hidden; margin-top: 18px;
+  /* Live Recording Styles */
+  .live-transcript{
+    background:var(--panel-2); border-radius:12px; padding:14px;
+    max-height:200px; overflow-y:auto;
+    font-size:13px; line-height:1.8;
+    border:1px solid var(--line);
+    margin-top:10px;
   }
-  .ai-chat-header{
-    padding: 14px 18px; border-bottom: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: space-between;
-    background: linear-gradient(135deg, rgba(212,162,78,0.08), transparent);
+  .live-transcript .highlight{
+    color:var(--gold);
+    font-weight:600;
   }
-  .ai-chat-header h3{ font-family: 'Space Grotesk'; font-size: 15px; font-weight: 700; }
-  .ai-badge{
-    background: linear-gradient(135deg, #FF6B6B, #ee5a24);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 999px;
-    letter-spacing: 0.5px;
+  .live-transcript .time{
+    color:var(--text-faint);
+    font-size:11px;
+    font-family:'JetBrains Mono';
   }
-  .ai-messages{
-    flex: 1; overflow-y: auto; padding: 14px; display: flex;
-    flex-direction: column; gap: 10px; height: 320px;
-    scroll-behavior: smooth;
+
+  .conversation-item{
+    background:var(--panel-2); border:1px solid var(--line);
+    border-radius:10px; padding:10px 14px; margin-bottom:6px;
   }
-  .ai-msg{
-    max-width: 88%; padding: 10px 14px; border-radius: 14px;
-    font-size: 13.5px; line-height: 1.6; animation: msgIn .25s ease;
+  .conversation-item .text{
+    font-size:13px;
   }
-  @keyframes msgIn{ from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);} }
-  .ai-msg.user{
-    align-self: flex-end; background: var(--gold); color: #1a1305; font-weight: 500;
-    border-bottom-right-radius: 4px;
+  .conversation-item .meta{
+    font-size:10px; color:var(--text-faint);
+    display:flex; gap:12px; margin-top:4px;
   }
-  .ai-msg.assistant{
-    align-self: flex-start; background: var(--panel-2); color: var(--text);
-    border: 1px solid var(--line); border-bottom-left-radius: 4px;
+  .conversation-item .meta .tag{
+    background:var(--blue-soft); color:var(--blue);
+    padding:1px 8px; border-radius:999px; font-size:9px;
   }
-  .ai-msg.thinking{
-    align-self: flex-start; background: var(--panel-2); border: 1px solid var(--line);
-    border-bottom-left-radius: 4px; color: var(--text-faint); font-style: italic;
+
+  /* Stock Edit Inline */
+  .stock-edit-row{
+    display:flex; gap:8px; align-items:center; flex-wrap:wrap;
   }
-  .ai-msg.error{
-    align-self: flex-start; background: var(--red-soft); color: var(--red);
-    border: 1px solid rgba(226,87,76,0.3); border-bottom-left-radius: 4px;
+  .stock-edit-row input{
+    background:var(--panel); border:1px solid var(--line);
+    color:var(--text); padding:4px 8px; border-radius:6px;
+    width:60px; font-size:12px;
   }
-  .ai-input-row{
-    padding: 12px 14px; border-top: 1px solid var(--line);
-    display: flex; gap: 8px; align-items: center;
-  }
-  .ai-input-row input{
-    flex: 1; background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
-    padding: 12px 14px; border-radius: 12px; font-size: 14px; outline: none; font-family: 'Inter';
-  }
-  .ai-input-row input:focus{ border-color: var(--gold); }
-  .ai-send-btn{
-    background: var(--gold); color: #1a1305; border: none; width: 44px; height: 44px;
-    border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    font-size: 18px; font-weight: 700; transition: all .2s; flex-shrink: 0;
-  }
-  .ai-send-btn:hover{ opacity: 0.85; transform:scale(0.95); }
-  .ai-voice-btn{
-    background: var(--panel-2); color: var(--text-dim); border: 1px solid var(--line);
-    width: 44px; height: 44px; border-radius: 12px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; font-size: 16px;
-    transition: all .2s; flex-shrink: 0;
-  }
-  .ai-voice-btn:hover{ border-color:var(--gold); }
-  .ai-voice-btn.listening{ background: var(--green); color: #0a2818; border-color: var(--green); animation: pulse-listen 1s infinite; }
-  .ai-quick-chips{
-    padding: 6px 14px 0; display: flex; gap: 6px; overflow-x: auto;
-    scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  }
-  .ai-quick-chips::-webkit-scrollbar{ display: none; }
-  .ai-chip{
-    flex-shrink: 0; background: var(--panel-2); border: 1px solid var(--line);
-    color: var(--text-dim); padding: 6px 12px; border-radius: 999px;
-    font-size: 12px; cursor: pointer; font-family: 'Inter'; font-weight: 500;
-    white-space: nowrap; transition: all .2s;
-  }
-  .ai-chip:hover{ border-color: var(--gold); color: var(--text); transform:scale(1.05); }
+  .stock-edit-row input:focus{ border-color:var(--gold); outline:none; }
 </style>
 </head>
 <body>
@@ -553,7 +469,7 @@
   <div class="topbar">
     <div class="brand">
       <div class="brand-mark">J</div>
-      <div><div class="brand-name">Jawiza</div><div class="brand-sub">Live Mic Sales</div></div>
+      <div><div class="brand-name">Jawiza</div><div class="brand-sub">Ultimate Live Recording</div></div>
     </div>
     <div class="topbar-right">
       <div class="save-bar"><span class="save-dot" id="saveDot"></span><span id="saveText">Imehifadhiwa</span></div>
@@ -569,8 +485,8 @@
   <!-- NAV TABS -->
   <div class="nav-tabs">
     <div class="nav-tab active" data-page="home" onclick="showPage('home')"><span class="dot"></span>Nyumbani</div>
+    <div class="nav-tab" data-page="live" onclick="showPage('live')"><span class="dot" style="background:var(--blue);"></span>🎤 Live</div>
     <div class="nav-tab" data-page="mauzo" onclick="showPage('mauzo')"><span class="dot"></span>Mauzo</div>
-    <div class="nav-tab" data-page="live" onclick="showPage('live')"><span class="dot" style="background:var(--blue);"></span>🎤 Live Sales</div>
     <div class="nav-tab" data-page="stock" onclick="showPage('stock')"><span class="dot"></span>Stoki</div>
     <div class="nav-tab" data-page="alldata" onclick="showPage('alldata')"><span class="dot" style="background:var(--gold);"></span>Ripoti</div>
   </div>
@@ -584,7 +500,7 @@
           <div class="orb-core"><svg viewBox="0 0 24 24" fill="none"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Z" stroke="#1a1305" stroke-width="1.8" fill="#1a1305"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3" stroke="#1a1305" stroke-width="1.8" stroke-linecap="round"/></svg></div>
         </div>
         <div class="orb-status" id="orbStatus">Bofya kuongea na Jawiza</div>
-        <div class="orb-hint">Sema "Uza [kiasi]" au bonyeza Live Mic</div>
+        <div class="orb-hint">Sema chochote, Live Mic inarekodi yote</div>
         <div class="typebar">
           <input type="text" id="commandInput" placeholder="Andika amri hapa...">
           <button onclick="submitTypedCommand()">Tuma</button>
@@ -592,20 +508,16 @@
         <div class="chips-wrap">
           <div class="help-chip" onclick="toggleLiveMic()">🎤 Live Mic</div>
           <div class="help-chip" onclick="triggerVoiceSale()">Seli</div>
-          <div class="help-chip" onclick="triggerVoiceExpense()">Matumizi</div>
           <div class="help-chip" onclick="triggerSavings()">💰 Akiba</div>
         </div>
-        <!-- Live Mic Status -->
-        <div style="margin-top:14px;width:100%;background:var(--panel-2);border-radius:12px;padding:10px 14px;border:1px solid var(--line);">
-          <div style="display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:12px;color:var(--text-dim);">
-              <i class="fa-solid fa-microphone"></i> Live Mic
-            </span>
-            <span id="liveMicStatus" style="font-size:12px;color:var(--text-faint);">🔴 Imewashwa</span>
+        <div style="margin-top:14px;width:100%;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--panel-2);border-radius:10px;border:1px solid var(--line);">
+            <span style="font-size:12px;color:var(--text-dim);"><i class="fa-solid fa-microphone"></i> Live Status</span>
+            <span id="liveMicStatus" style="font-size:12px;color:var(--text-faint);">🔴 Imezimwa</span>
             <span id="liveMicCountDisplay" style="font-size:14px;font-weight:700;color:var(--gold);">0</span>
           </div>
-          <div id="liveMicRecent" style="font-size:11px;color:var(--text-faint);margin-top:4px;max-height:40px;overflow:hidden;">
-            Hakuna mauzo ya hivi karibuni
+          <div id="liveTranscript" class="live-transcript" style="display:none;">
+            <div style="color:var(--text-faint);font-style:italic;">Inarekodi...</div>
           </div>
         </div>
       </div>
@@ -631,48 +543,54 @@
     </div>
   </div>
 
+  <!-- LIVE PAGE -->
+  <div class="page" id="page-live">
+    <div class="panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <div class="panel-title">🎤 Live Recording — Mazungumzo Yote</div>
+          <div class="panel-sub">Inarekodi kila kitu unachosema, AI inachambua baada ya kuzima</div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-blue" id="livePageMicBtn" onclick="toggleLiveMic()">
+            <i class="fa-solid fa-microphone"></i> <span id="livePageMicLabel">Washa Mic</span>
+          </button>
+          <button class="btn btn-gold" onclick="processLiveConversation()" id="processLiveBtn">
+            <i class="fa-solid fa-robot"></i> AI Chakua
+          </button>
+          <button class="btn btn-red" onclick="clearLiveConversation()">
+            <i class="fa-solid fa-trash"></i> Futa
+          </button>
+        </div>
+      </div>
+      
+      <!-- Conversation Transcript -->
+      <div id="liveConversationContainer" style="margin-top:14px;max-height:400px;overflow-y:auto;">
+        <div class="receipt-empty">Hakuna mazungumzo bado. Washa Live Mic na ongea!</div>
+      </div>
+      
+      <div class="live-counter" style="margin-top:12px;padding:10px 14px;background:var(--panel-2);border-radius:10px;text-align:center;">
+        <span style="font-size:13px;color:var(--text-dim);">Maneno yaliyorekodiwa: </span>
+        <strong id="liveWordCount" style="color:var(--gold);">0</strong>
+        <span style="font-size:13px;color:var(--text-dim);margin-left:16px;">Mauzo yaliyotambuliwa: </span>
+        <strong id="liveDetectedSales" style="color:var(--blue);">0</strong>
+      </div>
+    </div>
+  </div>
+
   <!-- MAUZO PAGE -->
   <div class="page" id="page-mauzo">
     <div class="panel">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-        <div><div class="panel-title">Jedwali la Mauzo</div><div class="panel-sub">Mauzo yote, tarehe, wateja na hali</div></div>
+        <div><div class="panel-title">Jedwali la Mauzo</div><div class="panel-sub">Mauzo yote yaliyorekodiwa na kuthibitishwa</div></div>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
           <button class="btn btn-gold" onclick="openModal('newSaleModal')"><i class="fa-solid fa-plus"></i> Mauzo Mapya</button>
           <button class="btn btn-blue" onclick="toggleLiveMic()"><i class="fa-solid fa-microphone"></i> Live Mic</button>
         </div>
       </div>
       <div style="overflow-x:auto; margin-top:18px;">
-        <table><thead><tr><th>Na.</th><th>Tarehe</th><th>Mteja</th><th>Bidhaa</th><th>Jumla</th><th>Hali</th><th>Kitendo</th></tr></thead><tbody id="salesTableBody"></tbody></table>
+        <table><thead><tr><th>Na.</th><th>Tarehe</th><th>Mteja</th><th>Bidhaa</th><th>Idadi</th><th>Jumla</th><th>Hali</th><th>Kitendo</th></tr></thead><tbody id="salesTableBody"></tbody></table>
         <div class="empty-state" id="salesEmpty" style="display:none;"><i class="fa-solid fa-receipt"></i><div>Hakuna mauzo bado.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LIVE SALES PAGE -->
-  <div class="page" id="page-live">
-    <div class="panel">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-        <div>
-          <div class="panel-title">🎤 Live Sales — Mauzo ya Sauti</div>
-          <div class="panel-sub">Mauzo yote yaliyorekodiwa kwa sauti</div>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn btn-blue" id="livePageMicBtn" onclick="toggleLiveMic()">
-            <i class="fa-solid fa-microphone"></i> <span id="livePageMicLabel">Washa Mic</span>
-          </button>
-          <button class="btn btn-gold" onclick="processLiveSales()" id="processLiveBtn">
-            <i class="fa-solid fa-check"></i> Chakua Mauzo
-          </button>
-          <button class="btn btn-red" onclick="clearLiveSales()">
-            <i class="fa-solid fa-trash"></i> Futa Yote
-          </button>
-        </div>
-      </div>
-      <div id="liveSalesList" style="margin-top:16px;max-height:500px;overflow-y:auto;">
-        <div class="receipt-empty">Hakuna mauzo ya live bado. Washa Live Mic na sema "Uza [kiasi]"</div>
-      </div>
-      <div class="live-counter" id="liveCounter">
-        Jumla ya Mauzo ya Live: <strong id="liveTotalAmount">Tsh 0</strong> | Idadi: <strong id="liveTotalCount">0</strong>
       </div>
     </div>
   </div>
@@ -690,15 +608,16 @@
     </div>
   </div>
 
-  <!-- ALL DATA / RIPOTI -->
+  <!-- RIPOTI PAGE -->
   <div class="page" id="page-alldata">
-    <div class="data-dashboard" style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:18px;">
-      <h3 style="font-family:'Space Grotesk';font-size:16px;margin-bottom:14px;">📊 Ripoti Kamili ya Biashara</h3>
+    <div class="panel">
+      <div class="panel-title">📊 Ripoti Kamili</div>
+      <div class="panel-sub">Muhtasari wa biashara yako</div>
       <div id="finalReportContainer"></div>
       <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
         <button class="btn btn-gold" onclick="exportFinalReportPDF()"><i class="fa-solid fa-file-pdf"></i> PDF</button>
         <button class="btn btn-gold" onclick="exportFinalReportPNG()"><i class="fa-solid fa-image"></i> PNG</button>
-        <button class="btn btn-blue" onclick="speakFinalReport()"><i class="fa-solid fa-volume-high"></i> Soma Ripoti</button>
+        <button class="btn btn-blue" onclick="speakFinalReport()"><i class="fa-solid fa-volume-high"></i> Soma</button>
       </div>
     </div>
   </div>
@@ -735,6 +654,7 @@
 </div>
 
 <!-- MODALS -->
+
 <div class="modal-overlay" id="savingsModal">
   <div class="modal-box">
     <div class="modal-head"><h3>💰 Weka Akiba</h3><button class="modal-close" onclick="closeModal('savingsModal')"><i class="fa-solid fa-xmark"></i></button></div>
@@ -783,11 +703,11 @@
 
 <div class="modal-overlay" id="quickStockModal">
   <div class="modal-box">
-    <div class="modal-head"><h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--red);"></i> Bidhaa Haipo Stoki</h3><button class="modal-close" onclick="closeModal('quickStockModal')"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="modal-head"><h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--red);"></i> Ongeza Bidhaa Mpya</h3><button class="modal-close" onclick="closeModal('quickStockModal')"><i class="fa-solid fa-xmark"></i></button></div>
     <p style="color:var(--text-dim);font-size:13.5px;margin-bottom:14px;" id="quickStockMissingText"></p>
-    <div class="field"><label>Jina la Bidhaa</label><input type="text" id="quickStockName" placeholder="alovera"></div>
+    <div class="field"><label>Jina la Bidhaa</label><input type="text" id="quickStockName" placeholder="samaki"></div>
     <div class="field-row">
-      <div class="field"><label>Idadi</label><input type="number" id="quickStockQty" placeholder="0"></div>
+      <div class="field"><label>Idadi</label><input type="number" id="quickStockQty" placeholder="1"></div>
       <div class="field"><label>Bei kwa Kipande (Tsh)</label><input type="number" id="quickStockPrice" placeholder="0"></div>
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
@@ -797,7 +717,6 @@
   </div>
 </div>
 
-<!-- RECEIPT MODAL -->
 <div class="modal-overlay" id="receiptModal">
   <div class="modal-box">
     <div class="modal-head"><h3>Risiti</h3><button class="modal-close" onclick="closeModal('receiptModal')"><i class="fa-solid fa-xmark"></i></button></div>
@@ -810,48 +729,35 @@
   </div>
 </div>
 
-<!-- PROCESS LIVE SALES MODAL -->
-<div class="modal-overlay" id="processLiveModal">
+<!-- PROCESS CONVERSATION MODAL -->
+<div class="modal-overlay" id="processConversationModal">
   <div class="modal-box wide">
     <div class="modal-head">
-      <h3>📋 Thibitisha Mauzo ya Live</h3>
-      <button class="modal-close" onclick="closeModal('processLiveModal')"><i class="fa-solid fa-xmark"></i></button>
+      <h3>🤖 AI Inachambua Mazungumzo Yako</h3>
+      <button class="modal-close" onclick="closeModal('processConversationModal')"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div id="processLiveContent"></div>
-    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
-      <button class="btn btn-ghost" onclick="closeModal('processLiveModal')">Ghairi</button>
-      <button class="btn btn-gold" onclick="confirmProcessedLiveSales()"><i class="fa-solid fa-check"></i> Thibitisha Yote</button>
-    </div>
-  </div>
-</div>
-
-<!-- FINAL REPORT MODAL -->
-<div class="modal-overlay" id="finalReportModal">
-  <div class="modal-box wide">
-    <div class="modal-head">
-      <h3>📊 Ripoti ya Mwisho wa Siku</h3>
-      <button class="modal-close" onclick="closeModal('finalReportModal')"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="finalReportContent"></div>
+    <div id="processConversationContent"></div>
     <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap;">
-      <button class="btn btn-ghost" onclick="closeModal('finalReportModal')">Funga</button>
-      <button class="btn btn-gold" onclick="exportFinalReportPDF()"><i class="fa-solid fa-file-pdf"></i> PDF</button>
-      <button class="btn btn-gold" onclick="exportFinalReportPNG()"><i class="fa-solid fa-image"></i> PNG</button>
-      <button class="btn btn-blue" onclick="speakFinalReport()"><i class="fa-solid fa-volume-high"></i> Soma</button>
+      <button class="btn btn-ghost" onclick="closeModal('processConversationModal')">Funga</button>
+      <button class="btn btn-gold" onclick="confirmProcessedSales()"><i class="fa-solid fa-check"></i> Thibitisha Yote</button>
     </div>
   </div>
 </div>
 
 <script>
 // ================================================================
-// CONSTANTS & STATE
+// ULTIMATE LIVE RECORDING SYSTEM
 // ================================================================
-const STORAGE_KEY = 'jawiza_state_v4';
+
+// ================================================================
+// CONSTANTS
+// ================================================================
+const STORAGE_KEY = 'jawiza_state_v5';
 const DELETED_KEY = 'jawiza_deleted_receipts';
+const CONVERSATION_KEY = 'jawiza_conversation';
 const LAST_BACKUP_KEY = 'jawiza_last_backup';
-const SLEEP_CHECK_KEY = 'jawiza_last_sleep_check';
 const REMINDER_LOG_KEY = 'jawiza_reminder_log';
-const LIVE_SALES_KEY = 'jawiza_live_sales';
+const SLEEP_CHECK_KEY = 'jawiza_last_sleep_check';
 
 // ================================================================
 // MISTRAL AI API
@@ -860,62 +766,63 @@ const MISTRAL_API_KEY = 'jHPOkMNjXGmn99LY3dvfHhCueNzvYl63';
 const MISTRAL_MODEL = 'mistral-large-latest';
 
 // ================================================================
-// LIVE SALES STATE
+// CONVERSATION STATE
 // ================================================================
-let liveSales = [];
+let conversation = [];
 let liveMicActive = false;
 let liveRecognition = null;
 let isLiveListening = false;
-let liveSaleCounter = 0;
-let processedLiveSales = [];
+let conversationWordCount = 0;
+let detectedSales = [];
 
-function getLiveSales() {
+function getConversation() {
   try {
-    const raw = localStorage.getItem(LIVE_SALES_KEY);
+    const raw = localStorage.getItem(CONVERSATION_KEY);
     return raw ? JSON.parse(raw) : [];
   } catch(e) { return []; }
 }
 
-function saveLiveSales(sales) {
-  localStorage.setItem(LIVE_SALES_KEY, JSON.stringify(sales));
+function saveConversation(conv) {
+  localStorage.setItem(CONVERSATION_KEY, JSON.stringify(conv));
+  conversation = conv;
 }
 
-function addLiveSale(amount) {
-  const sales = getLiveSales();
-  sales.push({
-    id: 'live-' + Date.now(),
-    amount: amount,
+function addToConversation(text, isFinal = true) {
+  const conv = getConversation();
+  conv.push({
+    id: 'conv-' + Date.now(),
+    text: text,
     timestamp: nowISO(),
-    status: 'pending',
-    product: null,
-    customer: null,
-    phone: null,
-    region: null
+    isFinal: isFinal,
+    processed: false
   });
-  saveLiveSales(sales);
-  liveSales = sales;
+  saveConversation(conv);
+  conversationWordCount += text.split(/\s+/).length;
   updateLiveUI();
-  speak('Rekodi: Uza ' + fmtMoney(amount));
-  showToast('🎤 Uza ' + fmtMoney(amount) + ' imerekodiwa!', 'blue');
   
-  // Play sound effect
-  playBeep();
-}
-
-function playBeep() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.frequency.value = 800;
-    osc.type = 'sine';
-    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.1);
-  } catch(e) {}
+  // Show live transcript
+  const transcript = document.getElementById('liveTranscript');
+  if (transcript) {
+    transcript.style.display = 'block';
+    const lastEntry = conv[conv.length - 1];
+    const time = new Date(lastEntry.timestamp).toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    transcript.innerHTML = `
+      <div class="conversation-item" style="animation:fadeIn .3s ease;">
+        <div class="text">${escapeHtml(text)}</div>
+        <div class="meta">
+          <span class="time">${time}</span>
+          <span class="tag">${isFinal ? '✅' : '⏳'}</span>
+        </div>
+      </div>
+      ${conv.slice(-3).reverse().slice(1).map(c => `
+        <div class="conversation-item" style="opacity:0.6;">
+          <div class="text">${escapeHtml(c.text)}</div>
+          <div class="meta"><span class="time">${new Date(c.timestamp).toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'})}</span></div>
+        </div>
+      `).join('')}
+    `;
+    transcript.scrollTop = transcript.scrollHeight;
+  }
 }
 
 // ================================================================
@@ -1052,8 +959,8 @@ function showPage(name) {
   
   switch(name) {
     case 'home': renderStats(); renderFeed(); renderSavings(); break;
+    case 'live': renderConversation(); break;
     case 'mauzo': renderSalesTable(); break;
-    case 'live': renderLiveSales(); break;
     case 'stock': renderStockTable(); break;
     case 'alldata': renderFinalReport(); break;
   }
@@ -1179,12 +1086,26 @@ function renderStockTable() {
     const low = s.idadi<=5;
     return `<tr>
       <td style="text-transform:capitalize;font-weight:600;">${escapeHtml(key)}${low ? ' <span class="badge badge-unpaid">Stoki Pungufu</span>' : ''}</td>
-      <td><input type="number" value="${s.idadi}" min="0" onchange="editStockField('${key}','idadi',this.value)"></td>
+      <td>
+        <div class="stock-edit-row">
+          <input type="number" value="${s.idadi}" min="0" onchange="editStockField('${key}','idadi',this.value)">
+          <button class="btn btn-sm btn-blue" onclick="addStockQty('${key}')"><i class="fa-solid fa-plus"></i></button>
+        </div>
+      </td>
       <td><input type="number" value="${s.bei}" min="0" onchange="editStockField('${key}','bei',this.value)"></td>
       <td class="mono">Tsh ${fmtMoney(s.idadi*s.bei)}</td>
       <td><button class="btn btn-red btn-sm" onclick="deleteStockItem('${key}')"><i class="fa-solid fa-trash"></i></button></td>
     </tr>`;
   }).join('');
+}
+
+function addStockQty(key) {
+  const input = document.querySelector(`input[value*="${key}"]`);
+  if (input) {
+    const current = parseInt(input.value) || 0;
+    input.value = current + 1;
+    editStockField(key, 'idadi', input.value);
+  }
 }
 
 function editStockField(key, field, val) {
@@ -1218,7 +1139,7 @@ function confirmNewStock() {
 
 function confirmQuickStock() {
   const name = document.getElementById('quickStockName').value.trim().toLowerCase();
-  const qty = parseInt(document.getElementById('quickStockQty').value)||0;
+  const qty = parseInt(document.getElementById('quickStockQty').value)||1;
   const price = parseInt(document.getElementById('quickStockPrice').value)||0;
   if(!name) { showToast('Andika jina la bidhaa', 'warn'); return; }
   if(state.stocks[name]) { state.stocks[name].idadi += qty; if(price>0) state.stocks[name].bei = price; }
@@ -1227,7 +1148,8 @@ function confirmQuickStock() {
   renderStockTable();
   renderStats();
   closeModal('quickStockModal');
-  showToast('Bidhaa imeongezwa: ' + name, 'ok');
+  showToast('✅ ' + name + ' imeongezwa stoki!', 'ok');
+  speak(name + ' imeongezwa stoki.');
 }
 
 function renderSalesTable() {
@@ -1237,13 +1159,14 @@ function renderSalesTable() {
   if(list.length===0) { body.innerHTML=''; empty.style.display='block'; return; }
   empty.style.display='none';
   body.innerHTML = list.map(sale=>{
-    const itemsLabel = sale.items.map(i=>`${i.name}`).join(', ');
+    const itemsLabel = sale.items.map(i=>`${i.name} x${i.qty}`).join(', ');
     const d = new Date(sale.dateISO);
     return `<tr>
       <td class="mono">#${sale.seriesNo}</td>
       <td class="mono">${d.toLocaleDateString('en-GB')} ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}</td>
       <td>${escapeHtml(sale.customerName||'-')}</td>
       <td>${escapeHtml(itemsLabel)}</td>
+      <td class="mono">${sale.items.reduce((a,i)=>a+i.qty,0)}</td>
       <td class="mono" style="font-weight:600;">Tsh ${fmtMoney(sale.total)}</td>
       <td><span class="badge ${sale.status==='paid'?'badge-paid':'badge-unpaid'}">${sale.status==='paid'?'Imelipiwa':'Haijalipiwa'}</span></td>
       <td>
@@ -1408,7 +1331,7 @@ function printReceiptPNG() {
 }
 
 // ================================================================
-// LIVE MIC SYSTEM - MAIN FEATURE
+// LIVE MIC - ULTIMATE RECORDING
 // ================================================================
 function toggleLiveMic() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1423,7 +1346,7 @@ function toggleLiveMic() {
   const pageLabel = document.getElementById('livePageMicLabel');
   
   if (liveMicActive) {
-    // STOP LIVE MIC
+    // STOP - Process conversation
     if (liveRecognition) {
       try { liveRecognition.stop(); } catch(e) {}
     }
@@ -1432,46 +1355,60 @@ function toggleLiveMic() {
     btn.classList.remove('active');
     label.textContent = 'Live Mic';
     if (pageLabel) pageLabel.textContent = 'Washa Mic';
-    document.getElementById('liveMicStatus').textContent = '🔴 Imewashwa';
-    document.getElementById('orbStatus').textContent = 'Live Mic imewashwa';
+    document.getElementById('liveMicStatus').textContent = '🔴 Imezimwa';
+    document.getElementById('orbStatus').textContent = 'Live Mic imezimwa';
     document.getElementById('orbStatus').className = 'orb-status';
     
-    // Process all recorded sales
-    const sales = getLiveSales();
-    if (sales.length > 0) {
-      showToast('📋 Mauzo ' + sales.length + ' yamekamilika!', 'gold');
-      speak('Mauzo ' + sales.length + ' yamekamilika. Tafadhali thibitisha.');
-      setTimeout(() => openProcessLiveModal(), 1000);
+    // Process the conversation
+    const conv = getConversation();
+    if (conv.length > 0) {
+      showToast('🎤 Mazungumzo ' + conv.length + ' yamekamilika! AI inachambua...', 'gold');
+      speak('Mazungumzo yamekamilika. AI inachambua mauzo yako.');
+      setTimeout(() => processLiveConversation(), 1500);
     } else {
-      showToast('Hakuna mauzo yaliyorekodiwa', 'warn');
+      showToast('Hakuna mazungumzo yaliyorekodiwa', 'warn');
     }
     
     return;
   }
   
-  // START LIVE MIC
+  // START
   try {
     liveRecognition = new SR();
     liveRecognition.continuous = true;
     liveRecognition.interimResults = true;
     liveRecognition.lang = 'sw-TZ';
     
+    let interimText = '';
+    
     liveRecognition.onresult = function(e) {
+      let finalText = '';
+      let interimText = '';
+      
       for (let i = e.resultIndex; i < e.results.length; i++) {
-        const transcript = e.results[i][0].transcript.toLowerCase();
+        const transcript = e.results[i][0].transcript;
         if (e.results[i].isFinal) {
-          // Check for "uza" pattern
-          const uzaMatch = transcript.match(/(?:uza|u z a|uz a)\s*(\d+)/);
-          if (uzaMatch) {
-            const amount = parseInt(uzaMatch[1]);
-            if (amount > 0) {
-              addLiveSale(amount);
-              // Update UI
-              document.getElementById('liveMicRecent').textContent = '🔄 Uza ' + fmtMoney(amount);
-              document.getElementById('liveMicCountDisplay').textContent = getLiveSales().length;
-              count.textContent = getLiveSales().length;
-            }
-          }
+          finalText += transcript + ' ';
+        } else {
+          interimText += transcript;
+        }
+      }
+      
+      if (finalText.trim()) {
+        addToConversation(finalText.trim(), true);
+        // Update live status
+        document.getElementById('liveMicStatus').textContent = '🟢 Inarekodi...';
+        document.getElementById('liveMicStatus').style.color = 'var(--green)';
+        document.getElementById('orbStatus').textContent = '🎤 Inarekodi...';
+        document.getElementById('orbStatus').className = 'orb-status live';
+        
+        // Check for sales mentions
+        const salesMatches = finalText.match(/(?:nil|nime)?uza\s*(\d+)/gi);
+        if (salesMatches) {
+          const count = document.getElementById('micLiveCount');
+          const current = parseInt(count.textContent) || 0;
+          count.textContent = current + salesMatches.length;
+          document.getElementById('liveMicCountDisplay').textContent = count.textContent;
         }
       }
     };
@@ -1485,7 +1422,6 @@ function toggleLiveMic() {
     
     liveRecognition.onend = function() {
       if (liveMicActive) {
-        // Restart if still active
         try { liveRecognition.start(); } catch(e) {}
       }
     };
@@ -1497,17 +1433,20 @@ function toggleLiveMic() {
     label.textContent = '🔴 Live';
     if (pageLabel) pageLabel.textContent = '🔴 Zima Mic';
     document.getElementById('liveMicStatus').textContent = '🟢 Inarekodi...';
-    document.getElementById('orbStatus').textContent = '🎤 Live Mic inarekodi! Sema "Uza [kiasi]"';
+    document.getElementById('liveMicStatus').style.color = 'var(--green)';
+    document.getElementById('orbStatus').textContent = '🎤 Inarekodi mazungumzo yote...';
     document.getElementById('orbStatus').className = 'orb-status live';
     
-    showToast('🎤 Live Mic imewashwa! Sema "Uza [kiasi]"', 'blue');
-    speak('Live Mic imewashwa. Sema Uza na kiasi.');
+    // Show transcript
+    document.getElementById('liveTranscript').style.display = 'block';
+    
+    showToast('🎤 Live Mic imewashwa! Ongea chochote, inarekodi yote.', 'blue');
+    speak('Live Mic imewashwa. Ongea chochote.');
     
     // Update count
-    const sales = getLiveSales();
-    count.textContent = sales.length;
-    document.getElementById('liveMicCountDisplay').textContent = sales.length;
-    document.getElementById('liveMicRecent').textContent = '🎤 Inasikiliza...';
+    const conv = getConversation();
+    document.getElementById('micLiveCount').textContent = conv.length;
+    document.getElementById('liveMicCountDisplay').textContent = conv.length;
     
   } catch(e) {
     showToast('Hitilafu: ' + e.message, 'warn');
@@ -1515,250 +1454,388 @@ function toggleLiveMic() {
 }
 
 // ================================================================
-// LIVE SALES UI
+// CONVERSATION UI
 // ================================================================
-function renderLiveSales() {
-  const container = document.getElementById('liveSalesList');
-  const sales = getLiveSales();
+function renderConversation() {
+  const container = document.getElementById('liveConversationContainer');
+  const conv = getConversation();
   
-  if (sales.length === 0) {
-    container.innerHTML = '<div class="receipt-empty">Hakuna mauzo ya live bado. Washa Live Mic na sema "Uza [kiasi]"</div>';
-    document.getElementById('liveTotalAmount').textContent = 'Tsh 0';
-    document.getElementById('liveTotalCount').textContent = '0';
+  if (conv.length === 0) {
+    container.innerHTML = '<div class="receipt-empty">Hakuna mazungumzo bado. Washa Live Mic na ongea!</div>';
+    document.getElementById('liveWordCount').textContent = '0';
+    document.getElementById('liveDetectedSales').textContent = '0';
     return;
   }
   
-  container.innerHTML = sales.map((s, idx) => {
-    const time = new Date(s.timestamp).toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    const statusClass = s.status === 'pending' ? 'pending' : 'done';
-    const statusLabel = s.status === 'pending' ? '⏳ Inasubiri' : '✅ Imekamilika';
+  container.innerHTML = conv.slice().reverse().map(c => {
+    const time = new Date(c.timestamp).toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    const isSale = /uza/i.test(c.text);
     return `
-      <div class="live-sale-item">
-        <div class="index">#${idx + 1}</div>
-        <div class="amount">Tsh ${fmtMoney(s.amount)}</div>
-        <div class="time">${time}</div>
-        <span class="status ${statusClass}">${statusLabel}</span>
-        ${s.product ? `<span style="font-size:11px;color:var(--text-dim);">${escapeHtml(s.product)}</span>` : ''}
+      <div class="conversation-item" style="${isSale ? 'border-left:3px solid var(--gold);' : ''}">
+        <div class="text">${escapeHtml(c.text)}</div>
+        <div class="meta">
+          <span class="time">${time}</span>
+          ${isSale ? '<span class="tag">💰 Mauzo</span>' : ''}
+          ${c.processed ? '<span class="tag" style="background:var(--green-soft);color:var(--green);">✅ Imechakuliwa</span>' : '<span class="tag" style="background:var(--gold-soft);color:var(--gold);">⏳ Inasubiri</span>'}
+        </div>
       </div>
     `;
   }).join('');
   
-  const total = sales.reduce((a,s) => a + s.amount, 0);
-  document.getElementById('liveTotalAmount').textContent = 'Tsh ' + fmtMoney(total);
-  document.getElementById('liveTotalCount').textContent = sales.length;
-  document.getElementById('micLiveCount').textContent = sales.length;
-  document.getElementById('liveMicCountDisplay').textContent = sales.length;
+  const wordCount = conv.reduce((a,c) => a + c.text.split(/\s+/).length, 0);
+  document.getElementById('liveWordCount').textContent = wordCount;
+  
+  const salesCount = conv.filter(c => /uza/i.test(c.text)).length;
+  document.getElementById('liveDetectedSales').textContent = salesCount;
 }
 
 function updateLiveUI() {
-  renderLiveSales();
-  const sales = getLiveSales();
-  document.getElementById('micLiveCount').textContent = sales.length;
-  document.getElementById('liveMicCountDisplay').textContent = sales.length;
+  renderConversation();
+  const conv = getConversation();
+  document.getElementById('micLiveCount').textContent = conv.length;
+  document.getElementById('liveMicCountDisplay').textContent = conv.length;
 }
 
-function clearLiveSales() {
-  if (!confirm('Je, una uhakika unataka kufuta mauzo yote ya live?')) return;
-  saveLiveSales([]);
-  renderLiveSales();
-  showToast('Mauzo yote ya live yamefutwa', 'warn');
+function clearLiveConversation() {
+  if (!confirm('Je, una uhakika unataka kufuta mazungumzo yote?')) return;
+  saveConversation([]);
+  conversationWordCount = 0;
+  renderConversation();
+  showToast('Mazungumzo yamefutwa', 'warn');
 }
 
 // ================================================================
-// PROCESS LIVE SALES MODAL
+// PROCESS CONVERSATION WITH AI
 // ================================================================
-function openProcessLiveModal() {
-  const modal = document.getElementById('processLiveModal');
-  const content = document.getElementById('processLiveContent');
-  const sales = getLiveSales();
-  
-  if (sales.length === 0) {
-    content.innerHTML = '<div class="receipt-empty">Hakuna mauzo ya live ya kuchakata.</div>';
-    modal.style.display = 'flex';
-    modal.classList.add('open');
+async function processLiveConversation() {
+  const conv = getConversation();
+  if (conv.length === 0) {
+    showToast('Hakuna mazungumzo ya kuchakata', 'warn');
     return;
   }
   
-  let html = `
-    <div style="margin-bottom:14px;font-size:13px;color:var(--text-dim);">
-      <i class="fa-solid fa-info-circle"></i> Thibitisha bidhaa kwa kila mauzo ya live
-    </div>
-    <div style="max-height:400px;overflow-y:auto;">
-  `;
-  
-  sales.forEach((s, idx) => {
-    const stockOptions = Object.keys(state.stocks).map(name => 
-      `<option value="${name}">${name} (${state.stocks[name].idadi} zipo)</option>`
-    ).join('');
-    
-    html += `
-      <div style="background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
-        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-          <span style="font-weight:700;color:var(--gold);font-size:16px;">Tsh ${fmtMoney(s.amount)}</span>
-          <span style="font-size:11px;color:var(--text-faint);">${new Date(s.timestamp).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}</span>
-          <select id="liveProduct_${idx}" style="flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px 10px;border-radius:8px;">
-            <option value="">-- Chagua Bidhaa --</option>
-            ${stockOptions}
-            <option value="__new__">➕ Ongeza Mpya</option>
-          </select>
-          <input type="text" id="liveCustomer_${idx}" placeholder="Mteja (hiari)" style="background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px 10px;border-radius:8px;width:120px;">
-          <input type="text" id="livePhone_${idx}" placeholder="Namba (hiari)" style="background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px 10px;border-radius:8px;width:120px;">
-        </div>
-      </div>
-    `;
-  });
-  
-  html += '</div>';
-  content.innerHTML = html;
+  const modal = document.getElementById('processConversationModal');
+  const content = document.getElementById('processConversationContent');
   
   modal.style.display = 'flex';
   modal.classList.add('open');
+  content.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim);">🧠 AI inachambua mazungumzo yako...</div>';
+  
+  try {
+    // Get full conversation text
+    const fullText = conv.map(c => c.text).join(' ');
+    
+    // Call Mistral AI to analyze
+    const aiResponse = await callMistralAPI(`
+      SOMA MAZUNGUMZO HAYA YA MTUMIAJI NA UTAMBUAE MAUZO YOTE:
+      
+      MAZUNGUMZO:
+      "${fullText}"
+      
+      STOKI ILIYOPO:
+      ${Object.entries(state.stocks).map(([k,v]) => `${k}: ${v.idadi} (Tsh ${v.bei})`).join(', ')}
+      
+      TAFADHALI:
+      1. Tambua mauzo yote yaliyotajwa katika mazungumzo
+      2. Kwa kila mauzo, tambua: bidhaa, idadi, bei (kama imetajwa), na mteja (kama imetajwa)
+      3. Angalia kama bidhaa zipo stoki
+      4. Toa orodha ya mauzo yaliyotambuliwa kwa muundo huu:
+      
+      MAUZO YALIYOTAMBULIWA:
+      [Bidhaa] x[Idadi] @ Tsh[Bei] - Mteja: [Jina] - Hali: [Imelipiwa/Haijalipiwa]
+      
+      JIBU KWA KISWAHILI kwa muundo rahisi.
+    `);
+    
+    // Parse AI response
+    const lines = aiResponse.split('\n');
+    let salesData = [];
+    let currentSale = {};
+    
+    lines.forEach(line => {
+      if (line.includes('MAUZO YALIYOTAMBULIWA')) {
+        // Skip header
+      } else if (line.match(/[a-z]+\s*x\s*\d+\s*@/i)) {
+        // Parse sale line
+        const match = line.match(/([a-z]+)\s*x\s*(\d+)\s*@\s*Tsh\s*(\d+)/i);
+        if (match) {
+          const name = match[1].toLowerCase();
+          const qty = parseInt(match[2]);
+          const price = parseInt(match[3]);
+          const customerMatch = line.match(/Mteja:\s*([^\s-]+)/i);
+          const customer = customerMatch ? customerMatch[1] : '';
+          const statusMatch = line.match(/Hali:\s*([^\s-]+)/i);
+          const status = statusMatch && statusMatch[1].toLowerCase().includes('lipiwa') ? 'paid' : 'unpaid';
+          
+          salesData.push({ name, qty, price, customer, status });
+        }
+      }
+    });
+    
+    // If AI didn't find anything, try regex manually
+    if (salesData.length === 0) {
+      // Manual detection
+      const manualMatches = fullText.match(/(?:nil|nime)?uza\s*(\d+)\s*(?:za\s*)?([a-z]+)/gi);
+      if (manualMatches) {
+        manualMatches.forEach(match => {
+          const parts = match.match(/(\d+)\s*(?:za\s*)?([a-z]+)/i);
+          if (parts) {
+            const qty = parseInt(parts[1]);
+            const name = parts[2].toLowerCase();
+            if (state.stocks[name]) {
+              salesData.push({ 
+                name, 
+                qty: qty || 1, 
+                price: state.stocks[name].bei,
+                customer: '',
+                status: 'paid'
+              });
+            }
+          }
+        });
+      }
+    }
+    
+    // Build UI
+    let html = `
+      <div style="margin-bottom:14px;font-size:13px;color:var(--text-dim);">
+        <i class="fa-solid fa-info-circle"></i> Mauzo ${salesData.length} yalitambuliwa katika mazungumzo yako.
+        Thibitisha na ubadilishe ikiwa ni lazima.
+      </div>
+      <div style="max-height:400px;overflow-y:auto;">
+    `;
+    
+    if (salesData.length === 0) {
+      html += `
+        <div class="receipt-empty">
+          <i class="fa-solid fa-search" style="font-size:30px;display:block;margin-bottom:10px;"></i>
+          Hakuna mauzo yaliyotambuliwa katika mazungumzo yako.
+          Hakikisha umetaja "uza" na kiasi.
+        </div>
+      `;
+    } else {
+      salesData.forEach((s, idx) => {
+        const stockOptions = Object.keys(state.stocks).map(name => 
+          `<option value="${name}" ${s.name === name ? 'selected' : ''}>${name} (${state.stocks[name].idadi} zipo)</option>`
+        ).join('');
+        
+        html += `
+          <div style="background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+              <span style="font-weight:700;color:var(--gold);font-size:14px;">#${idx+1}</span>
+              <select id="aiProduct_${idx}" style="flex:1;min-width:100px;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px 10px;border-radius:8px;">
+                ${stockOptions}
+                <option value="__new__">➕ Ongeza Mpya</option>
+              </select>
+              <input type="number" id="aiQty_${idx}" value="${s.qty || 1}" min="1" style="width:60px;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px 8px;border-radius:8px;">
+              <span style="color:var(--text-faint);font-size:12px;">x</span>
+              <input type="number" id="aiPrice_${idx}" value="${s.price || 0}" min="0" style="width:80px;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px 8px;border-radius:8px;">
+              <input type="text" id="aiCustomer_${idx}" placeholder="Mteja" value="${escapeHtml(s.customer || '')}" style="flex:1;min-width:80px;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px 8px;border-radius:8px;">
+              <select id="aiStatus_${idx}" style="background:var(--panel);border:1px solid var(--line);color:var(--text);padding:6px 8px;border-radius:8px;">
+                <option value="paid" ${s.status === 'paid' ? 'selected' : ''}>Imelipiwa</option>
+                <option value="unpaid" ${s.status === 'unpaid' ? 'selected' : ''}>Haijalipiwa</option>
+              </select>
+            </div>
+            <div style="font-size:11px;color:var(--text-faint);margin-top:6px;">
+              ${s.name && state.stocks[s.name] ? `✅ Inapatikana stoki (${state.stocks[s.name].idadi} zipo)` : '⚠️ Bidhaa haipo stoki'}
+            </div>
+          </div>
+        `;
+      });
+    }
+    
+    html += '</div>';
+    content.innerHTML = html;
+    
+    // Store sales data for confirmation
+    window._aiSalesData = salesData;
+    
+  } catch (error) {
+    content.innerHTML = `
+      <div style="text-align:center;padding:20px;color:var(--red);">
+        ⚠️ Hitilafu: ${error.message}
+        <br><br>
+        <button class="btn btn-ghost" onclick="closeModal('processConversationModal')">Funga</button>
+      </div>
+    `;
+  }
 }
 
-function confirmProcessedLiveSales() {
-  const sales = getLiveSales();
-  if (sales.length === 0) { showToast('Hakuna mauzo ya kuchakata', 'warn'); return; }
+function confirmProcessedSales() {
+  const salesData = window._aiSalesData || [];
+  if (salesData.length === 0) {
+    showToast('Hakuna mauzo ya kuthibitisha', 'warn');
+    return;
+  }
   
   let processed = 0;
   let errors = [];
   
-  sales.forEach((s, idx) => {
-    const productSelect = document.getElementById('liveProduct_' + idx);
-    const customer = document.getElementById('liveCustomer_' + idx)?.value || '';
-    const phone = document.getElementById('livePhone_' + idx)?.value || '';
+  salesData.forEach((s, idx) => {
+    const productSelect = document.getElementById('aiProduct_' + idx);
+    const qtyInput = document.getElementById('aiQty_' + idx);
+    const priceInput = document.getElementById('aiPrice_' + idx);
+    const customerInput = document.getElementById('aiCustomer_' + idx);
+    const statusSelect = document.getElementById('aiStatus_' + idx);
     
     if (!productSelect) return;
     
     const productName = productSelect.value;
+    const qty = parseInt(qtyInput?.value) || 1;
+    const price = parseInt(priceInput?.value) || 0;
+    const customer = customerInput?.value || 'Mteja wa Live';
+    const status = statusSelect?.value || 'paid';
     
     if (!productName || productName === '') {
-      errors.push(`Mauzo #${idx+1} (Tsh ${fmtMoney(s.amount)}) - hakuna bidhaa iliyochaguliwa`);
+      errors.push(`Mauzo #${idx+1} - hakuna bidhaa iliyochaguliwa`);
       return;
     }
     
     if (productName === '__new__') {
-      // Open quick add modal
+      // Open quick add
       const quickModal = document.getElementById('quickStockModal');
-      document.getElementById('quickStockMissingText').textContent = `Ongeza bidhaa mpya kwa mauzo ya Tsh ${fmtMoney(s.amount)}`;
-      document.getElementById('quickStockName').value = '';
-      document.getElementById('quickStockQty').value = '1';
-      document.getElementById('quickStockPrice').value = Math.round(s.amount);
+      document.getElementById('quickStockMissingText').textContent = `Ongeza bidhaa mpya: ${s.name || 'bidhaa'}`;
+      document.getElementById('quickStockName').value = s.name || '';
+      document.getElementById('quickStockQty').value = qty || 1;
+      document.getElementById('quickStockPrice').value = price || 0;
       quickModal.style.display = 'flex';
       quickModal.classList.add('open');
       
-      // Store sale id for later
-      quickModal.dataset.saleId = s.id;
-      
-      // Override confirm to handle this
+      // Override confirm
       const originalConfirm = window.confirmQuickStock;
       window.confirmQuickStock = function() {
         const name = document.getElementById('quickStockName').value.trim().toLowerCase();
-        const qty = parseInt(document.getElementById('quickStockQty').value)||1;
-        const price = parseInt(document.getElementById('quickStockPrice').value)||Math.round(s.amount);
+        const qty2 = parseInt(document.getElementById('quickStockQty').value)||1;
+        const price2 = parseInt(document.getElementById('quickStockPrice').value)||price;
         if(!name) { showToast('Andika jina la bidhaa', 'warn'); return; }
-        if(state.stocks[name]) { state.stocks[name].idadi += qty; if(price>0) state.stocks[name].bei = price; }
-        else { state.stocks[name] = {idadi:qty, bei:price, lastSold:null}; }
+        if(state.stocks[name]) { state.stocks[name].idadi += qty2; if(price2>0) state.stocks[name].bei = price2; }
+        else { state.stocks[name] = {idadi:qty2, bei:price2, lastSold:null}; }
         saveState();
         renderStockTable();
         renderStats();
         closeModal('quickStockModal');
-        
-        // Now process this sale with new product
-        processSingleLiveSale(s, name, customer, phone);
-        processed++;
-        
-        // Restore original
         window.confirmQuickStock = originalConfirm;
-        updateLiveUI();
         
-        // Check if all done
-        checkAllProcessed();
+        // Now process with new product
+        processSingleSale({name, qty: qty2, price: price2}, customer, status);
+        processed++;
+        updateLiveUI();
+        checkAllProcessed2();
       };
       return;
     }
     
+    // Check stock
+    if (!state.stocks[productName]) {
+      errors.push(`${productName} haipo stoki`);
+      return;
+    }
+    if (state.stocks[productName].idadi < qty) {
+      errors.push(`${productName} ina ${state.stocks[productName].idadi} tu, unataka ${qty}`);
+      return;
+    }
+    
     // Process sale
-    processSingleLiveSale(s, productName, customer, phone);
+    processSingleSale({name: productName, qty, price}, customer, status);
     processed++;
   });
   
-  // Check for errors
   if (errors.length > 0) {
     showToast('⚠️ ' + errors.join('; '), 'warn');
   }
   
   if (processed > 0) {
-    // Remove processed sales from live list
-    const remaining = getLiveSales().filter(s => s.status !== 'done');
-    saveLiveSales(remaining);
-    updateLiveUI();
-    closeModal('processLiveModal');
+    // Mark conversation as processed
+    const conv = getConversation();
+    conv.forEach(c => c.processed = true);
+    saveConversation(conv);
+    renderConversation();
+    closeModal('processConversationModal');
     showToast('✅ Mauzo ' + processed + ' yamekamilika!', 'ok');
-    speak('Mauzo ' + processed + ' yamekamilika. Risiti zinaandaliwa...');
-    
-    // Generate receipts
-    generateReceiptsForProcessed();
+    speak('Mauzo ' + processed + ' yamekamilika.');
   }
 }
 
-function processSingleLiveSale(sale, productName, customer, phone) {
-  // Check if product exists in stock
-  if (!state.stocks[productName]) {
-    showToast('Bidhaa ' + productName + ' haipo stoki', 'warn');
-    return;
-  }
-  
-  const price = state.stocks[productName].bei;
-  const qty = Math.max(1, Math.floor(sale.amount / price));
-  
-  if (state.stocks[productName].idadi < qty) {
-    showToast('Stoki ya ' + productName + ' ina ' + state.stocks[productName].idadi + ' tu', 'warn');
-    return;
-  }
-  
-  // Record sale
+function processSingleSale(item, customer, status) {
   const result = recordSale(
-    [{name: productName, qty: qty, price: price}],
+    [{name: item.name, qty: item.qty, price: item.price}],
     customer || 'Mteja wa Live',
-    phone || '',
-    'paid'
+    '',
+    status || 'paid'
   );
   
-  // Mark live sale as done
-  const allSales = getLiveSales();
-  const idx = allSales.findIndex(s => s.id === sale.id);
-  if (idx !== -1) {
-    allSales[idx].status = 'done';
-    allSales[idx].product = productName;
-    allSales[idx].customer = customer || 'Mteja wa Live';
-    allSales[idx].phone = phone || '';
-    saveLiveSales(allSales);
-  }
-  
-  // Play receipt sound
   setTimeout(() => {
     speak('Risiti namba ' + result.seriesNo + ' imekamilika');
     playBeep();
   }, 500);
   
-  // Show receipt
   setTimeout(() => viewReceipt(result.id), 1000);
 }
 
-function checkAllProcessed() {
-  const remaining = getLiveSales().filter(s => s.status !== 'done');
-  if (remaining.length === 0) {
+function checkAllProcessed2() {
+  // Check if all sales have been processed
+  const salesData = window._aiSalesData || [];
+  const processed = salesData.filter((_, idx) => {
+    const select = document.getElementById('aiProduct_' + idx);
+    return select && select.value && select.value !== '' && select.value !== '__new__';
+  }).length;
+  
+  if (processed === salesData.length) {
+    closeModal('processConversationModal');
     showToast('🎉 Mauzo yote yamekamilika!', 'gold');
-    speak('Mauzo yote yamekamilika!');
-    updateLiveUI();
-    closeModal('processLiveModal');
   }
 }
 
-function generateReceiptsForProcessed() {
-  const sales = getLiveSales().filter(s => s.status === 'done');
-  if (sales.length > 0) {
-    showToast('🧾 Risiti ' + sales.length + ' zimeandaliwa!', 'gold');
+function playBeep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.frequency.value = 880;
+    osc.type = 'sine';
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.15);
+  } catch(e) {}
+}
+
+// ================================================================
+// MISTRAL AI API
+// ================================================================
+async function callMistralAPI(prompt) {
+  try {
+    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${MISTRAL_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: MISTRAL_MODEL,
+        messages: [
+          { role: 'system', content: 'Wewe ni Jawiza, mshauri wa biashara. Unachambua mazungumzo na kutambua mauzo.' },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.5,
+        max_tokens: 1024,
+        top_p: 0.9
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`HTTP ${response.status}: ${errorData.error?.message || 'Unknown error'}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+
+  } catch (error) {
+    console.error('Mistral API Error:', error);
+    throw error;
   }
 }
 
@@ -1772,8 +1849,9 @@ function renderFinalReport() {
   const profit = getTodayProfit();
   const count = getTodaySalesCount();
   const savings = getTodaySavings();
-  const liveSales = getLiveSales().filter(s => s.status === 'done');
-  const totalLive = liveSales.reduce((a,s) => a + s.amount, 0);
+  const conv = getConversation();
+  const totalWords = conv.reduce((a,c) => a + c.text.split(/\s+/).length, 0);
+  const salesMentions = conv.filter(c => /uza/i.test(c.text)).length;
   const stockValue = Object.values(state.stocks).reduce((a,s) => a + (s.idadi * s.bei), 0);
   const unpaid = state.sales.filter(s => s.status === 'unpaid' && !isReceiptDeleted(s.id)).length;
   
@@ -1781,7 +1859,7 @@ function renderFinalReport() {
   const closeTime = state.shopCloseTime ? new Date(state.shopCloseTime).toLocaleTimeString('en-GB') : '--:--';
   
   container.innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px;">
       <div class="data-item" style="background:var(--panel-2);border-radius:10px;padding:14px;text-align:center;">
         <div class="label" style="font-size:11px;color:var(--text-faint);text-transform:uppercase;">Mauzo Leo</div>
         <div class="value green" style="font-size:20px;font-weight:700;">Tsh ${fmtMoney(sales)}</div>
@@ -1798,9 +1876,10 @@ function renderFinalReport() {
         <div class="label" style="font-size:11px;color:var(--text-faint);text-transform:uppercase;">Mauzo Yote</div>
         <div class="value" style="font-size:20px;font-weight:700;color:var(--blue);">${count}</div>
       </div>
-      <div class="data-item" style="background:var(--panel-2);border-radius:10px;padding:14px;text-align:center;">
-        <div class="label" style="font-size:11px;color:var(--text-faint);text-transform:uppercase;">🎤 Live Mauzo</div>
-        <div class="value" style="font-size:20px;font-weight:700;color:var(--gold);">Tsh ${fmtMoney(totalLive)}</div>
+      <div class="data-item" style="background:var(--panel-2);border-radius:10px;padding:14px;text-align:center;border-color:var(--gold);">
+        <div class="label" style="font-size:11px;color:var(--text-faint);text-transform:uppercase;">🎤 Mazungumzo</div>
+        <div class="value" style="font-size:20px;font-weight:700;color:var(--gold);">${conv.length}</div>
+        <div style="font-size:9px;color:var(--text-faint);">Maneno ${totalWords} · Mauzo ${salesMentions}</div>
       </div>
       <div class="data-item" style="background:var(--panel-2);border-radius:10px;padding:14px;text-align:center;">
         <div class="label" style="font-size:11px;color:var(--text-faint);text-transform:uppercase;">Akiba</div>
@@ -1832,7 +1911,8 @@ function renderFinalReport() {
       </div>
       <div style="margin-top:8px;font-size:13px;color:var(--text-dim);">
         ${profit >= 0 ? '✅ Biashara imefanya faida leo!' : '⚠️ Biashara imepata hasara leo.'}
-        ${liveSales.length > 0 ? `🎤 Mauzo ${liveSales.length} yalirekodiwa kwa sauti.` : ''}
+        ${conv.length > 0 ? `🎤 Mazungumzo ${conv.length} yalirekodiwa kwa sauti.` : ''}
+        ${salesMentions > 0 ? `💰 Mauzo ${salesMentions} yalitambuliwa katika mazungumzo.` : ''}
         ${unpaid > 0 ? `💳 Kuna madeni ${unpaid} ya wateja.` : ''}
       </div>
     </div>
@@ -1852,10 +1932,11 @@ function exportFinalReportPDF() {
   doc.text('Faida Leo: Tsh '+fmtMoney(getTodayProfit()), 20,66);
   doc.text('Akiba Leo: Tsh '+fmtMoney(getTodaySavings()), 20,74);
   doc.text('Thamani ya Stoki: Tsh '+fmtMoney(Object.values(state.stocks).reduce((a,s)=>a+(s.idadi*s.bei),0)), 20,82);
-  const live = getLiveSales().filter(s=>s.status==='done');
-  doc.text('Live Mauzo: Tsh '+fmtMoney(live.reduce((a,s)=>a+s.amount,0)), 20,90);
-  doc.text('Idadi ya Mauzo: '+getTodaySalesCount(), 20,98);
-  doc.text('Madeni: '+state.sales.filter(s=>s.status==='unpaid'&&!isReceiptDeleted(s.id)).length, 20,106);
+  const conv = getConversation();
+  doc.text('Mazungumzo Yaliyorekodiwa: '+conv.length, 20,90);
+  doc.text('Maneno Yote: '+conv.reduce((a,c)=>a+c.text.split(/\s+/).length,0), 20,98);
+  doc.text('Idadi ya Mauzo: '+getTodaySalesCount(), 20,106);
+  doc.text('Madeni: '+state.sales.filter(s=>s.status==='unpaid'&&!isReceiptDeleted(s.id)).length, 20,114);
   doc.save('jawiza-ripoti-siku-'+todayKey()+'.pdf');
 }
 
@@ -1877,10 +1958,9 @@ function speakFinalReport() {
   const profit = getTodayProfit();
   const count = getTodaySalesCount();
   const savings = getTodaySavings();
-  const live = getLiveSales().filter(s=>s.status==='done');
-  const totalLive = live.reduce((a,s)=>a+s.amount,0);
+  const conv = getConversation();
   
-  const msg = `Ripoti ya leo. Mauzo Tsh ${fmtMoney(sales)}. Matumizi Tsh ${fmtMoney(expenses)}. Faida Tsh ${fmtMoney(profit)}. Mauzo yote ${count}. Akiba Tsh ${fmtMoney(savings)}. Mauzo ya live Tsh ${fmtMoney(totalLive)}.`;
+  const msg = `Ripoti ya leo. Mauzo Tsh ${fmtMoney(sales)}. Matumizi Tsh ${fmtMoney(expenses)}. Faida Tsh ${fmtMoney(profit)}. Mauzo yote ${count}. Akiba Tsh ${fmtMoney(savings)}. Mazungumzo ${conv.length} yalirekodiwa.`;
   speak(msg);
 }
 
@@ -1894,34 +1974,20 @@ function triggerVoiceSale() {
   speak('Tafadhali sema jina la mteja.');
 }
 
-function triggerVoiceExpense() {
-  voiceFlowActive = true;
-  voiceFlowStep = 'expense_desc';
-  voiceFlowData = {};
-  speak('Ni kitu gani unatumia?');
-}
-
 function processVoiceCommand(text) {
   const lower = text.toLowerCase();
   if(voiceFlowActive) { handleVoiceFlow(text); return; }
 
   if(/\b(seli|mauzo|sales|sell)\b/.test(lower)) { triggerVoiceSale(); return; }
-  if(/\b(matumizi|expense|tumia|gharama)\b/.test(lower)) { triggerVoiceExpense(); return; }
   if(/\b(akiba|savings|save|weka akiba)\b/.test(lower)) { triggerSavings(); return; }
   
   // Check for "uza" pattern
-  const uzaMatch = lower.match(/(?:uza|u z a|uz a)\s*(\d+)/);
+  const uzaMatch = lower.match(/(?:nil|nime)?uza\s*(\d+)/);
   if (uzaMatch) {
     const amount = parseInt(uzaMatch[1]);
-    if (amount > 0) {
-      if (liveMicActive) {
-        addLiveSale(amount);
-        showToast('🎤 Uza ' + fmtMoney(amount) + ' imerekodiwa!', 'blue');
-      } else {
-        // Add to live sales even if mic not active
-        addLiveSale(amount);
-        showToast('💾 Uza ' + fmtMoney(amount) + ' imehifadhiwa!', 'blue');
-      }
+    if (amount > 0 && liveMicActive) {
+      // Already being recorded by live mic
+      showToast('🎤 Uza ' + fmtMoney(amount) + ' imerekodiwa!', 'blue');
       return;
     }
   }
@@ -1933,7 +1999,7 @@ function processVoiceCommand(text) {
       return;
     }
   }
-  speak('Samahani, sijaelewa. Jaribu "Uza [kiasi]"');
+  speak('Samahani, sijaelewa. Ongea chochote, Live Mic inarekodi.');
 }
 
 function handleVoiceFlow(text) {
@@ -1959,22 +2025,6 @@ function handleVoiceFlow(text) {
     const sale = recordSale([{name:item, qty, price:state.stocks[item].bei}], voiceFlowData.customer||'', '', 'paid');
     speak('Sawa, nimeuza '+item+' '+qty+', jumla Tsh '+fmtMoney(sale.total));
     viewReceipt(sale.id);
-    voiceFlowActive=false;
-    return;
-  }
-  if(voiceFlowStep==='expense_desc') {
-    voiceFlowData.desc = text.trim();
-    voiceFlowStep = 'expense_amount';
-    speak('Sema kiasi cha matumizi.');
-    return;
-  }
-  if(voiceFlowStep==='expense_amount') {
-    const amount = extractNumber(text);
-    if(!amount || amount<1) { speak('Tafadhali sema kiasi sahihi.'); return; }
-    state.expenses.push({id:uid(), dateISO:nowISO(), desc:voiceFlowData.desc, amount});
-    saveState();
-    renderAll();
-    speak('Nimeongeza matumizi ya '+voiceFlowData.desc+', Tsh '+fmtMoney(amount));
     voiceFlowActive=false;
     return;
   }
@@ -2110,7 +2160,7 @@ function renderAll() {
   renderSavings();
   renderStockTable();
   renderSalesTable();
-  renderLiveSales();
+  renderConversation();
   if(document.getElementById('page-alldata').classList.contains('active')) renderFinalReport();
 }
 
@@ -2128,7 +2178,6 @@ tickClock();
 // ================================================================
 function init() {
   setLang(localStorage.getItem('jawiza_lang') || 'sw');
-  renderAll();
   
   // Record shop open time
   if (!state.shopOpenTime) {
@@ -2136,9 +2185,11 @@ function init() {
     saveState();
   }
   
-  // Load live sales
-  liveSales = getLiveSales();
+  // Load conversation
+  conversation = getConversation();
   updateLiveUI();
+  
+  renderAll();
   
   document.querySelectorAll('.modal-overlay').forEach(m => {
     m.style.display = 'none';
@@ -2149,16 +2200,22 @@ function init() {
   if (micActive === 'true') {
     setTimeout(() => toggleLiveMic(), 1000);
   }
+  
+  // Set close time when page is closed
+  window.addEventListener('beforeunload', function() {
+    if (liveMicActive) {
+      localStorage.setItem('jawiza_mic_active', 'true');
+    } else {
+      localStorage.removeItem('jawiza_mic_active');
+    }
+    
+    // Record close time
+    if (!state.shopCloseTime) {
+      state.shopCloseTime = nowISO();
+      saveState();
+    }
+  });
 }
-
-// Save mic state on page unload
-window.addEventListener('beforeunload', function() {
-  if (liveMicActive) {
-    localStorage.setItem('jawiza_mic_active', 'true');
-  } else {
-    localStorage.removeItem('jawiza_mic_active');
-  }
-});
 
 document.addEventListener('DOMContentLoaded', init);
 if(document.readyState !== 'loading') init();
